@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      MONGO_URI: mongodb://host.docker.internal:27017
+      MONGO_DB: ${MONGO_DB:-QL_KHUYENMAI_DANHGIA}
+      FLASK_HOST: 0.0.0.0
+      FLASK_PORT: 5001
+      SECRET_KEY: ${SECRET_KEY:-docker-development-change-me}
+    ports:
+      - "127.0.0.1:${FLASK_PORT:-5001}:5001"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

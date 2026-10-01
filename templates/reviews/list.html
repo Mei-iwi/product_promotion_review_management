@@ -1,0 +1,64 @@
+{% extends 'base.html' %}{% block title %}Đánh giá{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Đánh giá sản phẩm</h1><p>Tiếp nhận, kiểm tra giao dịch và duyệt nội dung đánh giá</p></div></div>
+<details class="border rounded p-3 my-3">
+    <summary class="fw-semibold">Thêm đánh giá</summary>
+    <form method="post" class="row g-2 mt-2">
+        <div class="col-md-4"><label class="form-label">Mã đánh giá</label><input required class="form-control"
+                name="reviewCode" placeholder="DANHGIA2026100001"></div>
+        <div class="col-md-4"><label class="form-label">Mã sản phẩm</label><input required class="form-control"
+                name="productCode"></div>
+        <div class="col-md-4"><label class="form-label">Mã khách hàng</label><input required class="form-control"
+                name="customerCode"></div>
+        <div class="col-md-2"><label class="form-label">Điểm</label><input required type="number" min="1" max="5"
+                class="form-control" name="rating"></div>
+        <div class="col-md-10"><label class="form-label">Tiêu đề</label><input class="form-control" name="title"></div>
+        <div class="col-12"><label class="form-label">Nội dung</label><textarea required class="form-control"
+                name="content"></textarea></div>
+        <div class="col-12"><label class="form-label">URL hình ảnh (mỗi dòng một URL)</label><textarea
+                class="form-control" name="images"></textarea></div>
+        <div><button class="btn btn-primary">Thêm mới</button></div>
+    </form>
+</details>
+<form class="row g-2 my-3">
+    <div class="col-md-3"><input class="form-control" name="productCode" placeholder="Mã sản phẩm"></div>
+    <div class="col-md-2"><select class="form-select" name="status">
+            <option value="">Mọi trạng thái</option>
+            <option value="pending">Chờ duyệt</option>
+            <option value="approved">Đã duyệt</option>
+            <option value="rejected">Từ chối</option>
+        </select></div>
+    <div class="col"><button class="btn btn-primary">Lọc</button></div>
+</form>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Sản phẩm</th>
+                <th>Khách hàng</th>
+                <th>Điểm</th>
+                <th>Tiêu đề</th>
+                <th>Xác nhận mua</th>
+                <th>Ngày</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>{% for r in rows %}<tr>
+                <td>{{ r.reviewCode }}</td>
+                <td>{{ r.productCode }}</td>
+                <td>{{ r.customer.customerName }}</td>
+                <td>{{ r.rating }}/5</td>
+                <td>{{ r.title }}</td>
+                <td>{{ 'Đã xác nhận mua' if r.verifiedPurchase else 'Chưa xác nhận' }}</td>
+                <td>{{ r.createdAt|datevn }}</td>
+                <td><span class="status-badge status-{{ r.status|status_class }}">{{ r.status|status_vi }}</span></td>
+                <td>
+                    <form method="post" action="{{ url_for('web.review_status', code=r.reviewCode) }}"><button
+                            name="status" value="approved" class="btn btn-sm btn-success">Duyệt</button> <button
+                            name="status" value="rejected" class="btn btn-sm btn-outline-danger">Từ chối</button></form>
+                </td>
+            </tr>{% else %}<tr>
+                <td class="empty-state" colspan="9">Không có dữ liệu phù hợp</td>
+            </tr>{% endfor %}</tbody>
+    </table>
+</div>{% endblock %}

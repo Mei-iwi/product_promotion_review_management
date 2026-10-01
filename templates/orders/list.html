@@ -1,0 +1,39 @@
+{% extends 'base.html' %}{% block title %}Đơn hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách đơn hàng</h1><p>Tra cứu mặt hàng, khách hàng và khuyến mãi đã áp dụng</p></div></div>
+<form class="row g-2 my-3">
+    <div class="col-md-3"><input class="form-control" name="customerCode" placeholder="Mã khách hàng"></div>
+    <div class="col-md-2"><select class="form-select" name="status">
+            <option value="">Mọi trạng thái</option>
+            <option value="pending">Chờ xác nhận</option>
+            <option value="confirmed">Đã xác nhận</option>
+            <option value="completed">Hoàn tất</option>
+            <option value="cancelled">Đã hủy</option>
+        </select></div>
+    <div class="col-md-3"><input class="form-control" name="productCode" placeholder="Mã sản phẩm trong đơn"></div>
+    <div class="col"><button class="btn btn-primary">Lọc</button></div>
+</form>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Mã đơn</th>
+                <th>Khách hàng</th>
+                <th>Ngày</th>
+                <th>Số mặt hàng</th>
+                <th>Khuyến mãi</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>{% for r in rows %}<tr>
+                <td><a class="btn btn-outline-primary btn-sm" href="{{ url_for('web.order_detail', code=r.orderCode) }}">Xem {{ r.orderCode }}</a></td>
+                <td>{{ r.customerCode }}</td>
+                <td>{{ r.orderDate|datevn }}</td>
+<td>{{ r['items']|length }}</td>
+                <td>{{ r.appliedPromotion.promoCode if r.appliedPromotion else 'Không áp dụng' }}</td>
+                <td>{{ r.totalAmount|money }}</td>
+                <td><span class="status-badge status-{{ r.status|status_class }}">{{ r.status|status_vi }}</span></td>
+            </tr>{% else %}<tr>
+                <td class="empty-state" colspan="7">Không có dữ liệu phù hợp</td>
+            </tr>{% endfor %}</tbody>
+    </table>
+</div>{% endblock %}

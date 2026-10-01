@@ -1,0 +1,57 @@
+{% extends 'base.html' %}{% block title %}Sản phẩm{% endblock %}{% block content %}
+<div class="d-flex justify-content-between">
+    <h1 class="h3">Danh sách sản phẩm</h1><div><span class="text-secondary me-2">{{ total }} sản phẩm</span><a class="btn btn-primary btn-sm" href="{{ url_for('web.product_create_form') }}">Thêm mới</a></div>
+</div>
+<form class="row g-2 my-3">
+    <div class="col-md-3"><input class="form-control" name="q" value="{{ request.args.get('q','') }}"
+            placeholder="Tên sản phẩm"></div>
+    <div class="col-md-2"><input class="form-control" name="category" value="{{ request.args.get('category','') }}"
+            placeholder="Mã danh mục"></div>
+    <div class="col-md-2"><input class="form-control" name="brand" value="{{ request.args.get('brand','') }}"
+            placeholder="Thương hiệu"></div>
+    <div class="col-md-2"><select class="form-select" name="status">
+            <option value="">Mọi trạng thái</option>
+            <option value="active">Đang hoạt động</option>
+            <option value="inactive">Ngừng hoạt động</option>
+        </select></div>
+    <div class="col-md-2"><select class="form-select" name="sort">
+            <option value="">Giá tăng</option>
+            <option value="price_desc">Giá giảm</option>
+        </select></div>
+    <div class="col"><button class="btn btn-primary">Lọc</button></div>
+    <div class="col-md-2"><input type="number" min="0" class="form-control" name="min_price" placeholder="Giá từ"></div>
+    <div class="col-md-2"><input type="number" min="0" class="form-control" name="max_price" placeholder="Giá đến">
+    </div>
+    <div class="col-md-2"><input class="form-control" name="tag" placeholder="Nhãn"></div>
+</form>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Tên</th>
+                <th>Danh mục</th>
+                <th>Thương hiệu</th>
+                <th>Giá</th>
+                <th>Tồn kho</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}<tr>
+                <td><a class="btn btn-outline-primary btn-sm" href="{{ url_for('web.product_detail', code=row.productCode) }}">Xem {{ row.productCode }}</a></td>
+                <td>{{ row.name }}</td>
+                <td>{{ row.category.categoryName }}</td>
+                <td>{{ row.brand }}</td>
+                <td>{{ row.price|money }}</td>
+                <td>{{ row.stock }}</td>
+                <td><span class="status-badge status-{{ row.status|status_class }}">{{ row.status|status_vi }}</span></td>
+            </tr>{% else %}<tr>
+                <td class="empty-state" colspan="7">Không có dữ liệu phù hợp</td>
+            </tr>{% endfor %}</tbody>
+    </table>
+</div>
+<nav><a class="btn btn-outline-secondary btn-sm {% if page <= 1 %}disabled{% endif %}" href="?page={{ page-1 }}">Trang
+        trước</a> <a class="btn btn-outline-secondary btn-sm {% if page*10 >= total %}disabled{% endif %}"
+        href="?page={{ page+1 }}">Trang sau</a></nav>
+{% endblock %}

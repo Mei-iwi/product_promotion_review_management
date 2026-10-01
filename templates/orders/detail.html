@@ -1,0 +1,39 @@
+{% extends 'base.html' %}{% block title %}Chi tiết đơn hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Chi tiết đơn hàng {{ item.orderCode }}</h1><p>Khách hàng: {{ item.customerCode }} · Ngày: {{ item.orderDate|datevn }} · <span class="status-badge status-{{ item.status|status_class }}">{{ item.status|status_vi }}</span></p></div><a class="btn btn-outline-secondary" href="{{ url_for('web.orders') }}">← Quay lại</a></div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+    <tbody>{% for r in item['items'] %}<tr>
+                <td>{{ r.productCode }}</td>
+                <td>{{ r.productName }}</td>
+                <td>{{ r.quantity }}</td>
+                <td>{{ r.unitPrice|money }}</td>
+                <td>{{ (r.quantity*r.unitPrice)|money }}</td>
+            </tr>{% endfor %}</tbody>
+    </table>
+</div>
+<table class="table w-auto ms-auto">
+    <tr>
+        <th>Tạm tính</th>
+        <td>{{ subtotal|money }}</td>
+    </tr>
+    <tr>
+        <th>Khuyến mãi</th>
+        <td>{{ item.appliedPromotion.promoCode if item.appliedPromotion else 'Không áp dụng' }}</td>
+    </tr>
+    <tr>
+        <th>Tiền giảm</th>
+        <td>{{ (item.appliedPromotion.discountAmount if item.appliedPromotion else 0)|money }}</td>
+    </tr>
+    <tr>
+        <th>Tổng tiền</th>
+        <td class="fw-bold">{{ item.totalAmount|money }}</td>
+    </tr>
+</table>{% endblock %}

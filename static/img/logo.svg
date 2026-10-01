@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Logo quản lý khuyến mãi</title>
+  <desc id="desc">Biểu tượng thẻ khuyến mãi và cơ sở dữ liệu</desc>
+  <rect width="64" height="64" rx="14" fill="#ffffff"/>
+  <path d="M15 17h25l10 10-23 23-12-12V17Z" fill="#245b96"/>
+  <circle cx="24" cy="26" r="4" fill="#ffffff"/>
+  <path d="M31 30 24 42M39 31h.1M25 41h.1" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+  <ellipse cx="46" cy="45" rx="10" ry="4" fill="#17365d"/>
+  <path d="M36 45v6c0 2.2 4.5 4 10 4s10-1.8 10-4v-6" fill="#17365d" stroke="#ffffff" stroke-width="1.5"/>
+</svg>

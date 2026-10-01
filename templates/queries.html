@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Báo cáo nghiệp vụ{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <h1 class="h3">Báo cáo nghiệp vụ</h1>
+    <p>Tra cứu và tổng hợp trực tiếp từ dữ liệu MongoDB hiện tại</p>
+  </div>
+  <span class="badge text-bg-light border px-3 py-2">Dữ liệu trực tiếp</span>
+</div>
+
+<div class="report-layout">
+  <aside class="report-sidebar" aria-label="Danh sách báo cáo">
+    {% for group_name, items in groups.items() %}
+    <section class="report-group">
+      <h2 class="report-group-title">{{ group_name }}</h2>
+      {% for code, info in items %}
+      <a class="report-link {{ 'active' if code == selected else '' }}"
+         href="{{ url_for('web.query_demo', report=code) }}">{{ info.title }}</a>
+      {% endfor %}
+    </section>
+    {% endfor %}
+  </aside>
+
+  <section class="report-content">
+    <header class="report-content-header">
+      <div>
+        <h2>{{ report.title }}</h2>
+        <p>{{ report.description }}</p>
+      </div>
+      <span class="badge text-bg-primary align-self-start">{{ rows|length }} kết quả</span>
+    </header>
+
+    {% if rows %}
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead><tr>{% for field, label, kind in report.columns %}<th>{{ label }}</th>{% endfor %}</tr></thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            {% for field, label, kind in report.columns %}
+            {% set value = cell(row, field) %}
+            <td>
+              {% if value is none or value == '' %}
+                <span class="text-secondary">—</span>
+              {% elif kind == 'money' %}
+                {{ value|money }}
+              {% elif kind == 'rating' %}
+                <strong>{{ '%.1f'|format(value|float) }}/5</strong>
+              {% elif kind == 'stars' %}
+                <span class="text-warning" aria-label="{{ value }} trên 5 sao">{{ '★' * (value|int) }}</span>
+                <span class="text-secondary small">{{ value }}/5</span>
+              {% elif kind == 'date' %}
+                {{ value[:10] }}
+              {% elif kind == 'status' %}
+                <span class="status-badge status-{{ value|status_class }}">{{ value|status_vi }}</span>
+              {% else %}
+                {{ value }}
+              {% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <h3 class="h6">Chưa có dữ liệu phù hợp</h3>
+      <p class="mb-0">Báo cáo sẽ tự cập nhật khi dữ liệu tương ứng được thêm vào MongoDB.</p>
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/reports.js', v='1') }}"></script>
+{% endblock %}

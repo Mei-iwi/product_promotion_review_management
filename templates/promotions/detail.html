@@ -1,0 +1,30 @@
+{% extends 'base.html' %}{% block title %}Chi tiết khuyến mãi{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Chi tiết khuyến mãi</h1><p>{{ item.name }}</p></div><div class="page-actions"><a class="btn btn-outline-secondary" href="{{ url_for('web.promotions') }}">← Quay lại</a><a class="btn btn-primary" href="{{ url_for('web.promotion_edit_form', code=item.promoCode) }}">Cập nhật</a></div></div>
+<table class="table">
+    <tr>
+        <th>Mã</th>
+        <td>{{ item.promoCode }}</td>
+    </tr>
+    <tr>
+        <th>Giá trị</th>
+        <td>{{ item.value }}{{ '%' if item.promoType == 'percentage' else ' ₫' }}</td>
+    </tr>
+    <tr>
+        <th>Đơn tối thiểu</th>
+        <td>{{ item.conditions.minOrderValue|money }}</td>
+    </tr>
+    <tr>
+        <th>Giảm tối đa</th>
+        <td>{{ item.conditions.maxDiscount|money }}</td>
+    </tr>
+    <tr>
+        <th>Lượt sử dụng</th>
+        <td>{{ usage.count }}</td>
+    </tr>
+    <tr>
+        <th>Tổng tiền đã giảm</th>
+        <td>{{ usage.discount|money }}</td>
+    </tr>
+</table>
+<h2 class="h5">Sản phẩm tương ứng</h2>
+<div class="d-flex flex-wrap gap-2">{% for p in targets %}<a class="btn btn-outline-primary btn-sm" href="{{ url_for('web.product_detail', code=p.productCode) }}">Xem {{ p.name }}</a>{%
+    else %}<span class="text-secondary">Không có dữ liệu phù hợp</span>{% endfor %}</div>{% endblock %}

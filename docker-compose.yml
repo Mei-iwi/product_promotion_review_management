@@ -1,0 +1,33 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${MONGO_DOCKER_PORT:-27018}:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      MONGO_DB: ${MONGO_DB:-QL_KHUYENMAI_DANHGIA}
+      FLASK_HOST: 0.0.0.0
+      FLASK_PORT: 5001
+      SECRET_KEY: ${SECRET_KEY:-docker-development-change-me}
+    ports:
+      - "127.0.0.1:${FLASK_PORT:-5001}:5001"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+volumes:
+  mongodb_data:

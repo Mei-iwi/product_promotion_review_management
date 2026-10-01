@@ -1,0 +1,46 @@
+{% extends 'base.html' %}{% block title %}Chi tiết sản phẩm{% endblock %}{% block content %}
+<div class="page-heading"><div><h1 class="h3">{{ item.name }}</h1><p>{{ item.productCode }}</p></div><div class="page-actions"><a class="btn btn-outline-secondary" href="{{ url_for('web.products') }}">← Quay lại</a><a class="btn btn-primary" href="{{ url_for('web.product_edit_form', code=item.productCode) }}">Cập nhật</a></div></div>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <tr>
+                <th>Danh mục</th>
+                <td>{{ item.category.categoryName }} ({{ item.category.categoryCode }})</td>
+            </tr>
+            <tr>
+                <th>Thương hiệu</th>
+                <td>{{ item.brand }}</td>
+            </tr>
+            <tr>
+                <th>Giá</th>
+                <td>{{ item.price|money }}</td>
+            </tr>
+            <tr>
+                <th>Tồn kho</th>
+                <td>{{ item.stock }}</td>
+            </tr>
+            <tr>
+                <th>Nhãn</th>
+                <td>{{ item.tags|join(', ') }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h2 class="h5">Thuộc tính</h2>
+        <table class="table">{% for key,value in item.attributes.items() %}<tr>
+                <th>{{ key }}</th>
+                <td>{{ value }}</td>
+            </tr>{% else %}<tr>
+                <td>Chưa có</td>
+            </tr>{% endfor %}</table>
+    </div>
+</div>
+<h2 class="h5 mt-3">Khuyến mãi có thể áp dụng</h2>
+<div class="d-flex flex-wrap gap-2 mb-3">{% for p in promotions %}<a class="btn btn-outline-primary btn-sm" href="{{ url_for('web.promotion_detail', code=p.promoCode) }}">Xem {{ p.name }}</a>
+    {% else %}<span class="text-secondary">Chưa có</span>{% endfor %}</div>
+<h2 class="h5 mt-3">Đánh giá đã duyệt ({{ reviews|length }}) – {{ average|string|replace('.', ',') }}/5</h2>{% for r in
+reviews %}<article class="border rounded p-3 mb-2"><strong>{{ r.customer.customerName }} – {{ r.rating }}/5</strong>
+    <div>{{ r.title }}</div>
+    <p class="mb-0">{{ r.content }}</p>
+</article>{% else %}<p>Chưa có đánh giá.</p>{% endfor %}
+{% endblock %}

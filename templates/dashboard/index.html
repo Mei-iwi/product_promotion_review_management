@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Thống kê{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><h1 class="h3">Dashboard thống kê</h1><p>Số liệu được tổng hợp trực tiếp bằng MongoDB Aggregation Framework</p></div>
+  <span class="badge text-bg-light border px-3 py-2">Cập nhật từ dữ liệu hiện tại</span>
+</div>
+
+<div id="summary" class="row row-cols-1 row-cols-sm-2 row-cols-xl-5 g-3 mb-4">
+  <div class="text-secondary">Đang tải dữ liệu...</div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-5">
+    <section class="chart-card">
+      <div class="chart-card-header"><div><h2>Phân bố mức đánh giá</h2><small>Số đánh giá theo mức 1–5 sao</small></div><span class="badge text-bg-primary">Biểu đồ tròn</span></div>
+      <div class="chart-wrap chart-wrap-sm"><div id="ratingDistributionChart" class="svg-chart-host" role="img" aria-label="Biểu đồ phân bố đánh giá"></div></div>
+      <div id="ratingDistributionFallback" class="chart-fallback"></div>
+    </section>
+  </div>
+  <div class="col-lg-7">
+    <section class="chart-card">
+      <div class="chart-card-header"><div><h2>Điểm trung bình theo sản phẩm</h2><small>Điểm trung bình và số lượt đánh giá</small></div><span class="badge text-bg-light border">Đánh giá</span></div>
+      <div class="chart-wrap chart-wrap-sm"><div id="productRatingChart" class="svg-chart-host" role="img" aria-label="Biểu đồ điểm đánh giá sản phẩm"></div></div>
+      <div id="ratings" class="chart-fallback"></div>
+    </section>
+  </div>
+  <div class="col-lg-6">
+    <section class="chart-card">
+      <div class="chart-card-header"><div><h2>Mức sử dụng khuyến mãi</h2><small>Số lượt dùng theo chương trình</small></div><span class="badge text-bg-primary">Biểu đồ tròn</span></div>
+      <div class="chart-wrap"><div id="promotionUsageChart" class="svg-chart-host" role="img" aria-label="Biểu đồ sử dụng khuyến mãi"></div></div>
+      <div id="promotions" class="chart-fallback"></div>
+    </section>
+  </div>
+  <div class="col-lg-6">
+    <section class="chart-card">
+      <div class="chart-card-header"><div><h2>Doanh thu theo thời gian</h2><small>Doanh thu theo tháng</small></div><span class="badge text-bg-light border">Xu hướng</span></div>
+      <div class="chart-wrap"><div id="revenueTimelineChart" class="svg-chart-host" role="img" aria-label="Biểu đồ doanh thu theo thời gian"></div></div>
+      <div id="timelineFallback" class="chart-fallback"></div>
+    </section>
+  </div>
+  <div class="col-12">
+    <section class="chart-card">
+      <div class="chart-card-header"><div><h2>Doanh thu theo sản phẩm</h2><small>Số lượng bán và doanh thu trước giảm</small></div><span class="badge text-bg-light border">Top sản phẩm</span></div>
+      <div class="chart-wrap"><div id="productSalesChart" class="svg-chart-host" role="img" aria-label="Biểu đồ doanh thu sản phẩm"></div></div>
+      <div id="sales" class="chart-fallback"></div>
+    </section>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js', v='5') }}"></script>
+{% endblock %}
