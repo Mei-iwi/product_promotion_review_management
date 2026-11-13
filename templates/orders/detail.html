@@ -1,4 +1,7 @@
-{% extends 'base.html' %}{% block title %}Chi tiết đơn hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Chi tiết đơn hàng {{ item.orderCode }}</h1><p>Khách hàng: {{ item.customerCode }} · Ngày: {{ item.orderDate|datevn }} · <span class="status-badge status-{{ item.status|status_class }}">{{ item.status|status_vi }}</span></p></div><a class="btn btn-outline-secondary" href="{{ url_for('web.orders') }}">← Quay lại</a></div>
+{% extends 'base.html' %}{% block title %}Chi tiết đơn hàng{% endblock %}{% block content %}
+{% if order_error %}<div class="alert alert-danger" role="alert">{{ order_error }}</div>{% endif %}
+{% if review_error %}<div class="alert alert-danger" role="alert">{{ review_error }}</div>{% endif %}
+<div class="page-heading"><div><h1 class="h3">Chi tiết đơn hàng {{ item.orderCode }}</h1><p>Khách hàng: {{ item.customerCode }} · Ngày: {{ item.orderDate|datevn }} · <span class="status-badge status-{{ item.status|status_class }}">{{ item.status|status_vi }}</span></p></div><a class="btn btn-outline-secondary" href="{{ url_for('auth.own_orders') if own else url_for('web.orders') }}">← Quay lại</a></div>
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -12,7 +15,7 @@
         </thead>
     <tbody>{% for r in item['items'] %}<tr>
                 <td>{{ r.productCode }}</td>
-                <td>{{ r.productName }}</td>
+                <td>{{ r.productName }}{% if own and item.status in ['confirmed','completed'] and can('reviews.create_own') %}<a class="d-block mt-2" href="#review-{{ loop.index }}">Đánh giá sản phẩm</a>{% endif %}</td>
                 <td>{{ r.quantity }}</td>
                 <td>{{ r.unitPrice|money }}</td>
                 <td>{{ (r.quantity*r.unitPrice)|money }}</td>
@@ -36,4 +39,21 @@
         <th>Tổng tiền</th>
         <td class="fw-bold">{{ item.totalAmount|money }}</td>
     </tr>
-</table>{% endblock %}
+</table>
+{% if own and item.status in ['confirmed','completed'] and can('reviews.create_own') %}
+<section class="mt-4"><h2 class="h4">Đánh giá sản phẩm trong đơn</h2><p>Đánh giá được gửi bằng tài khoản của bạn và sẽ chờ kiểm duyệt.</p>
+{% for line in item['items'] %}{% set values = review_values if review_values and review_values.productCode == line.productCode else {} %}
+<article id="review-{{ loop.index }}" class="detail-section" style="scroll-margin-top: 100px"><h3 class="h5">{{ line.productName }}</h3>
+<form method="post" action="{{ url_for('auth.order_review',code=item.orderCode) }}" class="row g-3" data-product-review>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="productCode" value="{{ line.productCode }}">
+<div class="col-sm-4"><label class="form-label" for="rating-{{ loop.index }}">Điểm đánh giá</label><select id="rating-{{ loop.index }}" name="rating" class="form-select" required><option value="">Chọn số sao</option>{% for rating in range(5,0,-1) %}<option value="{{ rating }}" {{ 'selected' if values.get('rating') == rating|string else '' }}>{{ rating }} sao</option>{% endfor %}</select></div>
+<div class="col-sm-8"><label class="form-label" for="title-{{ loop.index }}">Tiêu đề</label><input id="title-{{ loop.index }}" class="form-control" name="title" maxlength="200" value="{{ values.get('title','') }}"></div>
+<div class="col-12"><label class="form-label" for="content-{{ loop.index }}">Nội dung đánh giá</label><textarea id="content-{{ loop.index }}" class="form-control" name="content" maxlength="5000" required>{{ values.get('content','') }}</textarea></div>
+<div><button type="submit" class="btn btn-primary">Gửi đánh giá</button></div></form></article>{% endfor %}</section>{% endif %}
+<div class="detail-section mt-4"><h2 class="h5">Giao hàng và thanh toán</h2>
+{% if item.recipient %}<p>{{ item.recipient.fullName }} - {{ item.recipient.phone }}</p><p>{{ item.recipient.address }}</p>{% else %}<p>Đơn cũ chưa lưu thông tin người nhận.</p>{% endif %}
+<p>Phí giao hàng: {{ item.get('shippingFee',0)|money }} - {{ item.get('paymentMethod','Chưa có thông tin') }}</p></div>
+<div class="detail-section"><h2 class="h5">Lịch sử trạng thái</h2><ol>{% for event in item.get('statusHistory',[]) or [] %}<li>{{ event.status|status_vi }} - {{ event.at|datevn }} - {{ role_labels.get(event.actorRole,'Hệ thống') }}</li>{% else %}<li>Đơn cũ chưa lưu lịch sử trạng thái.</li>{% endfor %}</ol></div>
+{% if own and item.status == 'pending' and can('orders.cancel_own') %}<form method="post" action="{{ url_for('shop.cancel',code=item.orderCode) }}" data-confirm="Bạn xác nhận hủy đơn hàng này?"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit" class="btn btn-outline-danger">Hủy đơn hàng</button></form>{% endif %}
+{% if not own and can('orders.manage_status') %}<div class="d-flex flex-wrap gap-2">{% for state in (['confirmed','cancelled'] if item.status == 'pending' else (['completed'] if item.status == 'confirmed' else [])) %}<form method="post" action="{{ url_for('shop.order_status',code=item.orderCode) }}" data-confirm="Xác nhận chuyển trạng thái đơn hàng?"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit" name="status" value="{{ state }}" class="btn {{ 'btn-outline-danger' if state == 'cancelled' else 'btn-primary' }}">{{ state|status_vi }}</button></form>{% endfor %}</div>{% endif %}
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}{% block title %}Sản phẩm{% endblock %}{% block content %}
 <div class="d-flex justify-content-between">
-    <h1 class="h3">Danh sách sản phẩm</h1><div><span class="text-secondary me-2">{{ total }} sản phẩm</span><a class="btn btn-primary btn-sm" href="{{ url_for('web.product_create_form') }}">Thêm mới</a></div>
+    <h1 class="h3">Danh sách sản phẩm</h1><div><span class="text-secondary me-2">{{ total }} sản phẩm</span>{% if can('products.create') %}<a class="btn btn-primary btn-sm" href="{{ url_for('web.product_create_form') }}">Thêm mới</a>{% endif %}</div>
 </div>
 <form class="row g-2 my-3">
     <div class="col-md-3"><input class="form-control" name="q" value="{{ request.args.get('q','') }}"
@@ -40,7 +40,7 @@
         <tbody>
             {% for row in rows %}<tr>
                 <td><a class="btn btn-outline-primary btn-sm" href="{{ url_for('web.product_detail', code=row.productCode) }}">Xem {{ row.productCode }}</a></td>
-                <td>{{ row.name }}</td>
+                <td><div class="d-flex align-items-center gap-2"><img data-product-image src="{{ (row.image or row.imageUrl)|product_image }}" alt="{{ row.name }}" loading="lazy" width="56" height="56" class="product-table-image"><span>{{ row.name }}</span></div></td>
                 <td>{{ row.category.categoryName }}</td>
                 <td>{{ row.brand }}</td>
                 <td>{{ row.price|money }}</td>

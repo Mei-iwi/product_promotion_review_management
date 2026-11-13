@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block title %}Đăng nhập{% endblock %}{% block content %}
+<div class="row justify-content-center"><section class="col-md-7 col-lg-5"><div class="card p-4">
+<h1 class="h3">Đăng nhập</h1><p>Nhập tài khoản được quản trị viên cấp.</p>
+{% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+<form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label class="form-label" for="email">Email</label><input class="form-control mb-3" id="email" name="email" type="email" maxlength="254" autocomplete="username" required>
+<label class="form-label" for="password">Mật khẩu</label><input class="form-control mb-3" id="password" name="password" type="password" maxlength="128" autocomplete="current-password" required>
+<button class="btn btn-primary w-100">Đăng nhập</button></form></div></section></div>
+{% endblock %}

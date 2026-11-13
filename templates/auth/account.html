@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block title %}Tài khoản của tôi{% endblock %}{% block content %}
+<h1 class="h3">Hồ sơ của tôi</h1><p>{{ item.customerCode }} · {{ item.email }} · {{ item.level|level_vi }}</p>
+<form method="post" action="{{ url_for('auth.profile') }}" class="row g-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="col-md-6"><label for="name" class="form-label">Họ tên</label><input id="name" name="fullName" class="form-control" maxlength="200" value="{{ item.fullName }}" required></div>
+<div class="col-md-6"><label for="address" class="form-label">Địa chỉ</label><input id="address" name="address" class="form-control" maxlength="500" value="{{ item.address or '' }}"></div><div><button class="btn btn-primary">Cập nhật hồ sơ</button></div></form>
+{% endblock %}

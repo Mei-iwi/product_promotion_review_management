@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block title %}Đánh giá của tôi{% endblock %}{% block content %}
+<div class="page-heading"><div><h1 class="h3">Đánh giá của tôi</h1><p>Các sản phẩm bạn đã đánh giá và trạng thái duyệt.</p></div><a class="btn btn-outline-primary" href="{{ url_for('auth.own_orders') }}">Xem đơn hàng của tôi</a></div>
+{% for row in rows %}<article class="detail-section">
+<div class="d-flex align-items-center gap-3 mb-3"><img data-product-image src="{{ row.product.image|product_image }}" alt="{{ row.product.name }}" width="80" height="80" class="product-table-image">
+<div>{% if row.product.available %}<a class="fw-semibold" href="{{ url_for('auth.public_product',code=row.productCode) }}">{{ row.product.name }}</a>{% else %}<strong>{{ row.product.name }}</strong>{% endif %}<div class="small text-secondary">{{ row.productCode }}</div></div></div>
+<h2 class="h5">{{ row.title or 'Đánh giá sản phẩm' }}</h2><p><strong>{{ row.rating }}/5</strong> · <span class="status-badge status-{{ row.status|status_class }}">{{ row.status|status_vi }}</span> · {{ row.createdAt|datevn }}</p><p class="text-break">{{ row.content }}</p>
+{% if row.orderCode %}<a href="{{ url_for('auth.own_order',code=row.orderCode) }}">Xem đơn hàng {{ row.orderCode }}</a>{% endif %}
+</article>{% else %}<div class="empty-state"><h2 class="h5">Bạn chưa đánh giá sản phẩm nào</h2><p>Mở chi tiết đơn đã xác nhận hoặc hoàn tất để đánh giá sản phẩm đã mua.</p></div>{% endfor %}
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}{% block title %}{{ 'Cập nhật' if item else 'Thêm' }} sản phẩm{% endblock %}{% block content %}
 <div class="page-heading"><div><h1 class="h3">{{ 'Cập nhật sản phẩm' if item else 'Thêm sản phẩm' }}</h1><p>{{ 'Chỉnh sửa thông tin sản phẩm hiện tại' if item else 'Tạo sản phẩm mới trong hệ thống' }}</p></div><a class="btn btn-outline-secondary" href="{{ url_for('web.product_detail', code=item.productCode) if item else url_for('web.products') }}">← Quay lại</a></div>
-<form method="post" class="row g-3">
+<form method="post" class="row g-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 <div class="col-md-4"><label class="form-label">Mã sản phẩm</label><input required class="form-control" name="productCode" value="{{ item.productCode if item else '' }}" {{ 'readonly' if item else '' }}></div>
 <div class="col-md-8"><label class="form-label">Tên sản phẩm</label><input required class="form-control" name="name" value="{{ item.name if item else '' }}"></div>
 <div class="col-md-4"><label class="form-label">Thương hiệu</label><input required class="form-control" name="brand" value="{{ item.brand if item else '' }}"></div>

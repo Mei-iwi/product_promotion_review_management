@@ -1,0 +1,22 @@
+{% extends 'base.html' %}{% block title %}Quản lý tài khoản{% endblock %}{% block content %}
+<div class="page-heading"><div><h1 class="h3">Quản lý tài khoản</h1><p>{{ total }} tài khoản phù hợp{% if not can('users.manage_all') %} · Chỉ quản lý khách hàng{% endif %}</p></div>
+{% if can('users.create') %}<a class="btn btn-primary" href="{{ url_for('auth.create_user') }}">Tạo tài khoản</a>{% endif %}</div>
+<form method="get" class="row g-3">
+  <div class="col-md-4"><label for="email-search" class="form-label">Tìm theo email</label><input id="email-search" class="form-control" name="q" maxlength="254" value="{{ filters.q }}" placeholder="Nhập một phần email"></div>
+  <div class="col-md-3"><label for="role-filter" class="form-label">Vai trò</label>
+  {% if can('users.manage_all') %}<select id="role-filter" class="form-select" name="role"><option value="">Tất cả vai trò</option>{% for role,label in role_labels.items() %}<option value="{{ role }}" {{ 'selected' if filters.role == role else '' }}>{{ label }}</option>{% endfor %}</select>
+  {% else %}<input id="role-filter" class="form-control" value="Khách hàng" disabled>{% endif %}</div>
+  <div class="col-md-3"><label for="status-filter" class="form-label">Trạng thái</label><select id="status-filter" class="form-select" name="status"><option value="">Tất cả trạng thái</option>{% for status,label in user_status_labels.items() %}<option value="{{ status }}" {{ 'selected' if filters.status == status else '' }}>{{ label }}</option>{% endfor %}</select></div>
+  <div class="col-md-2"><label for="page-size" class="form-label">Số dòng mỗi trang</label><input id="page-size" class="form-control" name="per_page" type="number" min="1" max="100" value="{{ per_page }}"></div>
+  <div><button class="btn btn-primary">Lọc tài khoản</button> <a class="btn btn-outline-secondary" href="{{ url_for('auth.users') }}">Xóa bộ lọc</a></div>
+</form>
+<div class="table-responsive"><table class="table"><thead><tr><th>Email</th><th>Vai trò</th><th>Trạng thái</th><th>Đăng nhập gần nhất</th><th>Thao tác</th></tr></thead><tbody>
+{% for u in rows %}<tr><td>{{ u.email }}</td><td>{{ role_labels.get(u.role,u.role) }}</td><td>{{ user_status_labels.get(u.status,u.status) }}</td><td>{{ u.lastLoginAt|datevn }}</td><td>
+{% if can('users.update') %}<a href="{{ url_for('auth.edit_user', user_id=u.id) }}">{% if u.status == 'locked' %}Mở khóa / Cập nhật{% elif u.status == 'disabled' %}Kích hoạt / Cập nhật{% else %}Quản lý / Đặt lại mật khẩu{% endif %}</a>{% endif %}</td></tr>
+{% else %}<tr><td colspan="5" class="empty-state">Không có tài khoản phù hợp</td></tr>{% endfor %}
+</tbody></table></div>
+<nav aria-label="Phân trang tài khoản" class="d-flex flex-wrap align-items-center gap-3 mt-3">
+{% if page > 1 %}<a class="btn btn-outline-secondary" rel="prev" href="{{ page_url(page-1) }}">Trang trước</a>{% endif %}
+<span>Trang {{ page }} / {{ pages }}</span>
+{% if page < pages %}<a class="btn btn-outline-secondary" rel="next" href="{{ page_url(page+1) }}">Trang sau</a>{% endif %}
+</nav>{% endblock %}

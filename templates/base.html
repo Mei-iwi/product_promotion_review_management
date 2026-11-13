@@ -3,20 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{% block title %}Quản lý khuyến mãi{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/app.css', v='3') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/app.css', v='4') }}" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-expand-xl navbar-dark app-navbar fixed-top">
-  <div class="container-fluid app-shell"><a class="navbar-brand" href="{{ url_for('web.home') }}"><img class="brand-logo" src="{{ url_for('static', filename='img/logo.svg', v='1') }}" alt="Logo"><span><strong>Quản lý khuyến mãi</strong><small>Đồ án MongoDB</small></span></a>
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu"><span class="navbar-toggler-icon"></span></button>
+{% set admin_navigation = current_user and current_user.role == 'ADMIN' %}
+<nav class="navbar {{ 'navbar-expand-xxl app-navbar-admin' if admin_navigation else 'navbar-expand-xl' }} navbar-dark app-navbar fixed-top">
+  <div class="container-fluid app-shell"><a class="navbar-brand" href="{{ landing }}"><img class="brand-logo" src="{{ url_for('static', filename='img/logo.svg', v='1') }}" alt="Logo"><span><strong>Quản lý khuyến mãi</strong><small>Đồ án MongoDB</small></span></a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Mở menu điều hướng"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="menu"><div class="navbar-nav ms-auto">
-      <a class="nav-link {{ 'active' if request.endpoint == 'web.home' else '' }}" href="{{ url_for('web.home') }}">Tổng quan</a>
-      <a class="nav-link {{ 'active' if request.endpoint and 'product' in request.endpoint else '' }}" href="{{ url_for('web.products') }}">Sản phẩm</a><a class="nav-link {{ 'active' if request.endpoint and 'promotion' in request.endpoint else '' }}" href="{{ url_for('web.promotions') }}">Khuyến mãi</a>
-      <a class="nav-link {{ 'active' if request.endpoint and 'customer' in request.endpoint else '' }}" href="{{ url_for('web.customers') }}">Khách hàng</a><a class="nav-link {{ 'active' if request.endpoint and 'review' in request.endpoint else '' }}" href="{{ url_for('web.reviews') }}">Đánh giá</a>
-      <a class="nav-link {{ 'active' if request.endpoint and 'order' in request.endpoint else '' }}" href="{{ url_for('web.orders') }}">Đơn hàng</a><a class="nav-link {{ 'active' if request.endpoint == 'web.dashboard' else '' }}" href="{{ url_for('web.dashboard') }}">Thống kê</a>
-      <a class="nav-link {{ 'active' if request.endpoint == 'web.query_demo' else '' }}" href="{{ url_for('web.query_demo') }}">Báo cáo</a>
+      {% if can('reports.read_sensitive') %}<a class="nav-link {{ 'active' if request.endpoint == 'web.home' else '' }}" href="{{ url_for('web.home') }}">Tổng quan</a>{% endif %}
+      {% if can('products.read_internal') %}<a class="nav-link {{ 'active' if request.endpoint and 'product' in request.endpoint else '' }}" href="{{ url_for('web.products') }}">Sản phẩm</a>{% endif %}{% if can('promotions.read') %}<a class="nav-link {{ 'active' if request.endpoint and 'promotion' in request.endpoint else '' }}" href="{{ url_for('web.promotions') }}">Khuyến mãi</a>{% endif %}
+      {% if can('customers.read') %}<a class="nav-link {{ 'active' if request.endpoint and 'customer' in request.endpoint else '' }}" href="{{ url_for('web.customers') }}">Khách hàng</a>{% endif %}{% if can('reviews.read_moderation_queue') %}<a class="nav-link {{ 'active' if request.endpoint and 'review' in request.endpoint else '' }}" href="{{ url_for('web.reviews') }}">Đánh giá</a>{% endif %}
+      {% if can('orders.read_all') %}<a class="nav-link {{ 'active' if request.endpoint and 'order' in request.endpoint else '' }}" href="{{ url_for('web.orders') }}">Đơn hàng</a>{% endif %}{% if can('reports.read_aggregate') %}<a class="nav-link {{ 'active' if request.endpoint == 'web.dashboard' else '' }}" href="{{ url_for('web.dashboard') }}">Thống kê</a>{% endif %}
+      {% if can('reports.read_aggregate') %}<a class="nav-link {{ 'active' if request.endpoint == 'web.query_demo' else '' }}" href="{{ url_for('web.query_demo') }}">Báo cáo</a>{% endif %}
+      {% if can('users.read') %}<a class="nav-link {{ 'active' if request.endpoint in ['auth.users', 'auth.create_user', 'auth.edit_user'] else '' }}" href="{{ url_for('auth.users') }}">Quản lý tài khoản</a>{% endif %}
+      <a class="nav-link {{ 'active' if request.endpoint in ['auth.catalog','auth.public_product','auth.public_reviews'] else '' }}" href="{{ url_for('auth.catalog') }}">Danh m&#7909;c</a>
+      {% if can('promotions.view_offers') %}<a class="nav-link {{ 'active' if request.endpoint == 'shop.vouchers' else '' }}" href="{{ url_for('shop.vouchers') }}">Mã giảm giá</a>{% endif %}
+      {% if can('cart.read_own') %}<a class="nav-link {{ 'active' if request.endpoint == 'shop.cart' else '' }}" href="{{ url_for('shop.cart') }}">Giỏ hàng</a>{% endif %}
+      {% if can('orders.read_own') %}<a class="nav-link {{ 'active' if request.endpoint in ['auth.own_orders','auth.own_order','auth.order_review','shop.confirmation'] else '' }}" href="{{ url_for('auth.own_orders') }}">Đơn hàng của tôi</a>{% endif %}
+      {% if current_user %}
+      <div class="nav-item dropdown">
+        <button class="nav-link dropdown-toggle border-0 bg-transparent" data-bs-toggle="dropdown" aria-expanded="false">Tài khoản</button>
+        <div class="dropdown-menu dropdown-menu-end account-menu">
+          <div class="px-3 py-2 small text-break">{{ current_user.email }}<br><span class="text-secondary">{{ role_labels.get(current_user.role,current_user.role) }}</span></div>
+          {% if can('customers.read_own') %}<a class="dropdown-item" href="{{ url_for('auth.account') }}">Hồ sơ của tôi</a>{% endif %}
+          {% if can('reviews.read_own') %}<a class="dropdown-item" href="{{ url_for('auth.own_reviews') }}">Đánh giá của tôi</a>{% endif %}
+          <a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Đổi mật khẩu</a>
+          <form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="dropdown-item">Đăng xuất</button></form>
+        </div>
+      </div>
+      {% else %}<a class="nav-link" href="{{ url_for('auth.login') }}">&#272;&#259;ng nh&#7853;p</a>{% endif %}
     </div></div>
   </div>
 </nav>

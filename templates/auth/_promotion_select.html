@@ -1,0 +1,7 @@
+<label for="promo-choice" class="form-label">Chọn mã phù hợp với giỏ hàng</label>
+<select id="promo-choice" class="form-select mb-2" name="promoCode"><option value="">Không dùng mã giảm giá</option>
+{% set available_codes = offers|map(attribute='promoCode')|list %}
+{% if selected_promo and selected_promo not in available_codes %}<option value="{{ selected_promo }}" selected>{{ selected_promo }} · Cần kiểm tra lại điều kiện</option>{% endif %}
+{% for offer in offers %}<option value="{{ offer.promoCode }}" {{ 'selected' if selected_promo == offer.promoCode else '' }}>{{ offer.name }} · {{ offer.promoCode }} · Giảm {{ offer.discount|money }}{{ ' (giảm nhiều nhất)' if loop.first else '' }}</option>{% endfor %}</select>
+{% if not offers %}<p class="small text-secondary">Chưa có mã phù hợp với sản phẩm và giá trị giỏ hiện tại.</p>{% endif %}
+<a class="small" href="{{ url_for('shop.vouchers') }}" target="_blank" rel="noopener">Xem các mã và điều kiện áp dụng</a>

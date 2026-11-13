@@ -1,4 +1,18 @@
 :root { --app-navy: #17365d; --app-blue: #245b96; --app-border: #dfe5ec; --app-muted: #667085; }
+.account-menu { min-width: 16rem; max-width: min(22rem, 90vw); }
+.shop-product { overflow: hidden; }
+.shop-product-image { width: 100%; height: 180px; object-fit: contain; background: #fff; }
+.product-table-image { flex: 0 0 56px; object-fit: contain; background: #fff; border-radius: 8px; }
+.shop-detail-image { width: 100%; max-height: 460px; object-fit: contain; border-radius: .7rem; background: #edf3f9; }
+.shop-price { color: #174f85; font-size: 1.2rem; font-weight: 750; margin-bottom: .5rem; }
+.shop-quantity { width: 5rem; min-width: 5rem; }
+.shop-promo { max-width: 22rem; }
+.shop-summary { position: sticky; top: 104px; }
+.shop-totals { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .8rem; }
+.shop-totals dd { text-align: right; margin: 0; }
+.page-heading > div { min-width: 0; max-width: 100%; }
+.page-heading h1, .order-code { overflow-wrap: anywhere; }
+a:focus-visible, button:focus-visible { outline: 3px solid #bc7100; outline-offset: 3px; }
 body { padding-top: 84px; background: #f4f6f9; color: #1f2937; font-family: "Segoe UI", Arial, sans-serif; }
 .app-shell { max-width: 1440px; padding-left: 1.5rem; padding-right: 1.5rem; }
 .app-navbar { position: fixed !important; inset: 0 0 auto 0 !important; z-index: 1050; min-height: 84px; margin: 0 !important; padding: .65rem 0; background: var(--app-navy); box-shadow: 0 3px 14px rgba(15, 23, 42, .2); transform: none !important; }
@@ -9,6 +23,16 @@ body { padding-top: 84px; background: #f4f6f9; color: #1f2937; font-family: "Seg
 .navbar-nav { align-items: stretch; gap: .22rem; }
 .navbar-nav .nav-link { display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: .5rem; color: #dbe5f1; padding: .48rem .78rem; font-size: .96rem; font-weight: 600; line-height: 1.15; }
 .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active { color: #fff; background: rgba(255,255,255,.13); }
+.app-navbar-admin > .app-shell { max-width: none; padding-left: 1.25rem; padding-right: 1.25rem; }
+.app-navbar-admin .navbar-brand { flex-shrink: 0; gap: .6rem; margin-right: 1rem; }
+.app-navbar-admin .brand-logo { width: 42px; height: 42px; flex-basis: 42px; }
+.app-navbar-admin .navbar-nav { gap: .1rem; }
+.app-navbar-admin .navbar-nav .nav-link { white-space: nowrap; padding: .5rem; font-size: .875rem; min-height: 44px; }
+@media (max-width: 1399.98px) {
+  .app-navbar-admin .navbar-collapse.show { max-height: calc(100dvh - 84px); overflow-y: auto; padding-bottom: 1rem; }
+  .app-navbar-admin .navbar-nav { padding-top: .8rem; align-items: stretch; }
+  .app-navbar-admin .navbar-nav .nav-link { justify-content: flex-start; }
+}
 main { min-height: calc(100vh - 134px); }
 h1.h3 { color: #172b4d; font-weight: 700; letter-spacing: -.02em; margin-bottom: .35rem; }
 h2.h5 { color: #243b5a; font-weight: 650; }

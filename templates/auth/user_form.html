@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% block title %}Tài khoản{% endblock %}{% block content %}
+<div class="page-heading"><h1 class="h3">{{ 'Cập nhật' if item else 'Tạo' }} tài khoản</h1><a href="{{ url_for('auth.users') }}" class="btn btn-outline-secondary">← Quay lại</a></div>
+{% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+<form method="post" class="row g-3" {% if item %}data-account-edit data-current-status="{{ item.status }}"{% endif %}><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="col-md-6"><label for="email" class="form-label">Email</label>{% if item %}<p id="email">{{ item.email }}</p>{% else %}<input id="email" name="email" class="form-control" type="email" maxlength="254" autocomplete="off" value="{{ values.get('email','') }}" required>{% endif %}</div>
+<div class="col-md-6"><label for="role" class="form-label">Vai trò</label>
+{% if can('users.assign_role') %}<select id="role" class="form-select" name="role">{% for role in roles %}<option value="{{ role }}" {{ 'selected' if values.get('role',item.role if item else 'CUSTOMER') == role else '' }}>{{ role_labels.get(role,role) }}</option>{% endfor %}</select>
+{% else %}<p id="role">Khách hàng</p>{% endif %}</div>
+<div class="col-md-6"><label for="customer" class="form-label">Mã hồ sơ khách hàng (chỉ CUSTOMER)</label>
+{% if not item or can('users.manage_all') %}<input id="customer" class="form-control" name="customerCode" maxlength="100" value="{{ values.get('customerCode',item.customerCode or '' if item else '') }}" {{ 'required' if not can('users.manage_all') else '' }}>
+{% else %}<p id="customer">{{ item.customerCode }}</p>{% endif %}</div>
+{% if item %}<div class="col-md-6"><label for="status" class="form-label">Trạng thái</label>
+<select id="status" class="form-select" name="status">{% for status,label in user_status_labels.items() %}
+{% if status != 'locked' or can('users.manage_all') or item.status == 'locked' %}<option value="{{ status }}" {{ 'selected' if values.get('status',item.status) == status else '' }} {{ 'disabled' if status == 'locked' and not can('users.manage_all') else '' }}>{{ label }}</option>{% endif %}{% endfor %}</select>
+<small>Chọn “Đang hoạt động” để kích hoạt hoặc mở khóa. Khóa tạm thời tự hết hạn sau 15 phút.</small></div>{% endif %}
+<div class="col-md-6"><label for="password" class="form-label">{{ 'Mật khẩu mới (để trống nếu giữ nguyên)' if item else 'Mật khẩu ban đầu' }}</label><input id="password" class="form-control" name="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" {{ 'required' if not item else '' }}></div>
+{% if can('users.manage_all') %}<div class="col-md-6"><label for="actor" class="form-label">Mật khẩu của bạn để xác thực thao tác đặc quyền</label><input id="actor" class="form-control" name="actorPassword" type="password" autocomplete="current-password"><small>Bắt buộc khi tạo Admin/Quản trị viên tài khoản, cấp hoặc thu hồi quyền, đổi trạng thái hay đặt lại mật khẩu tài khoản đặc quyền.</small></div>{% endif %}
+<p>Thay đổi tài khoản sẽ thu hồi các phiên hiện tại của tài khoản được cập nhật.</p><div><button type="submit" class="btn btn-primary">Lưu tài khoản</button></div></form>{% endblock %}
