@@ -2,53 +2,46 @@
 
 Ứng dụng web sử dụng Flask, PyMongo và MongoDB để quản lý sản phẩm, chương trình khuyến mãi, khách hàng, đánh giá và đơn hàng.
 
+Đã có **khu mua sắm CUSTOMER**: danh mục tìm/lọc/phân trang, giỏ lưu MongoDB, áp mã,
+đặt COD bằng transaction, hủy pending, theo dõi đơn và đánh giá. Checkout cần replica set và đối soát lượt mã;
+standalone vẫn xem danh mục/tra cứu được. [Cách chạy demo, chuyển dữ liệu an toàn và kết quả kiểm thử](docs/SHOPPING.md).
+Dùng một stack: `docker compose up --build -d`, web **http://127.0.0.1:5002**, MongoDB **localhost:27018**.
+Quản lý và mua sắm dùng chung database, tài khoản và dữ liệu.
+
+Đăng nhập bằng mọi vai trò đều chuyển đến `/catalog` trước; các tab quản lý vẫn theo quyền.
+50 sản phẩm demo có ảnh lưu trong `static/img/products/`, dùng chung cho danh mục và trang quản lý.
+
+Ứng dụng đã có authentication và RBAC, gồm ADMIN và **Quản trị viên tài khoản (ACCOUNT_MANAGER)**.
+Chi tiết phạm vi, bộ lọc, phân trang và API: [quản lý tài khoản](docs/ACCOUNT_MANAGEMENT.md).
+**Đọc [hướng dẫn bảo mật và tạo ADMIN](docs/SECURITY.md)
+trước khi chạy**: không có tài khoản mặc định; các trang/API nội bộ yêu cầu đăng nhập.
+Danh mục công khai tại `/catalog`. Ma trận quyền: [RBAC_MATRIX.md](docs/RBAC_MATRIX.md);
+route/method: [SECURITY_ROUTES.md](docs/SECURITY_ROUTES.md); bằng chứng test:
+[SECURITY_TESTS.md](docs/SECURITY_TESTS.md). Cấu hình Docker/credential hiện hành trong hướng dẫn bảo mật
+được ưu tiên so với các ví dụ cài đặt ban đầu bên dưới.
+
 ## Khởi động nhanh
 
-Sau khi clone dự án, chọn một trong các cách sau.
+Dùng duy nhất `docker-compose.yml` cho cả quản lý và mua sắm:
 
-### Chạy local với MongoDB tại `localhost:27017`
-
-```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-Copy-Item .env.example .env
-python scripts\check_connection.py
-python app.py
-```
-
-Mở `http://127.0.0.1:5001`.
-
-### Chạy ứng dụng trong Docker, dùng MongoDB hiện có trên máy
-
-Phù hợp khi Navicat đang dùng database tại `localhost:27017`:
-
-```powershell
-docker compose -f docker-compose.host-mongodb.yml up --build -d
-docker compose -f docker-compose.host-mongodb.yml logs -f app
-```
-
-Dừng ứng dụng:
-
-```powershell
-docker compose -f docker-compose.host-mongodb.yml down
-```
-
-### Chạy cả ứng dụng và MongoDB trong Docker
-
-```powershell
+```bash
 docker compose up --build -d
-docker compose ps
-docker compose logs -f app
+docker compose exec app python -m flask --app app:create_app reconcile-promotion-usage
 ```
 
-Ứng dụng chạy tại `http://127.0.0.1:5001`; MongoDB Docker được xuất tại `localhost:27018` và lưu dữ liệu trong Docker volume. Dừng stack nhưng giữ dữ liệu bằng:
+Mở **http://127.0.0.1:5002**. `.env` cần SECRET_KEY và credential MongoDB
+như `.env.example`. `FLASK_PORT=5002` là cổng web; `MONGO_DOCKER_PORT=27018`
+là cổng MongoDB cho Compass. Chọn authSource đúng MONGO_DB và directConnection=true.
+Sau khi import khuyến mãi/đơn hàng, chạy lại lệnh đối soát ở trên.
+Tạo ADMIN khi database mới bằng `docker compose exec app python -m flask --app app:create_app bootstrap-admin`.
+Dừng bằng `docker compose down`, giữ volume; không dùng `down -v`.
 
-```powershell
-docker compose down
-```
-
-Docker Desktop phải được mở và Docker Engine phải ở trạng thái **Running** trước khi chạy các lệnh Docker. Hướng dẫn cấu hình, chuyển dữ liệu và xử lý lỗi chi tiết nằm tại mục 11–12 và mục 17.
+`.venv` dùng cho phát triển/kiểm thử: `source .venv/Scripts/activate`, `python -m pytest -q`.
+Không chạy thêm `python app.py` khi Docker đã phục vụ web cổng 5002.
+Nếu chọn chạy Python thay Docker: `docker compose stop app`, sau đó `python app.py`.
+Trong `APP_ENV=development`, Python tự nạp lại khi sửa mã; debug console vẫn tắt.
+Sau lần cập nhật cơ chế khởi chạy này, dừng tiến trình cũ bằng Ctrl+C và chạy lại một lần.
+Chi tiết: [SHOPPING.md](docs/SHOPPING.md).
 
 Chức năng chính:
 
@@ -151,389 +144,13 @@ Trình duyệt → Flask → PyMongo → MongoDB Server
 
 Ứng dụng **không đọc `DB.js` khi chạy**, không dùng dữ liệu giả từ file và không tự động xóa/nạp lại database. Mọi thao tác CRUD, thống kê và biểu đồ đều lấy trực tiếp từ 5 collection trong MongoDB.
 
-## 5. Khởi động MongoDB
-
-### Cách 1: MongoDB chạy dưới dạng Windows Service
-
-Kiểm tra dịch vụ:
-
-```powershell
-Get-Service MongoDB
-```
-
-Nếu trạng thái là `Stopped`, mở PowerShell bằng quyền Administrator và chạy:
-
-```powershell
-Start-Service MongoDB
-```
-
-### Cách 2: MongoDB được quản lý bởi công cụ khác
-
-Nếu dùng MongoDB Compass, Laragon hoặc một bộ cài riêng, hãy khởi động MongoDB từ công cụ tương ứng và đảm bảo server lắng nghe tại:
-
-```text
-mongodb://127.0.0.1:27017
-```
-
-Kiểm tra trực tiếp bằng mongosh:
-
-```powershell
-mongosh "mongodb://127.0.0.1:27017" --eval "db.adminCommand({ ping: 1 })"
-```
-
-Kết quả thành công phải chứa `ok: 1`.
-
-## 6. Tạo virtual environment
-
-Tại thư mục chứa `app.py`, chạy:
-
-```powershell
-py -m venv .venv
-```
-
-Kích hoạt môi trường ảo:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-Nếu PowerShell báo không cho phép chạy script, chỉ thay đổi policy cho cửa sổ hiện tại:
-
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
-```
-
-Sau khi kích hoạt, đầu dòng lệnh sẽ có tiền tố `(.venv)`.
-
-Nếu sử dụng Windows CMD:
-
-```bat
-.venv\Scripts\activate.bat
-```
-
-## 7. Cài dependency
-
-Nâng cấp pip và cài thư viện:
-
-```powershell
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-Kiểm tra Flask và PyMongo:
-
-```powershell
-python -c "import flask, pymongo; print('Flask:', flask.__version__); print('PyMongo:', pymongo.version)"
-```
-
-Nếu không có lỗi import thì dependency đã được cài thành công.
-
-## 8. Tạo file cấu hình .env
-
-Sao chép file mẫu:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-Mở `.env` và kiểm tra nội dung:
-
-```dotenv
-MONGO_URI=mongodb://127.0.0.1:27017
-MONGO_DB=QL_KHUYENMAI_DANHGIA
-FLASK_HOST=127.0.0.1
-FLASK_PORT=5001
-SECRET_KEY=thay-bang-chuoi-ngau-nhien
-```
-
-Có thể tạo `SECRET_KEY` ngẫu nhiên bằng Python:
-
-```powershell
-python -c "import secrets; print(secrets.token_hex(32))"
-```
-
-Sao chép kết quả và thay giá trị `SECRET_KEY` trong `.env`.
-
-Không commit file `.env` lên Git.
-
-## 9. Chọn database hiện có hoặc khởi tạo database mới
-
-Database bắt buộc:
-
-```text
-QL_KHUYENMAI_DANHGIA
-```
-
-### Trường hợp A: Máy đã có database trong Navicat (khuyến nghị)
-
-Nếu Navicat đã hiển thị database `QL_KHUYENMAI_DANHGIA` gồm `products`, `promotions`, `customers`, `reviews` và `orders`, hãy giữ nguyên dữ liệu và **bỏ qua toàn bộ phần chạy `DB.js` bên dưới**.
-
-Ứng dụng sẽ kết nối tới database này bằng hai biến trong `.env`:
-
-```dotenv
-MONGO_URI=mongodb://127.0.0.1:27017
-MONGO_DB=QL_KHUYENMAI_DANHGIA
-```
-
-Chuyển thẳng tới mục 10 để kiểm tra kết nối.
-
-### Trường hợp B: MongoDB mới, chưa có database
-
-Chỉ dùng `DB.js` để tạo dữ liệu ban đầu khi server MongoDB chưa có database hoặc các collection đang trống. Sau khi nạp dữ liệu chuẩn, database có tối thiểu:
-
-| Collection | Số document |
-|---|---:|
-| products | 12 |
-| promotions | 6 |
-| customers | 10 |
-| reviews | 14 |
-| orders | 12 |
-
-> Cảnh báo: `DB.js` có lệnh xóa dữ liệu cũ trong đúng 5 collection trước khi chèn lại. Không chạy file này trên database đang có dữ liệu cần giữ.
-
-### Cách 1: Chạy bằng Navicat for MongoDB
-
-1. Mở Navicat for MongoDB.
-2. Tạo hoặc mở kết nối tới `mongodb://127.0.0.1:27017`.
-3. Chọn **New Query**.
-4. Mở file `DB.js` với encoding UTF-8.
-5. Nếu Navicat báo lỗi tại dòng `show collections;`, comment dòng đó thành:
-
-```javascript
-// show collections;
-```
-
-6. Chạy toàn bộ script.
-7. Refresh kết nối và kiểm tra database `QL_KHUYENMAI_DANHGIA`.
-
-### Cách 2: Chạy bằng mongosh trong PowerShell
-
-File nguồn có meta-command `show collections;` nằm trong IIFE. Lệnh sau chỉ loại dòng này trên luồng chạy, không sửa file gốc. Việc cấu hình UTF-8 là bắt buộc để không làm tên tiếng Việt thành dấu `?`.
-
-```powershell
-$utf8 = [System.Text.UTF8Encoding]::new($false)
-[Console]::OutputEncoding = $utf8
-$OutputEncoding = $utf8
-$dbScript = Get-Content -LiteralPath "..\DB.js" -Raw -Encoding UTF8
-$compatibleScript = $dbScript -replace '(?m)^show collections;\r?\n', ''
-$compatibleScript | mongosh "mongodb://127.0.0.1:27017/QL_KHUYENMAI_DANHGIA"
-```
-
-Nếu `DB.js` nằm ở vị trí khác, thay `..\DB.js` bằng đường dẫn đầy đủ tới file trên máy.
-
-## 10. Kiểm tra MongoDB trước khi chạy Flask
-
-Đảm bảo virtual environment đang được kích hoạt, sau đó chạy:
-
-```powershell
-python scripts\check_connection.py
-```
-
-Kết quả mong đợi:
-
-```text
-Kết nối MongoDB thành công: QL_KHUYENMAI_DANHGIA
-```
-
-Kiểm tra số lượng document:
-
-```powershell
-python scripts\verify_database.py
-```
-
-Kiểm tra index:
-
-```powershell
-python scripts\check_indexes.py
-```
-
-Kết quả mong đợi:
-
-```text
-Kết quả: ĐỦ INDEX
-```
-
-Kiểm tra execution plan của truy vấn review:
-
-```powershell
-python scripts\explain_review_query.py
-```
-
-Kết quả phải hiển thị `winningPlan`, `totalDocsExamined`, `totalKeysExamined` và `executionTimeMillis`.
-
-## 11. Chạy local
-
-Trước khi chạy, kiểm tra cổng 5001:
-
-```powershell
-netstat -ano | findstr :5001
-```
-
-Nếu không có dòng `LISTENING`, chạy ứng dụng:
-
-```powershell
-python app.py
-```
-
-Kết quả mong đợi:
-
-```text
-* Running on http://127.0.0.1:5001
-```
-
-Mở trình duyệt tại:
-
-```text
-http://127.0.0.1:5001
-```
-
-Các trang chính:
-
-| Chức năng | URL |
-|---|---|
-| Tổng quan | `http://127.0.0.1:5001/` |
-| Sản phẩm | `http://127.0.0.1:5001/san-pham` |
-| Khuyến mãi | `http://127.0.0.1:5001/khuyen-mai` |
-| Khách hàng | `http://127.0.0.1:5001/khach-hang` |
-| Đánh giá | `http://127.0.0.1:5001/danh-gia` |
-| Đơn hàng | `http://127.0.0.1:5001/don-hang` |
-| Dashboard | `http://127.0.0.1:5001/thong-ke` |
-| Báo cáo nghiệp vụ | `http://127.0.0.1:5001/bao-cao` |
-
-Để dừng ứng dụng, quay lại terminal và nhấn:
-
-```text
-Ctrl + C
-```
-
-Không chạy nhiều cửa sổ `python app.py` cùng lúc.
-
-## 12. Chạy bằng Docker
-
-Dự án cung cấp ba file:
-
-- `Dockerfile`: đóng gói ứng dụng Flask và chạy bằng Gunicorn;
-- `docker-compose.host-mongodb.yml`: chạy ứng dụng trong Docker nhưng dùng MongoDB hiện có trên máy tại `localhost:27017`;
-- `docker-compose.yml`: chạy cả ứng dụng và một MongoDB riêng trong Docker.
-
-### Cách A: Container ứng dụng dùng MongoDB hiện có trên máy
-
-Đây là lựa chọn phù hợp khi Navicat đang kết nối `localhost:27017` và database `QL_KHUYENMAI_DANHGIA` đã có dữ liệu.
-
-Trước tiên, dừng ứng dụng local nếu đang chiếm cổng `5001`. Sau đó chạy tại thư mục dự án:
-
-```powershell
-docker compose -f docker-compose.host-mongodb.yml up --build -d
-```
-
-Kiểm tra container và log:
-
-```powershell
-docker compose -f docker-compose.host-mongodb.yml ps
-docker compose -f docker-compose.host-mongodb.yml logs -f app
-```
-
-Khi log cho biết Gunicorn đang lắng nghe tại `0.0.0.0:5001`, mở:
-
-```text
-http://127.0.0.1:5001
-```
-
-Container kết nối tới MongoDB host bằng URI nội bộ:
-
-```text
-mongodb://host.docker.internal:27017
-```
-
-Navicat vẫn tiếp tục dùng `localhost:27017`; cả Navicat và ứng dụng container cùng đọc một database trên máy.
-
-Dừng container:
-
-```powershell
-docker compose -f docker-compose.host-mongodb.yml down
-```
-
-Nếu container báo không kết nối được MongoDB, kiểm tra MongoDB Windows Service đang chạy và tường lửa cho phép Docker Desktop kết nối tới cổng `27017`.
-
-### Cách B: Chạy cả Flask và MongoDB trong Docker
-
-Chạy toàn bộ stack:
-
-```powershell
-docker compose up --build -d
-```
-
-Kiểm tra trạng thái và xem log:
-
-```powershell
-docker compose ps
-docker compose logs -f app
-```
-
-Các địa chỉ sau được sử dụng:
-
-| Thành phần | Địa chỉ trên máy host |
-|---|---|
-| Ứng dụng | `http://127.0.0.1:5001` |
-| MongoDB Docker | `mongodb://127.0.0.1:27018` |
-
-MongoDB Docker dùng cổng `27018` để không xung đột với MongoDB local tại `27017`. Trong Navicat, tạo thêm kết nối `localhost:27018` nếu muốn quản trị database trong container.
-
-MongoDB container là database độc lập và ban đầu chưa có dữ liệu. Ứng dụng không tự chạy `DB.js`, không tự seed và không xóa dữ liệu. Có thể sao chép database local sang Docker bằng:
-
-```powershell
-mongodump --uri="mongodb://127.0.0.1:27017" --db="QL_KHUYENMAI_DANHGIA" --out=".\backup"
-mongorestore --uri="mongodb://127.0.0.1:27018" --drop --db="QL_KHUYENMAI_DANHGIA" ".\backup\QL_KHUYENMAI_DANHGIA"
-```
-
-Lệnh `--drop` chỉ xóa các collection tương ứng trong MongoDB Docker tại cổng `27018`; không tác động MongoDB local tại `27017`.
-
-Dừng stack nhưng giữ dữ liệu MongoDB:
-
-```powershell
-docker compose down
-```
-
-Khởi động lại với dữ liệu đã lưu:
-
-```powershell
-docker compose up -d
-```
-
-Chỉ khi chắc chắn muốn xóa cả volume và toàn bộ dữ liệu MongoDB Docker mới chạy:
-
-```powershell
-docker compose down -v
-```
-
-### Build và chạy riêng Dockerfile
-
-Build image:
-
-```powershell
-docker build -t ql-khuyen-mai:local .
-```
-
-Chạy image và kết nối MongoDB trên máy host:
-
-```powershell
-docker run --rm --name ql-khuyen-mai -p 127.0.0.1:5001:5001 -e MONGO_URI=mongodb://host.docker.internal:27017 -e MONGO_DB=QL_KHUYENMAI_DANHGIA -e SECRET_KEY=thay-bang-chuoi-ngau-nhien ql-khuyen-mai:local
-```
-
-Nhấn `Ctrl + C` để dừng container chạy trực tiếp.
-
-### Đổi cổng Docker
-
-Nếu cổng `5001` hoặc `27018` đang được sử dụng, đặt biến trước khi chạy Compose đầy đủ:
-
-```powershell
-$env:FLASK_PORT = "5002"
-$env:MONGO_DOCKER_PORT = "27019"
-docker compose up --build -d
-```
-
-Khi đó ứng dụng ở `http://127.0.0.1:5002` và MongoDB Docker ở `localhost:27019`.
+## 5–12. Cài đặt và chạy
+
+Theo mục **Khởi động nhanh** ở đầu tài liệu. Dùng một `docker-compose.yml`,
+web cổng 5002 và MongoDB cổng 27018, chung database cho quản lý và mua sắm.
+Không cần chạy thêm MongoDB local hoặc `python app.py` để sử dụng website.
+Các bước nhập dữ liệu, bootstrap ADMIN, backup và đối soát xem [SHOPPING.md](docs/SHOPPING.md).
+Không nạp lại `DB.js` vào database đang dùng vì script khởi tạo có thể xóa dữ liệu.
 
 ## 13. Chạy kiểm thử
 
@@ -552,7 +169,7 @@ python -m pytest -q
 Kết quả hiện tại:
 
 ```text
-25 passed
+Xem kết quả đầy đủ trong docs/SECURITY_TESTS.md (gồm MongoDB thật và Docker).
 ```
 
 Kiểm tra cú pháp toàn bộ source Python:
@@ -577,7 +194,6 @@ product_promotion_review_management/
 ├── requirements-dev.txt
 ├── Dockerfile
 ├── docker-compose.yml
-├── docker-compose.host-mongodb.yml
 ├── .dockerignore
 ├── .env.example
 ├── README.md
@@ -708,19 +324,19 @@ Chạy:
 python scripts\verify_database.py
 ```
 
-Nếu 5 collection đều bằng 0, chạy lại `DB.js` theo mục 9.
+Nếu database trống, import JSON demo vào đúng MongoDB cổng 27018 theo data/demo/README.md.
 
 ### Chữ tiếng Việt bị biến thành dấu hỏi
 
-Nguyên nhân thường là nạp `DB.js` qua pipeline không sử dụng UTF-8. Nên xóa/nạp lại database bằng lệnh UTF-8 tại mục 9.
+Kiểm tra encoding UTF-8 khi nhập JSON. Giữ nguyên dữ liệu gốc và bản backup trước khi sửa.
 Nếu đã có bản backup đúng, khôi phục lại database theo mục 16 thay vì sửa chuỗi lỗi thủ công.
 
-### Cổng 5001 đã được sử dụng
+### Cổng 5002 đã được sử dụng
 
 Kiểm tra PID:
 
 ```powershell
-netstat -ano | findstr :5001
+netstat -ano | findstr :5002
 ```
 
 Kiểm tra tiến trình trước khi dừng:
@@ -749,7 +365,7 @@ Sau đó mở `http://127.0.0.1:5002`.
 2. Chỉ khởi động một instance:
 
 ```powershell
-python app.py
+docker compose up --build -d
 ```
 
 3. Mở đúng cổng được in trong terminal.
@@ -757,10 +373,10 @@ python app.py
 5. Kiểm tra API trực tiếp:
 
 ```text
-http://127.0.0.1:5001/api/dashboard/summary
-http://127.0.0.1:5001/api/dashboard/ratings
-http://127.0.0.1:5001/api/dashboard/promotions
-http://127.0.0.1:5001/api/dashboard/sales
+http://127.0.0.1:5002/api/dashboard/summary
+http://127.0.0.1:5002/api/dashboard/ratings
+http://127.0.0.1:5002/api/dashboard/promotions
+http://127.0.0.1:5002/api/dashboard/sales
 ```
 
 Các API phải trả `"success": true`.
@@ -791,7 +407,7 @@ Dự án không triển khai:
 - vận chuyển;
 - giỏ hàng phức tạp;
 - OAuth;
-- phân quyền nhiều cấp;
+- phân cấp role ngầm định (quyền được cấp tường minh qua RBAC);
 - microservice;
 - Kubernetes;
 - cloud production.
