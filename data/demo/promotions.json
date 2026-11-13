@@ -1,0 +1,502 @@
+[
+  {
+    "promoCode": "KHUYENMAI2026110001",
+    "name": "Ưu đãi điện thoại tháng 11 - giảm 5%",
+    "promoType": "percentage",
+    "value": 5,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 5000000,
+      "maxDiscount": 1000000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-DIENTHOAI"
+      ]
+    },
+    "usageLimit": 200,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110002",
+    "name": "Laptop học tập và làm việc - giảm 7%",
+    "promoType": "percentage",
+    "value": 7,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 10000000,
+      "maxDiscount": 1500000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-LAPTOP"
+      ]
+    },
+    "usageLimit": 150,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110003",
+    "name": "Máy tính bảng cho học tập - giảm 8%",
+    "promoType": "percentage",
+    "value": 8,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 4000000,
+      "maxDiscount": 800000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-MAYTINHBANG"
+      ]
+    },
+    "usageLimit": 180,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110004",
+    "name": "Tai nghe yêu thích - giảm 10%",
+    "promoType": "percentage",
+    "value": 10,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 1000000,
+      "maxDiscount": 500000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-TAINGHE"
+      ]
+    },
+    "usageLimit": 300,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110005",
+    "name": "Âm thanh cuối tuần - giảm 10%",
+    "promoType": "percentage",
+    "value": 10,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 900000,
+      "maxDiscount": 400000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-LOA"
+      ]
+    },
+    "usageLimit": 250,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110006",
+    "name": "Đồng hồ đồng hành - giảm 8%",
+    "promoType": "percentage",
+    "value": 8,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 700000,
+      "maxDiscount": 500000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-DONGHO"
+      ]
+    },
+    "usageLimit": 200,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110007",
+    "name": "Nâng cấp góc làm việc - giảm 10%",
+    "promoType": "percentage",
+    "value": 10,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 2500000,
+      "maxDiscount": 600000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-MANHINH"
+      ]
+    },
+    "usageLimit": 160,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110008",
+    "name": "Bàn phím mới, trải nghiệm mới - giảm 12%",
+    "promoType": "percentage",
+    "value": 12,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 1500000,
+      "maxDiscount": 400000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-BANPHIM"
+      ]
+    },
+    "usageLimit": 220,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110009",
+    "name": "Chuột máy tính - giảm 15%",
+    "promoType": "percentage",
+    "value": 15,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 450000,
+      "maxDiscount": 300000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-CHUOT"
+      ]
+    },
+    "usageLimit": 350,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110010",
+    "name": "Phụ kiện thiết yếu - giảm 10%",
+    "promoType": "percentage",
+    "value": 10,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 190000,
+      "maxDiscount": 100000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-PHUKIEN"
+      ]
+    },
+    "usageLimit": 500,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110011",
+    "name": "Voucher iPhone 15 - giảm 500.000đ",
+    "promoType": "fixed",
+    "value": 500000,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 15000000,
+      "maxDiscount": 500000
+    },
+    "targets": {
+      "productCodes": [
+        "SANPHAM2026110001"
+      ],
+      "categories": []
+    },
+    "usageLimit": 80,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110012",
+    "name": "Voucher MacBook Air M2 - giảm 1.000.000đ",
+    "promoType": "fixed",
+    "value": 1000000,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 20000000,
+      "maxDiscount": 1000000
+    },
+    "targets": {
+      "productCodes": [
+        "SANPHAM2026110006"
+      ],
+      "categories": []
+    },
+    "usageLimit": 60,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110013",
+    "name": "Voucher AirPods Pro 2 - giảm 300.000đ",
+    "promoType": "fixed",
+    "value": 300000,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 5000000,
+      "maxDiscount": 300000
+    },
+    "targets": {
+      "productCodes": [
+        "SANPHAM2026110016"
+      ],
+      "categories": []
+    },
+    "usageLimit": 120,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110014",
+    "name": "Voucher JBL Flip 6 - giảm 200.000đ",
+    "promoType": "fixed",
+    "value": 200000,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 2000000,
+      "maxDiscount": 200000
+    },
+    "targets": {
+      "productCodes": [
+        "SANPHAM2026110021"
+      ],
+      "categories": []
+    },
+    "usageLimit": 100,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110015",
+    "name": "Voucher Logitech MX Keys S - giảm 200.000đ",
+    "promoType": "fixed",
+    "value": 200000,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 2000000,
+      "maxDiscount": 200000
+    },
+    "targets": {
+      "productCodes": [
+        "SANPHAM2026110036"
+      ],
+      "categories": []
+    },
+    "usageLimit": 100,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110016",
+    "name": "Voucher Logitech MX Master 3S - giảm 150.000đ",
+    "promoType": "fixed",
+    "value": 150000,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 2000000,
+      "maxDiscount": 150000
+    },
+    "targets": {
+      "productCodes": [
+        "SANPHAM2026110041"
+      ],
+      "categories": []
+    },
+    "usageLimit": 120,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110017",
+    "name": "Ngày đôi 11.11 - giảm 11%",
+    "promoType": "percentage",
+    "value": 11,
+    "startDate": {
+      "$date": "2026-11-10T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2026-11-12T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 500000,
+      "maxDiscount": 500000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-DIENTHOAI",
+        "DM-LAPTOP",
+        "DM-MAYTINHBANG",
+        "DM-TAINGHE",
+        "DM-LOA",
+        "DM-DONGHO",
+        "DM-MANHINH",
+        "DM-BANPHIM",
+        "DM-CHUOT",
+        "DM-PHUKIEN"
+      ]
+    },
+    "usageLimit": 1111,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110018",
+    "name": "Black Friday - giảm 15%",
+    "promoType": "percentage",
+    "value": 15,
+    "startDate": {
+      "$date": "2026-11-20T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2026-11-30T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 1000000,
+      "maxDiscount": 1000000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-DIENTHOAI",
+        "DM-LAPTOP",
+        "DM-MAYTINHBANG",
+        "DM-TAINGHE",
+        "DM-LOA",
+        "DM-DONGHO",
+        "DM-MANHINH",
+        "DM-BANPHIM",
+        "DM-CHUOT",
+        "DM-PHUKIEN"
+      ]
+    },
+    "usageLimit": 500,
+    "status": "active"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110019",
+    "name": "Ưu đãi phụ kiện tháng 10 - đã kết thúc",
+    "promoType": "percentage",
+    "value": 10,
+    "startDate": {
+      "$date": "2026-10-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2026-10-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 300000,
+      "maxDiscount": 100000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-PHUKIEN"
+      ]
+    },
+    "usageLimit": 300,
+    "status": "expired"
+  },
+  {
+    "promoCode": "KHUYENMAI2026110020",
+    "name": "Combo góc làm việc - tạm ngừng",
+    "promoType": "fixed",
+    "value": 300000,
+    "startDate": {
+      "$date": "2026-11-01T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-01-31T23:59:59.999Z"
+    },
+    "conditions": {
+      "minOrderValue": 3000000,
+      "maxDiscount": 300000
+    },
+    "targets": {
+      "productCodes": [],
+      "categories": [
+        "DM-MANHINH",
+        "DM-BANPHIM",
+        "DM-CHUOT"
+      ]
+    },
+    "usageLimit": 100,
+    "status": "inactive"
+  }
+]

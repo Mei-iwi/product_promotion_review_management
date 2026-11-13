@@ -1,0 +1,1102 @@
+[
+  {
+    "productCode": "SANPHAM2026110001",
+    "name": "iPhone 15 128GB",
+    "category": {
+      "categoryCode": "DM-DIENTHOAI",
+      "categoryName": "Điện thoại"
+    },
+    "brand": "Apple",
+    "price": 16990000,
+    "stock": 15,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "điện thoại",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110001.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110002",
+    "name": "Samsung Galaxy S24 Ultra",
+    "category": {
+      "categoryCode": "DM-DIENTHOAI",
+      "categoryName": "Điện thoại"
+    },
+    "brand": "Samsung",
+    "price": 26990000,
+    "stock": 22,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "điện thoại",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110002.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110003",
+    "name": "Xiaomi Redmi Note 13 Pro",
+    "category": {
+      "categoryCode": "DM-DIENTHOAI",
+      "categoryName": "Điện thoại"
+    },
+    "brand": "Xiaomi",
+    "price": 6990000,
+    "stock": 29,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "điện thoại",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110003.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110004",
+    "name": "OPPO Reno11 5G",
+    "category": {
+      "categoryCode": "DM-DIENTHOAI",
+      "categoryName": "Điện thoại"
+    },
+    "brand": "OPPO",
+    "price": 8990000,
+    "stock": 36,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "điện thoại",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110004.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110005",
+    "name": "realme 11 5G",
+    "category": {
+      "categoryCode": "DM-DIENTHOAI",
+      "categoryName": "Điện thoại"
+    },
+    "brand": "realme",
+    "price": 5490000,
+    "stock": 43,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "điện thoại",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110005.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110006",
+    "name": "MacBook Air 13 inch M2",
+    "category": {
+      "categoryCode": "DM-LAPTOP",
+      "categoryName": "Laptop"
+    },
+    "brand": "Apple",
+    "price": 21990000,
+    "stock": 50,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "laptop",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110006.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110007",
+    "name": "Dell Inspiron 15 3530",
+    "category": {
+      "categoryCode": "DM-LAPTOP",
+      "categoryName": "Laptop"
+    },
+    "brand": "Dell",
+    "price": 15490000,
+    "stock": 57,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "laptop",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110007.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110008",
+    "name": "ASUS Vivobook 15 X1504VA",
+    "category": {
+      "categoryCode": "DM-LAPTOP",
+      "categoryName": "Laptop"
+    },
+    "brand": "ASUS",
+    "price": 13990000,
+    "stock": 64,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "laptop",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110008.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110009",
+    "name": "Lenovo IdeaPad Slim 3 15IRH8",
+    "category": {
+      "categoryCode": "DM-LAPTOP",
+      "categoryName": "Laptop"
+    },
+    "brand": "Lenovo",
+    "price": 14990000,
+    "stock": 71,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "laptop",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110009.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110010",
+    "name": "HP Pavilion 15-eg",
+    "category": {
+      "categoryCode": "DM-LAPTOP",
+      "categoryName": "Laptop"
+    },
+    "brand": "HP",
+    "price": 16990000,
+    "stock": 78,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "laptop",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110010.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110011",
+    "name": "iPad Gen 10 Wi-Fi 64GB",
+    "category": {
+      "categoryCode": "DM-MAYTINHBANG",
+      "categoryName": "Máy tính bảng"
+    },
+    "brand": "Apple",
+    "price": 8990000,
+    "stock": 12,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "máy tính bảng",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110011.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110012",
+    "name": "Samsung Galaxy Tab S9 FE",
+    "category": {
+      "categoryCode": "DM-MAYTINHBANG",
+      "categoryName": "Máy tính bảng"
+    },
+    "brand": "Samsung",
+    "price": 9990000,
+    "stock": 19,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "máy tính bảng",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110012.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110013",
+    "name": "Xiaomi Pad 6",
+    "category": {
+      "categoryCode": "DM-MAYTINHBANG",
+      "categoryName": "Máy tính bảng"
+    },
+    "brand": "Xiaomi",
+    "price": 7490000,
+    "stock": 26,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "máy tính bảng",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110013.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110014",
+    "name": "Lenovo Tab M11",
+    "category": {
+      "categoryCode": "DM-MAYTINHBANG",
+      "categoryName": "Máy tính bảng"
+    },
+    "brand": "Lenovo",
+    "price": 4990000,
+    "stock": 33,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "máy tính bảng",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110014.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110015",
+    "name": "OPPO Pad Air",
+    "category": {
+      "categoryCode": "DM-MAYTINHBANG",
+      "categoryName": "Máy tính bảng"
+    },
+    "brand": "OPPO",
+    "price": 4490000,
+    "stock": 40,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "máy tính bảng",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110015.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110016",
+    "name": "AirPods Pro thế hệ 2 USB-C",
+    "category": {
+      "categoryCode": "DM-TAINGHE",
+      "categoryName": "Tai nghe"
+    },
+    "brand": "Apple",
+    "price": 5490000,
+    "stock": 47,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "tai nghe",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110016.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110017",
+    "name": "Sony WH-1000XM5",
+    "category": {
+      "categoryCode": "DM-TAINGHE",
+      "categoryName": "Tai nghe"
+    },
+    "brand": "Sony",
+    "price": 7490000,
+    "stock": 54,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "tai nghe",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110017.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110018",
+    "name": "Samsung Galaxy Buds2 Pro",
+    "category": {
+      "categoryCode": "DM-TAINGHE",
+      "categoryName": "Tai nghe"
+    },
+    "brand": "Samsung",
+    "price": 2990000,
+    "stock": 61,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "tai nghe",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110018.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110019",
+    "name": "JBL Tune 520BT",
+    "category": {
+      "categoryCode": "DM-TAINGHE",
+      "categoryName": "Tai nghe"
+    },
+    "brand": "JBL",
+    "price": 1090000,
+    "stock": 68,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "tai nghe",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110019.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110020",
+    "name": "Anker Soundcore Liberty 4 NC",
+    "category": {
+      "categoryCode": "DM-TAINGHE",
+      "categoryName": "Tai nghe"
+    },
+    "brand": "Anker",
+    "price": 2190000,
+    "stock": 75,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "tai nghe",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110020.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110021",
+    "name": "JBL Flip 6",
+    "category": {
+      "categoryCode": "DM-LOA",
+      "categoryName": "Loa"
+    },
+    "brand": "JBL",
+    "price": 2490000,
+    "stock": 9,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "loa",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110021.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110022",
+    "name": "Sony SRS-XB100",
+    "category": {
+      "categoryCode": "DM-LOA",
+      "categoryName": "Loa"
+    },
+    "brand": "Sony",
+    "price": 990000,
+    "stock": 16,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "loa",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110022.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110023",
+    "name": "Marshall Emberton II",
+    "category": {
+      "categoryCode": "DM-LOA",
+      "categoryName": "Loa"
+    },
+    "brand": "Marshall",
+    "price": 3990000,
+    "stock": 23,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "loa",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110023.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110024",
+    "name": "Anker Soundcore Motion+",
+    "category": {
+      "categoryCode": "DM-LOA",
+      "categoryName": "Loa"
+    },
+    "brand": "Anker",
+    "price": 1990000,
+    "stock": 30,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "loa",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110024.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110025",
+    "name": "Logitech Z407",
+    "category": {
+      "categoryCode": "DM-LOA",
+      "categoryName": "Loa"
+    },
+    "brand": "Logitech",
+    "price": 2290000,
+    "stock": 37,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "loa",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110025.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110026",
+    "name": "Apple Watch SE 2022 GPS 40mm",
+    "category": {
+      "categoryCode": "DM-DONGHO",
+      "categoryName": "Đồng hồ thông minh"
+    },
+    "brand": "Apple",
+    "price": 5490000,
+    "stock": 44,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "đồng hồ thông minh",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110026.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110027",
+    "name": "Samsung Galaxy Watch6 40mm",
+    "category": {
+      "categoryCode": "DM-DONGHO",
+      "categoryName": "Đồng hồ thông minh"
+    },
+    "brand": "Samsung",
+    "price": 4990000,
+    "stock": 51,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "đồng hồ thông minh",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110027.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110028",
+    "name": "Huawei Watch Fit 3",
+    "category": {
+      "categoryCode": "DM-DONGHO",
+      "categoryName": "Đồng hồ thông minh"
+    },
+    "brand": "Huawei",
+    "price": 2790000,
+    "stock": 58,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "đồng hồ thông minh",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110028.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110029",
+    "name": "Garmin Forerunner 165",
+    "category": {
+      "categoryCode": "DM-DONGHO",
+      "categoryName": "Đồng hồ thông minh"
+    },
+    "brand": "Garmin",
+    "price": 6690000,
+    "stock": 65,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "đồng hồ thông minh",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110029.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110030",
+    "name": "Xiaomi Smart Band 8",
+    "category": {
+      "categoryCode": "DM-DONGHO",
+      "categoryName": "Đồng hồ thông minh"
+    },
+    "brand": "Xiaomi",
+    "price": 790000,
+    "stock": 72,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "đồng hồ thông minh",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110030.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110031",
+    "name": "Dell UltraSharp U2422H",
+    "category": {
+      "categoryCode": "DM-MANHINH",
+      "categoryName": "Màn hình"
+    },
+    "brand": "Dell",
+    "price": 4790000,
+    "stock": 79,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "màn hình",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110031.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110032",
+    "name": "LG UltraGear 24GN60R-B",
+    "category": {
+      "categoryCode": "DM-MANHINH",
+      "categoryName": "Màn hình"
+    },
+    "brand": "LG",
+    "price": 3290000,
+    "stock": 13,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "màn hình",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110032.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110033",
+    "name": "ASUS TUF Gaming VG249Q1A",
+    "category": {
+      "categoryCode": "DM-MANHINH",
+      "categoryName": "Màn hình"
+    },
+    "brand": "ASUS",
+    "price": 3490000,
+    "stock": 20,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "màn hình",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110033.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110034",
+    "name": "Samsung Odyssey G5 LC27G55T",
+    "category": {
+      "categoryCode": "DM-MANHINH",
+      "categoryName": "Màn hình"
+    },
+    "brand": "Samsung",
+    "price": 5290000,
+    "stock": 27,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "màn hình",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110034.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110035",
+    "name": "BenQ GW2480",
+    "category": {
+      "categoryCode": "DM-MANHINH",
+      "categoryName": "Màn hình"
+    },
+    "brand": "BenQ",
+    "price": 2590000,
+    "stock": 34,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "màn hình",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110035.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110036",
+    "name": "Logitech MX Keys S",
+    "category": {
+      "categoryCode": "DM-BANPHIM",
+      "categoryName": "Bàn phím"
+    },
+    "brand": "Logitech",
+    "price": 2490000,
+    "stock": 41,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "bàn phím",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110036.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110037",
+    "name": "Keychron K2 V2",
+    "category": {
+      "categoryCode": "DM-BANPHIM",
+      "categoryName": "Bàn phím"
+    },
+    "brand": "Keychron",
+    "price": 1990000,
+    "stock": 48,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "bàn phím",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110037.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110038",
+    "name": "Razer BlackWidow V3",
+    "category": {
+      "categoryCode": "DM-BANPHIM",
+      "categoryName": "Bàn phím"
+    },
+    "brand": "Razer",
+    "price": 2290000,
+    "stock": 55,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "bàn phím",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110038.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110039",
+    "name": "ASUS ROG Strix Scope II",
+    "category": {
+      "categoryCode": "DM-BANPHIM",
+      "categoryName": "Bàn phím"
+    },
+    "brand": "ASUS",
+    "price": 2990000,
+    "stock": 62,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "bàn phím",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110039.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110040",
+    "name": "Akko 5075B Plus",
+    "category": {
+      "categoryCode": "DM-BANPHIM",
+      "categoryName": "Bàn phím"
+    },
+    "brand": "Akko",
+    "price": 1790000,
+    "stock": 69,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "bàn phím",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110040.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110041",
+    "name": "Logitech MX Master 3S",
+    "category": {
+      "categoryCode": "DM-CHUOT",
+      "categoryName": "Chuột máy tính"
+    },
+    "brand": "Logitech",
+    "price": 2190000,
+    "stock": 76,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "chuột máy tính",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110041.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110042",
+    "name": "Razer DeathAdder V3",
+    "category": {
+      "categoryCode": "DM-CHUOT",
+      "categoryName": "Chuột máy tính"
+    },
+    "brand": "Razer",
+    "price": 1390000,
+    "stock": 10,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "chuột máy tính",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110042.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110043",
+    "name": "Logitech G304 LIGHTSPEED",
+    "category": {
+      "categoryCode": "DM-CHUOT",
+      "categoryName": "Chuột máy tính"
+    },
+    "brand": "Logitech",
+    "price": 690000,
+    "stock": 17,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "chuột máy tính",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110043.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110044",
+    "name": "SteelSeries Rival 3",
+    "category": {
+      "categoryCode": "DM-CHUOT",
+      "categoryName": "Chuột máy tính"
+    },
+    "brand": "SteelSeries",
+    "price": 590000,
+    "stock": 24,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "chuột máy tính",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110044.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110045",
+    "name": "Microsoft Bluetooth Mouse",
+    "category": {
+      "categoryCode": "DM-CHUOT",
+      "categoryName": "Chuột máy tính"
+    },
+    "brand": "Microsoft",
+    "price": 490000,
+    "stock": 31,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "chuột máy tính",
+      "văn phòng"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110045.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110046",
+    "name": "Anker Nano II 65W A2663",
+    "category": {
+      "categoryCode": "DM-PHUKIEN",
+      "categoryName": "Phụ kiện"
+    },
+    "brand": "Anker",
+    "price": 790000,
+    "stock": 38,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "phụ kiện",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110046.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110047",
+    "name": "UGREEN Nexode 65W CD244",
+    "category": {
+      "categoryCode": "DM-PHUKIEN",
+      "categoryName": "Phụ kiện"
+    },
+    "brand": "UGREEN",
+    "price": 690000,
+    "stock": 45,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "phụ kiện",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110047.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110048",
+    "name": "Samsung Battery Pack 10000mAh EB-P3400",
+    "category": {
+      "categoryCode": "DM-PHUKIEN",
+      "categoryName": "Phụ kiện"
+    },
+    "brand": "Samsung",
+    "price": 790000,
+    "stock": 52,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "phụ kiện",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110048.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110049",
+    "name": "Apple USB-C to USB-C Charge Cable 1m",
+    "category": {
+      "categoryCode": "DM-PHUKIEN",
+      "categoryName": "Phụ kiện"
+    },
+    "brand": "Apple",
+    "price": 490000,
+    "stock": 59,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "phụ kiện",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110049.webp"
+  },
+  {
+    "productCode": "SANPHAM2026110050",
+    "name": "Kingston DataTraveler Exodia 128GB",
+    "category": {
+      "categoryCode": "DM-PHUKIEN",
+      "categoryName": "Phụ kiện"
+    },
+    "brand": "Kingston",
+    "price": 199000,
+    "stock": 66,
+    "attributes": {
+      "condition": "Mới",
+      "salesChannel": "Online và cửa hàng"
+    },
+    "tags": [
+      "demo-202611",
+      "phụ kiện",
+      "công nghệ"
+    ],
+    "status": "active",
+    "image": "/static/img/products/SANPHAM2026110050.webp"
+  }
+]

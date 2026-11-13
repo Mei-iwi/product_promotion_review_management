@@ -1,0 +1,402 @@
+[
+  {
+    "productCode": "SANPHAM2026110001",
+    "name": "iPhone 15 128GB",
+    "image": "/static/img/products/SANPHAM2026110001.webp",
+    "source": "https://phonesstore.shop/produit/apple-iphone-15-5g-6-1-6-128-go-48-mpx-bleu/?srsltid=AfmBOoqu6cybt3re8rgtDEdYxdGyie4LIjNnwMkDjE33eWp-Ccqw2WZo",
+    "originalImage": "https://phonesstore.shop/wp-content/uploads/2023/11/1-7-1.jpg",
+    "sha256": "75187f69326e6db7e71469d936e0ff1e8260fef75587035c15fdb4d2f4225731"
+  },
+  {
+    "productCode": "SANPHAM2026110002",
+    "name": "Samsung Galaxy S24 Ultra",
+    "image": "/static/img/products/SANPHAM2026110002.webp",
+    "source": "https://www.cryovex.com/galaxy-s24-ultra-review-unleash-your-potential/",
+    "originalImage": "https://i.ebayimg.com/images/g/AucAAOSwHHdl0kZk/s-l1600.jpg",
+    "sha256": "5e9cecc7be20429dc7d16a3afce8003497ce147766ca68d21fc795a53023b7ef"
+  },
+  {
+    "productCode": "SANPHAM2026110003",
+    "name": "Xiaomi Redmi Note 13 Pro",
+    "image": "/static/img/products/SANPHAM2026110003.webp",
+    "source": "https://minmobile.net.vn/xiaomi-redmi-note-13-pro-4g-chinh-hang-256gb-s680?srsltid=AfmBOorssWyJPzcZWWK6x739bUngKwYzLVj4bW65CxkNpOrTV8xl_dNo",
+    "originalImage": "https://minmobile.net.vn/images/product/1730186706-xiaomi-redmi-note-13-pro-chinh-hang-gia-re-tim-webp.webp",
+    "sha256": "ac379d1c96572d52a65f96b7edf1c1c8104b77fb6122ed9409e3bd20f548f76e"
+  },
+  {
+    "productCode": "SANPHAM2026110004",
+    "name": "OPPO Reno11 5G",
+    "image": "/static/img/products/SANPHAM2026110004.webp",
+    "source": "https://dienthoaigiakho.vn/oppo-reno-11-5g-8gb256gb-chinh-hang-1704855041",
+    "originalImage": "https://cdn.dienthoaigiakho.vn/photos/1707128694764-Oppo-Reno-11-Ge.jpg",
+    "sha256": "fce9e7f8457b4c7333a336c6d7a189912216cb7787e1a363acecc0f68b034a9f"
+  },
+  {
+    "productCode": "SANPHAM2026110005",
+    "name": "realme 11 5G",
+    "image": "/static/img/products/SANPHAM2026110005.webp",
+    "source": "https://www.al.to/p/1173562-smartfon-telefon-realme-11-5g-8-256gb-glory-gold-108mp-nfc-67w-120hz.html",
+    "originalImage": "https://cdn.al.to/i/setup/images/prod/big/product-new-big%2C%2C2023/9/pr_2023_9_26_7_48_11_931_08.jpg",
+    "sha256": "eed13ed9b0775a8a106d3b257ef80d514d201275b1bf33f79013243d164da2c3"
+  },
+  {
+    "productCode": "SANPHAM2026110006",
+    "name": "MacBook Air 13 inch M2",
+    "image": "/static/img/products/SANPHAM2026110006.webp",
+    "source": "https://istore.ph/products/macbook-air-13-inch-m2-2022-copy",
+    "originalImage": "https://istore.ph/cdn/shop/products/MacBook_Air_M2_Starlight_PDP_Image_Position-1__ROSA.jpg?v=1657016048&width=4000",
+    "sha256": "4e7138fd537134d5fea915982429006c0feaf8e995deaf2aa86301d137323054"
+  },
+  {
+    "productCode": "SANPHAM2026110007",
+    "name": "Dell Inspiron 15 3530",
+    "image": "/static/img/products/SANPHAM2026110007.webp",
+    "source": "https://www.ryans.com/dell-inspiron-15-3530-13th-gen-intel-core-i3-1305u-8gb-ram-512gb-ssd-15.6-inch-fhd-display-carbon-black-laptop",
+    "originalImage": "https://www.ryans.com/storage/products/main/dell-inspiron-15-3530-13th-gen-intel-core-i3-11704867341.webp",
+    "sha256": "df6360d23cc3dcd4c6197b0ba45c2031b600483e5127e623e14f06acbecc0a90"
+  },
+  {
+    "productCode": "SANPHAM2026110008",
+    "name": "ASUS Vivobook 15 X1504VA",
+    "image": "/static/img/products/SANPHAM2026110008.webp",
+    "source": "https://shopee.tw/ASUS%E8%8F%AF%E7%A2%A9-Vivobook-15-X1504VA-15.6%E5%90%8B%E7%AD%86%E9%9B%BB%28C7-150U-8G-8G-1T_SSD%29-i.68758442.43973721454",
+    "originalImage": "https://down-tw.img.susercontent.com/file/tw-11134207-81ztm-mfprkwum1bt450",
+    "sha256": "09a6dda9ffc69970616f944954db14dbb6a17ec51180bf67527683c21bab9a4f"
+  },
+  {
+    "productCode": "SANPHAM2026110009",
+    "name": "Lenovo IdeaPad Slim 3 15IRH8",
+    "image": "/static/img/products/SANPHAM2026110009.webp",
+    "source": "https://www.gigahertz.com.ph/products/lenovo-ideapad-slim-3-15irh8-83em009cph-15-6-fhd-i7-13620h-uhd-graphics-16gb-ram-512gb-ssd-win-11",
+    "originalImage": "https://www.gigahertz.com.ph/cdn/shop/files/lenovo-ideapad-slim-3-15irh8-83em009cph-156-fhd-i7-13620h-uhd-graphics-16gb-ram-512gb-ssd-win-11-lenovo-gigahertz-437164.jpg?v=1726732492&width=1000",
+    "sha256": "2740c219ba2ce1474eb8f0f7bf31ecbbb3fe34d40624a840b9e1c7e4bc6be93e"
+  },
+  {
+    "productCode": "SANPHAM2026110010",
+    "name": "HP Pavilion 15-eg",
+    "image": "/static/img/products/SANPHAM2026110010.webp",
+    "source": "https://support.hp.com/br-pt/document/ish_7670853-7729118-16",
+    "originalImage": "https://kaas.hpcloud.hp.com/PROD/v2/renderbinary/7670853/6302698/con-win-nb-p-strelka-23c1-hp-pavilion-15-eg3000-specification/con-strelka-22c1-hp-pavilion-15-eg2000-product-image",
+    "sha256": "3ec7ec2eea0fba679fdb1762989085952f7373734c0c4d529db745e4bee672a6"
+  },
+  {
+    "productCode": "SANPHAM2026110011",
+    "name": "iPad Gen 10 Wi-Fi 64GB",
+    "image": "/static/img/products/SANPHAM2026110011.webp",
+    "source": "https://viettelstore.vn/may-tinh-bang/ipad-gen-10-wifi-64gb-pid295660.html",
+    "originalImage": "https://cdn1.viettelstore.vn/Images/Product/ProductImage/2145259476.jpeg",
+    "sha256": "1d3ff192d46c1cdfff7393a36077944e01465c77c5814f1f8cabaab65d14b456"
+  },
+  {
+    "productCode": "SANPHAM2026110012",
+    "name": "Samsung Galaxy Tab S9 FE",
+    "image": "/static/img/products/SANPHAM2026110012.webp",
+    "source": "https://www.walmart.ca/en/ip/Samsung-Galaxy-Tab-S9-FE-128GB-10-9-Screen-with-S-pen-Brand-New-Android-Tablet-X510/4WSPE77IYP0O",
+    "originalImage": "https://i5.walmartimages.com/asr/833deb74-5621-4e3b-ac51-907e9446f902.3d34972a11a9af55af823d8dc66dc5fc.jpeg?odnBg=FFFFFF&odnHeight=2000&odnWidth=2000",
+    "sha256": "5bc278b6ccc8f405a77f9295f667871d82093e77893d4f80ade0217a5f7a62c6"
+  },
+  {
+    "productCode": "SANPHAM2026110013",
+    "name": "Xiaomi Pad 6",
+    "image": "/static/img/products/SANPHAM2026110013.webp",
+    "source": "https://static01.galaxus.com/productimages/6/9/3/8/4/0/2/6/9/9/3/4/5/8/6/1/1/6/7/1bc9fc47-8370-4421-87b5-1f1397acd9d8_cropped.jpg_720.jpeg",
+    "originalImage": "https://static01.galaxus.com/productimages/6/9/3/8/4/0/2/6/9/9/3/4/5/8/6/1/1/6/7/1bc9fc47-8370-4421-87b5-1f1397acd9d8_cropped.jpg_720.jpeg",
+    "sha256": "883c4a9766a8400792b736ae46bff4987f77019164d638f374541d586d538475"
+  },
+  {
+    "productCode": "SANPHAM2026110014",
+    "name": "Lenovo Tab M11",
+    "image": "/static/img/products/SANPHAM2026110014.webp",
+    "source": "https://d.scdn.gr/images/sku_main_images/053417/53417828/20240513155043_lenovo_tab_m11_11_me_wifi_4g_8gb_128gb_folio_case_lenovo_tab_pen_luna_grey.jpeg",
+    "originalImage": "https://d.scdn.gr/images/sku_main_images/053417/53417828/20240513155043_lenovo_tab_m11_11_me_wifi_4g_8gb_128gb_folio_case_lenovo_tab_pen_luna_grey.jpeg",
+    "sha256": "bfbe3d8798481ab8201b936a05554f55dd6a7d4aec398263810e7cbeb17add0a"
+  },
+  {
+    "productCode": "SANPHAM2026110015",
+    "name": "OPPO Pad Air",
+    "image": "/static/img/products/SANPHAM2026110015.webp",
+    "source": "https://www.notebookcheck.net/fileadmin/Notebooks/Huawei/MatePad_SE/4_zu_3_OPPOPadAir.jpg",
+    "originalImage": "https://www.notebookcheck.net/fileadmin/Notebooks/Huawei/MatePad_SE/4_zu_3_OPPOPadAir.jpg",
+    "sha256": "2041313f722d002956eab3be40670d0381abb34fe4e5279b1bd1be855afd7841"
+  },
+  {
+    "productCode": "SANPHAM2026110016",
+    "name": "AirPods Pro thế hệ 2 USB-C",
+    "image": "/static/img/products/SANPHAM2026110016.webp",
+    "source": "https://static.minhtuanmobile.com/uploads/editer/images/2023/10/tai-nghe-airpods-pro-2-2023-cong-sac-type-c-chinh-hang-vn-01.webp",
+    "originalImage": "https://static.minhtuanmobile.com/uploads/editer/images/2023/10/tai-nghe-airpods-pro-2-2023-cong-sac-type-c-chinh-hang-vn-01.webp",
+    "sha256": "70daf789ef7d8ca957ddb2c3943b2ff7691e28d4e0365cd14400d0f257bc330d"
+  },
+  {
+    "productCode": "SANPHAM2026110017",
+    "name": "Sony WH-1000XM5",
+    "image": "/static/img/products/SANPHAM2026110017.webp",
+    "source": "https://swiftronics.ca/cdn/shop/files/WHXM5Blue.jpg?v=1772136792&width=1920",
+    "originalImage": "https://swiftronics.ca/cdn/shop/files/WHXM5Blue.jpg?v=1772136792&width=1920",
+    "sha256": "88d8f73613d225d4858e9d93c2f966b83d2c8f6e4a1a44c313b3656682debd9a"
+  },
+  {
+    "productCode": "SANPHAM2026110018",
+    "name": "Samsung Galaxy Buds2 Pro",
+    "image": "/static/img/products/SANPHAM2026110018.webp",
+    "source": "https://img.myshopline.com/image/store/2001337788/1658802944258/MARKETPLACE%28ZSB%29-COVER-SAMSUNG-GALAXY-BUDS2-PRO-01.jpeg?h=1080&w=1080",
+    "originalImage": "https://img.myshopline.com/image/store/2001337788/1658802944258/MARKETPLACE%28ZSB%29-COVER-SAMSUNG-GALAXY-BUDS2-PRO-01.jpeg?h=1080&w=1080",
+    "sha256": "c8af60f11761003b23f62a0a8de3a317f492121d4ab6e9c4a04f0991ac97f811"
+  },
+  {
+    "productCode": "SANPHAM2026110019",
+    "name": "JBL Tune 520BT",
+    "image": "/static/img/products/SANPHAM2026110019.webp",
+    "source": "https://prom.ua/ua/p1867268663-besprovodnye-naushniki-jbl.html",
+    "originalImage": "https://images.prom.ua/4592043467_besprovodnye-naushniki-jbl.jpg",
+    "sha256": "d62804b7076978702fed81aaa1fa5ae33c5599b52051381137d9a0fba003209e"
+  },
+  {
+    "productCode": "SANPHAM2026110020",
+    "name": "Anker Soundcore Liberty 4 NC",
+    "image": "/static/img/products/SANPHAM2026110020.webp",
+    "source": "https://static.jakmall.id/2023/10/images/products/f66720/detail/promo-earphone-tws-anker-soundcore-liberty-4-nc-a3947-putih.jpeg",
+    "originalImage": "https://static.jakmall.id/2023/10/images/products/f66720/detail/promo-earphone-tws-anker-soundcore-liberty-4-nc-a3947-putih.jpeg",
+    "sha256": "45bb3c679c8be1d0184407ba8f25d73c1bd3c88858f020a804b01071f0c714f2"
+  },
+  {
+    "productCode": "SANPHAM2026110021",
+    "name": "JBL Flip 6",
+    "image": "/static/img/products/SANPHAM2026110021.webp",
+    "source": "https://cubeonline.pk/cdn/shop/files/1_JBL_FLIP6_HERO_BLACK_29391_x2_a4f91e10-2819-4cdb-8a2a-e72e33f8c12f_535x.png?v=1731777409",
+    "originalImage": "https://cubeonline.pk/cdn/shop/files/1_JBL_FLIP6_HERO_BLACK_29391_x2_a4f91e10-2819-4cdb-8a2a-e72e33f8c12f_535x.png?v=1731777409",
+    "sha256": "223249b6ad7ec36a8bb72fb9067e8c80234800fafab55fb72db0f143c19148a8"
+  },
+  {
+    "productCode": "SANPHAM2026110022",
+    "name": "Sony SRS-XB100",
+    "image": "/static/img/products/SANPHAM2026110022.webp",
+    "source": "https://www.adorama.com/images/Large/SOWSG.jpg",
+    "originalImage": "https://www.adorama.com/images/Large/SOWSG.jpg",
+    "sha256": "14dffcf4d14f78ef9ec7c057455b83c320f2440930ed0c1b4aa8a30034ccd7fd"
+  },
+  {
+    "productCode": "SANPHAM2026110023",
+    "name": "Marshall Emberton II",
+    "image": "/static/img/products/SANPHAM2026110023.webp",
+    "source": "https://shoppy.hkbn.net/en/products/marshall-emberton-ii-portable-speaker-nc",
+    "originalImage": "https://shoppy.hkbn.net/cdn/shop/files/MarshallEmbertonIICream_1000x1000_1_359b7a59-839e-41e6-a431-1c14c5cf138c_800x.jpg?v=1706022965",
+    "sha256": "8ed47e789304b0b1738124ecd5bab2c1459465a1a6458eabad066e0c9ea2add4"
+  },
+  {
+    "productCode": "SANPHAM2026110024",
+    "name": "Anker Soundcore Motion+",
+    "image": "/static/img/products/SANPHAM2026110024.webp",
+    "source": "https://www.emag.ro/boxa-portabila-wireless-anker-soundcore-motion-30w-hi-res-bassup-negru-a3116h11/pd/D5WHZ4MBM/",
+    "originalImage": "https://s13emagst.akamaized.net/products/46843/46842979/images/res_be4b798dc6c4169aace063550d292211.jpg",
+    "sha256": "db4f7d3e975f0ca3dfef42f9990c73eba154f5f581bf4b936104b9bb50705ccd"
+  },
+  {
+    "productCode": "SANPHAM2026110025",
+    "name": "Logitech Z407",
+    "image": "/static/img/products/SANPHAM2026110025.webp",
+    "source": "https://shopee.ph/Logitech-Z407-Bluetooth-Speaker-with-Subwoofer-i.379168804.29181243649",
+    "originalImage": "https://down-ph.img.susercontent.com/file/ph-11134207-7rash-m7x5myis35hp9c",
+    "sha256": "9312ce0945e0c6b3fddb73b9b3d2f8d4da0ed1469734f9ffe84c837689b6ebbe"
+  },
+  {
+    "productCode": "SANPHAM2026110026",
+    "name": "Apple Watch SE 2022 GPS 40mm",
+    "image": "/static/img/products/SANPHAM2026110026.webp",
+    "source": "https://www.ttt.ua/ua/shop/product/apple-watch-se-2022-gps-40mm-midnight-aluminium-case-with-midnight-sport-band",
+    "originalImage": "https://www.ttt.ua/uploads/shop/products/large/e21f65cd6c5fdf66a0ce26d716d2bd29.jpg",
+    "sha256": "67560964dfc888503f5f84665c4fe159646ff53b81946848d115ccb431ec64d2"
+  },
+  {
+    "productCode": "SANPHAM2026110027",
+    "name": "Samsung Galaxy Watch6 40mm",
+    "image": "/static/img/products/SANPHAM2026110027.webp",
+    "source": "https://foneco.pl/product-pol-8279-Samsung-Galaxy-Watch-6-40-mm-GPS-Czarny.html",
+    "originalImage": "https://www.szpilcov.unixstorm.org/zdjecia/N05148/1.jpg",
+    "sha256": "5dd6c5b6edc7f0538ab623b4a450683a06719558dd59145380d6483eed7cd8d4"
+  },
+  {
+    "productCode": "SANPHAM2026110028",
+    "name": "Huawei Watch Fit 3",
+    "image": "/static/img/products/SANPHAM2026110028.webp",
+    "source": "https://www.movemore.pl/products/huawei-watch-fit-3-rozowy-smartwatch",
+    "originalImage": "https://www.movemore.pl/cdn/shop/files/HUAWEIWATCHFIT3-BasicAngle_Pink_FrontLeft30_JPG_RGB_EN_20240404_Copy.webp?v=1718888048",
+    "sha256": "2f42f75aae2a9f136aac50ed8868daa3fe8a1772534eda632fc4d3642caed65e"
+  },
+  {
+    "productCode": "SANPHAM2026110029",
+    "name": "Garmin Forerunner 165",
+    "image": "/static/img/products/SANPHAM2026110029.webp",
+    "source": "https://www.elverys.ie/products/garmin-forerunner-r-165-smartwatch-white",
+    "originalImage": "https://www.elverys.ie/cdn/shop/files/C1-000000000001156325-636Wx636H.jpg?v=1716390070&width=1024",
+    "sha256": "e5ddb8a2af1551c5e58b09b40b52cf3fae8b076c841cf6aacaf658a0cfd7258f"
+  },
+  {
+    "productCode": "SANPHAM2026110030",
+    "name": "Xiaomi Smart Band 8",
+    "image": "/static/img/products/SANPHAM2026110030.webp",
+    "source": "https://technave.com/gadget/Xiaomi-Smart-Band-8-Price-in-Malaysia-Specs-36067.html",
+    "originalImage": "https://cf.shopee.com.my/file/my-11134207-7r98p-lwnseme4546o7e",
+    "sha256": "e701823c4462152094dbb258284fe99e0952b1cda0f18626ecc45beb65fabcc4"
+  },
+  {
+    "productCode": "SANPHAM2026110031",
+    "name": "Dell UltraSharp U2422H",
+    "image": "/static/img/products/SANPHAM2026110031.webp",
+    "source": "https://www.maccenter.vn/Dell-Ultrasharp-U2422H.aspx",
+    "originalImage": "https://www.maccenter.vn/App_Images/Dell-UltraSharp-U2422H-A.jpg",
+    "sha256": "757c7b68212f6a1d276c89c1058db75253e1d352932fbb44171283f71fdfb0fd"
+  },
+  {
+    "productCode": "SANPHAM2026110032",
+    "name": "LG UltraGear 24GN60R-B",
+    "image": "/static/img/products/SANPHAM2026110032.webp",
+    "source": "https://shopee.co.id/Monitor-LED-LG-UltraGear%E2%84%A2-24GN60R-B-Full-HD-144Hz-24-Inch-i.24517949.24561859108",
+    "originalImage": "https://down-id.img.susercontent.com/file/id-11134207-7r98s-lr73onraffm521",
+    "sha256": "74b50872f85b5fec5f2663bb5b08c2149cbe5c7a0e44c3ea3effea0e9e57fe2e"
+  },
+  {
+    "productCode": "SANPHAM2026110033",
+    "name": "ASUS TUF Gaming VG249Q1A",
+    "image": "/static/img/products/SANPHAM2026110033.webp",
+    "source": "https://shopee.co.id/ASUS-MONITOR-LED-GAMING-TUF-VG249Q1A-WIDE-SCREEN-24-INCH-i.717252982.18691862087",
+    "originalImage": "https://down-id.img.susercontent.com/file/id-11134207-7qul4-lkeqxpcdtz21b0",
+    "sha256": "85cb125a13d83d133c21aa85d2de4ec4575bee6b30c41be8751728bdc030c944"
+  },
+  {
+    "productCode": "SANPHAM2026110034",
+    "name": "Samsung Odyssey G5 LC27G55T",
+    "image": "/static/img/products/SANPHAM2026110034.webp",
+    "source": "https://i.ebayimg.com/images/g/LM8AAOSwFn9fg~42/s-l400.jpg",
+    "originalImage": "https://i.ebayimg.com/images/g/LM8AAOSwFn9fg~42/s-l400.jpg",
+    "sha256": "462c9b2669ce7c53581e61db254f5d189af311cfcc85f17183cf7c5fd0b45e07"
+  },
+  {
+    "productCode": "SANPHAM2026110035",
+    "name": "BenQ GW2480",
+    "image": "/static/img/products/SANPHAM2026110035.webp",
+    "source": "https://product.hstatic.net/1000037809/product/benq_gw2480_4412285f6c684cd593639c2edbba3985_master.png",
+    "originalImage": "https://product.hstatic.net/1000037809/product/benq_gw2480_4412285f6c684cd593639c2edbba3985_master.png",
+    "sha256": "a176cefc105e7c7ecfb4de47b8f0b0500465d0cb792c81c335764ef9e7e9db7f"
+  },
+  {
+    "productCode": "SANPHAM2026110036",
+    "name": "Logitech MX Keys S",
+    "image": "/static/img/products/SANPHAM2026110036.webp",
+    "source": "https://www.telia.fi/kauppa/tuote/logitech-mx-keys-s",
+    "originalImage": "https://creativehub.teliacompany.com/transform/979b7bcd-77a2-412a-947e-1442f8622a47/logitech-mx-keys-s-graphite-01?io=transform%3Afill%2Cwidth%3A500&quality=95",
+    "sha256": "e1c88b56a0005f3c963ccf5ebabf318749c091e18a7d442bb3bc0dc3a89adbb8"
+  },
+  {
+    "productCode": "SANPHAM2026110037",
+    "name": "Keychron K2 V2",
+    "image": "/static/img/products/SANPHAM2026110037.webp",
+    "source": "https://shopee.ph/EasyPC-Keychron-K2-V2-Hot-swappable-Aluminum-RGB-Wireless-Mechanical-Gaming-Keyboard-Brown-Switch-i.77398075.21221273300",
+    "originalImage": "https://down-ph.img.susercontent.com/file/3af3f62144d5ef316924a5f644cbc895",
+    "sha256": "7a9c3c0785d25eb8d6d139ca9d1836ae62b518680e32d6d9f16c8fa34d723e99"
+  },
+  {
+    "productCode": "SANPHAM2026110038",
+    "name": "Razer BlackWidow V3",
+    "image": "/static/img/products/SANPHAM2026110038.webp",
+    "source": "https://thaipick.com/product/shopee/5057713",
+    "originalImage": "https://cf.shopee.co.th/file/a9b18513a67caef6ff0bd3df67d0c220",
+    "sha256": "d69f28f3f1855c1e6243c874b20aaf9bdab7cad64ec11a1088ead6a13c7bb898"
+  },
+  {
+    "productCode": "SANPHAM2026110039",
+    "name": "ASUS ROG Strix Scope II",
+    "image": "/static/img/products/SANPHAM2026110039.webp",
+    "source": "https://www.mwave.com.au/product/asus-rog-strix-scope-ii-mechanical-gaming-keyboard-nx-snow-ac75685",
+    "originalImage": "https://cdn.mwave.com.au/images/400/asus_rog_strix_scope_ii_mechanical_gaming_keyboard_nx_snow_ac75685_15166.jpg",
+    "sha256": "45631478992db8a74e7084a3b8276309fb510c022a2ae95aee614b37c3d8ff58"
+  },
+  {
+    "productCode": "SANPHAM2026110040",
+    "name": "Akko 5075B Plus",
+    "image": "/static/img/products/SANPHAM2026110040.webp",
+    "source": "https://cf.shopee.vn/file/vn-11134201-23030-91n9kycpqfovc4",
+    "originalImage": "https://cf.shopee.vn/file/vn-11134201-23030-91n9kycpqfovc4",
+    "sha256": "663a0e0cdb73cc7550ebb2c55bc3e500f57058d91618003f45be7a688c8b6428"
+  },
+  {
+    "productCode": "SANPHAM2026110041",
+    "name": "Logitech MX Master 3S",
+    "image": "/static/img/products/SANPHAM2026110041.webp",
+    "source": "https://www.connection.com/product/logitech-mx-master-3s-wireless-mouse-pale-gray/910-006558/41465308?srsltid=AfmBOoqkWkCSJwHy34v83r0rsjvfRrfNfjD3Fqa-Tigzc9iR8VIRsebY",
+    "originalImage": "https://service.pcconnection.com/images/inhouse/9B37F09F-8797-487D-AC6A-22DE83E9F43D.jpg",
+    "sha256": "bfe712fb32551bd3ed6067fa2fbabb7b8483ac4866c745e1945593e5356006e0"
+  },
+  {
+    "productCode": "SANPHAM2026110042",
+    "name": "Razer DeathAdder V3",
+    "image": "/static/img/products/SANPHAM2026110042.webp",
+    "source": "https://24h.pchome.com.tw/prod/DCBF00-A900H3VGJ",
+    "originalImage": "https://img.pchome.com.tw/cs/items/DCBF00A900H3VGJ/000001_1762272155.jpg",
+    "sha256": "90874d5bea6ef37b3f80de74ebeaeffe9cb808e8c65d56df7394b6af1f455407"
+  },
+  {
+    "productCode": "SANPHAM2026110043",
+    "name": "Logitech G304 LIGHTSPEED",
+    "image": "/static/img/products/SANPHAM2026110043.webp",
+    "source": "https://www.goodgamingshop.com/product/logitech-g304-wireless-gaming-mouse242",
+    "originalImage": "https://storage.googleapis.com/ggsbaru/prod/1730283222_1.jpg",
+    "sha256": "aea2810d162fb634452af273c84db99593fe3c1bae74ed88c761e47335998482"
+  },
+  {
+    "productCode": "SANPHAM2026110044",
+    "name": "SteelSeries Rival 3",
+    "image": "/static/img/products/SANPHAM2026110044.webp",
+    "source": "https://shopee.ph/EasyPC-SteelSeries-Rival-3-wired-gaming-mouse-Black-TrueMove-Core-Sensor-Light-and-Ergonomic-i.77398075.20353633252",
+    "originalImage": "https://down-ph.img.susercontent.com/file/482ae0272a77bde2354da3a2a0fb18ec",
+    "sha256": "31bbe13f9ba9c8df587f941368380c84db2ba2370e521e95230dad97d17219d3"
+  },
+  {
+    "productCode": "SANPHAM2026110045",
+    "name": "Microsoft Bluetooth Mouse",
+    "image": "/static/img/products/SANPHAM2026110045.webp",
+    "source": "https://shopee.co.id/Microsoft-Bluetooth-Mouse-Monza-Grey-RJN-00065-Jannie-i.236390603.20465457412",
+    "originalImage": "https://down-id.img.susercontent.com/file/sg-11134201-22110-a812j2fumfkvd8",
+    "sha256": "c294cb2208d4a2cf53c7af55832c162513275983d17c5597af4da57f5a9b0e94"
+  },
+  {
+    "productCode": "SANPHAM2026110046",
+    "name": "Anker Nano II 65W A2663",
+    "image": "/static/img/products/SANPHAM2026110046.webp",
+    "source": "https://shopee.vn/C%E1%BB%A7-S%E1%BA%A1c-Nhanh-65W-Anker-Nano-GaN-II-A2663-h%E1%BB%97-tr%E1%BB%A3-PD-PPS-QC-B%E1%BA%A3o-h%C3%A0nh-12-th%C3%A1ng-i.2849999.17379151571",
+    "originalImage": "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lf3ytmi2vq8a21",
+    "sha256": "ce3022b40f02209e640c4c6c942e7bb02352ca93a8fa6d1a10d6e8fa024bb0fc"
+  },
+  {
+    "productCode": "SANPHAM2026110047",
+    "name": "UGREEN Nexode 65W CD244",
+    "image": "/static/img/products/SANPHAM2026110047.webp",
+    "source": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lllmwza9kpxreb",
+    "originalImage": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lllmwza9kpxreb",
+    "sha256": "944560cd8a0108693e493c995886353e00b5eb8d4e1bc6de9a0a942c48b208c4"
+  },
+  {
+    "productCode": "SANPHAM2026110048",
+    "name": "Samsung Battery Pack 10000mAh EB-P3400",
+    "image": "/static/img/products/SANPHAM2026110048.webp",
+    "source": "https://biggo.com.tw/s/eb-p3400/",
+    "originalImage": "https://cf.shopee.tw/file/tw-11134207-7qukz-ljar951viouac6",
+    "sha256": "9e2466ca5d14d9e911f470a1cb6f7f7677cf15affd0b5778a3bfe360c1eb2353"
+  },
+  {
+    "productCode": "SANPHAM2026110049",
+    "name": "Apple USB-C to USB-C Charge Cable 1m",
+    "image": "/static/img/products/SANPHAM2026110049.webp",
+    "source": "https://media.karousell.com/media/photos/products/2022/7/16/sg_seller_apple_iphone_13_12_1_1657969811_a04a78fa_progressive",
+    "originalImage": "https://media.karousell.com/media/photos/products/2022/7/16/sg_seller_apple_iphone_13_12_1_1657969811_a04a78fa_progressive",
+    "sha256": "425c100fac4bc7fed714139e29501e5f0c262c6841d23cd6c9ab2a90183adcdc"
+  },
+  {
+    "productCode": "SANPHAM2026110050",
+    "name": "Kingston DataTraveler Exodia 128GB",
+    "image": "/static/img/products/SANPHAM2026110050.webp",
+    "source": "https://bizweb.dktcdn.net/thumb/1024x1024/100/486/569/products/z5044901911534-c247063446671fcf2d209f5667d61fe2.jpg?v=1704513359200",
+    "originalImage": "https://bizweb.dktcdn.net/thumb/1024x1024/100/486/569/products/z5044901911534-c247063446671fcf2d209f5667d61fe2.jpg?v=1704513359200",
+    "sha256": "82821454ffabb589fec373e4a7f12391e3c0acd1b98457f26cac8f6fbab7d052"
+  }
+]
