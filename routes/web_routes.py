@@ -1,5 +1,6 @@
 from datetime import datetime
-from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
+from flask import Blueprint, abort, flash, redirect, render_template, request, url_for, g
+from services.access_policy import has_permission, REPORT_PERMISSIONS
 from db.mongo import get_db
 from repositories import customer_repository, promotion_repository, review_repository, report_repository
 from repositories.common import serialize
@@ -83,7 +84,8 @@ def product_detail(code):
     if not product: abort(404)
     reviews = review_repository.find_reviews({"productCode": code}, True)
     average = round(sum(r["rating"] for r in reviews) / len(reviews), 2) if reviews else 0
-    return render_template("products/detail.html", item=product, reviews=reviews, average=average, promotions=promotion_repository.applicable_for(product))
+    promotions = promotion_repository.applicable_for(product) if has_permission(g.current_user, 'promotions.read') else []
+    return render_template("products/detail.html", item=product, reviews=reviews, average=average, promotions=promotions)
 
 
 @bp.get("/khuyen-mai")
@@ -164,14 +166,15 @@ def reviews(): return render_template("reviews/list.html", rows=review_repositor
 def create_review():
     try:
         data = request.form.to_dict(); data["images"] = [x.strip() for x in data.get("images", "").splitlines() if x.strip()]
-        review_service.create(data); flash("Đã gửi đánh giá và đang chờ duyệt", "success")
+        data.pop('csrf_token', None)
+        review_service.create_own(g.current_user, data); flash("Đã gửi đánh giá và đang chờ duyệt", "success")
     except ValidationError as error: flash(str(error), "danger")
-    return redirect(url_for("web.reviews"))
+    return redirect(url_for("auth.own_reviews"))
 
 
 @bp.post("/danh-gia/<code>/trang-thai")
 def review_status(code):
-    try: review_service.set_status(code, request.form.get("status")); flash("Đã cập nhật đánh giá", "success")
+    try: review_service.moderate(g.current_user, code, request.form.get("status")); flash("Đã cập nhật đánh giá", "success")
     except (ValidationError, LookupError) as error: flash(str(error), "danger")
     return redirect(url_for("web.reviews"))
 
@@ -196,13 +199,15 @@ def dashboard(): return render_template("dashboard/index.html")
 def query_demo():
     selected = request.args.get("report", "NC05")
     if selected not in REPORTS:
-        selected = "NC05"
+        abort(400)
     rows = serialize(report_repository.run_basic(selected))
     for row in rows:
         if selected == "NC08":
             row["monthLabel"] = f"{int(row.get('month', 0)):02d}/{row.get('year', '')}"
     groups = {}
     for code, info in REPORTS.items():
+        if not has_permission(g.current_user, REPORT_PERMISSIONS[code]):
+            continue
         groups.setdefault(info["group"], []).append((code, info))
     return render_template("queries.html", groups=groups, selected=selected, report=REPORTS[selected], rows=rows, cell=_report_cell)
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, g
 from pymongo.errors import PyMongoError
 from repositories.common import serialize
 from repositories import customer_repository, promotion_repository, review_repository
@@ -105,11 +105,11 @@ def reviews(): return response(review_repository.find_reviews(request.args))
 
 
 @bp.post("/reviews")
-def create_review(): return response(review_service.create(body()), "Đã gửi đánh giá và đang chờ duyệt", 201)
+def create_review(): return response(review_service.create_own(g.current_user, body()), "Đã gửi đánh giá và đang chờ duyệt", 201)
 
 
 @bp.patch("/reviews/<code>/status")
-def review_status(code): return response(review_service.set_status(code, body().get("status")), "Đã cập nhật trạng thái đánh giá")
+def review_status(code): return response(review_service.moderate(g.current_user, code, body().get("status")), "Đã cập nhật trạng thái đánh giá")
 
 
 @bp.get("/orders")
