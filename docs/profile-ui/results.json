@@ -1,0 +1,10 @@
+[
+  "PASS avatar preview requires confirmation; upload preserves profile draft",
+  "PASS 360px profile/forms without page overflow",
+  "PASS 390px profile/forms without page overflow",
+  "PASS 768px profile/forms without page overflow",
+  "PASS 1024px profile/forms without page overflow",
+  "PASS 1440px profile/forms without page overflow",
+  "PASS profile reload/reset, password validation/visibility, independent error drafts and avatar deletion",
+  "PASS password success signs out both sessions; new password login works"
+]

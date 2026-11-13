@@ -1,0 +1,9 @@
+[
+  "PASS ADMIN: profile save/reload, own role/email, password form, mobile and desktop",
+  "PASS ACCOUNT_MANAGER: profile save/reload, own role/email, password form, mobile and desktop",
+  "PASS PRODUCT_STAFF: profile save/reload, own role/email, password form, mobile and desktop",
+  "PASS MARKETING_STAFF: profile save/reload, own role/email, password form, mobile and desktop",
+  "PASS SUPPORT_STAFF: profile save/reload, own role/email, password form, mobile and desktop",
+  "PASS REVIEW_MODERATOR: profile save/reload, own role/email, password form, mobile and desktop",
+  "PASS ANALYST: profile save/reload, own role/email, password form, mobile and desktop"
+]

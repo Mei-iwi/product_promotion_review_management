@@ -413,3 +413,13 @@ Dự án không triển khai:
 - cloud production.
 
 Chi tiết cấu trúc collection nằm trong [mô hình dữ liệu](docs/SCHEMA.md). Navicat for MongoDB là công cụ quản trị; ứng dụng Flask thực hiện CRUD, báo cáo và aggregation trực tiếp trên MongoDB.
+
+## Hồ sơ, ảnh đại diện và bảo mật tài khoản
+
+Mọi vai trò mở `/account` để cập nhật thông tin cá nhân, xem trước/lưu/xóa avatar và đổi mật khẩu. Email đăng nhập và vai trò/hạng thành viên chỉ đọc; trang không hiển thị mã khách hàng. Các form xử lý riêng, đổi mật khẩu đăng xuất toàn bộ phiên.
+
+Avatar JPG/PNG/WebP tối đa 800 KiB được chuẩn hóa thành WebP 512px, lưu riêng trong volume `avatar_data` bằng `appuser`; không nằm trong static hay Git. Rebuild/recreate app giữ ảnh; `docker compose down --volumes` sẽ xóa cả các volume, vì vậy không dùng lệnh này trên dữ liệu cần giữ. Với Python local, mặc định ảnh nằm trong `instance/avatars`, có thể cấu hình `AVATAR_STORAGE_DIR`.
+
+Chi tiết triển khai, tệp thay đổi, backup/cleanup và bằng chứng kiểm thử: [docs/PROFILE.md](docs/PROFILE.md).
+
+ADMIN và các role nhân viên có hồ sơ riêng trong `users.profile`; CUSTOMER vẫn dùng hồ sơ `customers` hiện hữu. Tài khoản cũ có thể mở và điền thông tin ngay, không cần tạo hồ sơ khách hàng. Xem [docs/STAFF_PROFILES.md](docs/STAFF_PROFILES.md).

@@ -5,7 +5,10 @@ Generated from Flask URL map and ENDPOINT_POLICIES.
 | Route | Method | Endpoint | Permission |
 |---|---|---|---|
 | `/` | GET | `web.home` | `reports.read_sensitive` |
-| `/account` | GET | `auth.account` | `customers.read_own` |
+| `/account` | GET | `auth.account` | `account.read_own_profile` |
+| `/account/avatar` | GET | `auth.avatar` | `account.read_own_profile` |
+| `/account/avatar` | POST | `auth.upload_avatar` | `account.update_own_profile` |
+| `/account/avatar/delete` | POST | `auth.delete_avatar` | `account.update_own_profile` |
 | `/account/change-password` | GET | `auth.change_password` | `account.change_own_password` |
 | `/account/change-password` | POST | `auth.change_password` | `account.change_own_password` |
 | `/account/orders` | GET | `auth.own_orders` | `orders.read_own` |
@@ -13,7 +16,7 @@ Generated from Flask URL map and ENDPOINT_POLICIES.
 | `/account/orders/<code>/cancel` | POST | `shop.cancel` | `orders.cancel_own` |
 | `/account/orders/<code>/confirmation` | GET | `shop.confirmation` | `orders.read_own` |
 | `/account/orders/<code>/reviews` | POST | `auth.order_review` | `reviews.create_own` |
-| `/account/profile` | POST | `auth.profile` | `customers.update_own_profile` |
+| `/account/profile` | POST | `auth.profile` | `account.update_own_profile` |
 | `/account/reviews` | GET | `auth.own_reviews` | `reviews.read_own` |
 | `/admin/users` | GET | `auth.users` | `users.read` |
 | `/admin/users/<user_id>/edit` | GET | `auth.edit_user` | `users.update` |
@@ -31,8 +34,8 @@ Generated from Flask URL map and ENDPOINT_POLICIES.
 | `/api/account/orders` | GET | `auth.api_orders` | `orders.read_own` |
 | `/api/account/orders/<code>` | GET | `auth.api_order` | `orders.read_own` |
 | `/api/account/orders/<code>/cancel` | POST | `shop.api_cancel` | `orders.cancel_own` |
-| `/api/account/profile` | GET | `auth.api_profile` | `customers.read_own` |
-| `/api/account/profile` | PUT | `auth.api_profile` | `customers.update_own_profile` |
+| `/api/account/profile` | GET | `auth.api_profile` | `account.read_own_profile` |
+| `/api/account/profile` | PUT | `auth.api_profile` | `account.update_own_profile` |
 | `/api/account/reviews` | GET | `auth.api_reviews` | `reviews.read_own` |
 | `/api/customers` | POST | `api.create_customer` | `customers.create` |
 | `/api/customers` | GET | `api.customers` | `customers.read` |
@@ -159,3 +162,15 @@ CUSTOMER owns carts by userId + customerCode. Checkout quotes are user-bound; or
 cart.read_own/cart.manage_own and orders.create_own/orders.cancel_own are CUSTOMER only. orders.manage_status is ADMIN only; SUPPORT_STAFF remains read-only.
 Every mutation requires CSRF. Checkout/cancel/status run on a real replica-set transaction, guarded by promotion-usage reconciliation; standalone checkout returns 503 before inventory/order writes.
 See [SHOPPING.md](SHOPPING.md) for idempotency, pricing rules and deployment.
+
+## Personal profile and avatar
+
+`GET /account` renders no customerCode; login email comes from users. Profile updates accept only fullName/phone/dateOfBirth/gender/address/bio, using the current session's customer link. Missing fields are preserved; empty optional fields are unset. Profile and avatar writes reread the account under the shared user mutation lock.
+
+Avatar routes use own-account permissions for every authenticated role; all mutations require CSRF. The private GET route serves only the current user's normalized avatar or a static default. There is no route accepting a storage key, user ID or arbitrary file path. Uploads allow static JPEG/PNG/WebP up to 800 KiB, 16 million pixels and 8192px per side; normalized files are metadata-free WebP, at most 512×512. Files live outside static in the appuser-owned avatar_data volume.
+
+POST /account/change-password now also requires confirmPassword matching newPassword. It calls the existing auth_service.change_password, clears the auth cookie and redirects to login with a success flash. Existing staff permissions, Argon2id, account lock, authVersion increment and session revocation are unchanged. Requests with Accept: application/json receive the standard response envelope, allowing independent forms without losing other drafts.
+
+## Staff profiles
+
+/account, /account/profile, /api/account/profile and avatar routes now use account.read_own_profile/account.update_own_profile for all roles. Non-CUSTOMER personal fields and avatar metadata are stored under users.profile, selected only by session user ID/authVersion. Public API output uses an allowlist and excludes passwordHash/authVersion/security fields. CUSTOMER storage and ownership checks remain unchanged. The existing customer-specific permissions were not granted to staff. Avatar cleanup includes references in both customers.avatar and users.profile.avatar.

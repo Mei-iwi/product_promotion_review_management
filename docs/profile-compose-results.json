@@ -1,0 +1,7 @@
+[
+  "PASS app runs as a non-root user; synthetic customer seeded only in the disposable DB",
+  "PASS HTTP profile update and avatar upload write to MongoDB and the appuser-owned named volume",
+  "PASS force-recreated app keeps separate CUSTOMER and ADMIN avatars, profile fields and sessions",
+  "PASS customer avatar replacement/deletion preserves the separate staff avatar",
+  "PASS password change revokes the other real MongoDB session, rejects the old password and accepts the new one"
+]

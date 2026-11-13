@@ -4,6 +4,8 @@ Single source: services/access_policy.py. Guest only has public read permissions
 
 | Permission | ADMIN | ACCOUNT_MANAGER | PRODUCT_STAFF | MARKETING_STAFF | SUPPORT_STAFF | REVIEW_MODERATOR | ANALYST | CUSTOMER |
 |---|---|---|---|---|---|---|---|---|
+| `account.read_own_profile` | Y | Y | Y | Y | Y | Y | Y | Y |
+| `account.update_own_profile` | Y | Y | Y | Y | Y | Y | Y | Y |
 | `account.change_own_password` | Y | Y | Y | Y | Y | Y | Y | Y |
 | `account.logout` | Y | Y | Y | Y | Y | Y | Y | Y |
 | `cart.manage_own` | - | - | - | - | - | - | - | Y |
@@ -54,3 +56,7 @@ See [ACCOUNT_MANAGEMENT.md](ACCOUNT_MANAGEMENT.md).
 
 Guest: active catalog and approved anonymous reviews only. CUSTOMER: own cart, COD checkout and pending cancellation. ADMIN: internal order confirmation/completion/pending cancellation. No checkout impersonation by staff.
 See [SHOPPING.md](SHOPPING.md).
+
+## Own profile for all roles
+
+Every authenticated role has account.read_own_profile and account.update_own_profile. These grant only the current user's personal profile and private avatar. Staff profile fields are stored in users.profile; CUSTOMER continues to use its linked customers document. No cart, customer-business, order, review or other management permissions were added. Profile updates cannot change role/status/email/authVersion/customerCode.
