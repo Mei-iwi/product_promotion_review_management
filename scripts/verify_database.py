@@ -10,7 +10,6 @@ collections = ["products", "promotions", "customers", "reviews", "orders"]
 client.admin.command("ping")
 database = client[Config.MONGO_DB]
 
-print(f"MongoDB URI: {Config.MONGO_URI}")
 print(f"Database: {Config.MONGO_DB}")
 print(f"{'Collection':<15}{'Số document':>15}")
 for name in collections:
