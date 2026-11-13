@@ -287,3 +287,11 @@ Tham chiếu: [PyMongo transactions/callback retries](https://www.mongodb.com/do
 - `tests/test_shopping.py`, `tests/test_shopping_replica.py`, `tests/shopping_support.py`: unit/HTTP/concurrency fixtures.
 - `scripts/verify_shopping_replica.py`, `scripts/verify_shopping_browser.py`, `scripts/verify_shopping_compose.py`: môi trường kiểm thử thật riêng.
 - `scripts/export_security_policy.py`, README và các tài liệu schema/policy: hướng dẫn, ma trận, route và bằng chứng.
+
+## Tự cập nhật giá khi thay đổi giỏ và mã
+
+`static/js/shopping.js` gửi lại form hiện hữu khi người dùng xác nhận thay đổi số lượng (change), nhập mã rồi rời ô, hoặc chọn/bỏ mã trong dropdown. Không cần bấm nút Cập nhật/Áp mã; các nút vẫn dùng được như thao tác dự phòng. Thêm sản phẩm vẫn đi qua POST giỏ hiện hữu và hiển thị giá mới từ máy chủ.
+
+Tại checkout, script gọi requestSubmit đúng nút có formaction checkout_promotion, formnovalidate và data-skip-confirm. Máy chủ tạo quote mới và giữ thông tin nhận hàng. Không gọi nút đặt hàng, không tính tiền bằng JS, không bỏ CSRF/ownership/quote validation. Giá được cập nhật qua phản hồi trang của máy chủ.
+
+Kiểm tra liên quan: tests/test_shopping.py và tests/test_promotion_offers.py (32 PASS), script verify_shopping_replica.py (15 test replica PASS và browser desktop/mobile). Browser kiểm tra số lượng 1→2→1, giữ ưu đãi, tự áp/bỏ mã ở checkout mà không tạo đơn và không mất số điện thoại.

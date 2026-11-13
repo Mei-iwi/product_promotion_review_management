@@ -1,0 +1,10 @@
+[
+  "PASS 360px voucher cards, controls and page without horizontal overflow",
+  "PASS 390px voucher cards, controls and page without horizontal overflow",
+  "PASS 768px voucher cards, controls and page without horizontal overflow",
+  "PASS 1024px voucher cards, controls and page without horizontal overflow",
+  "PASS 1440px voucher cards, controls and page without horizontal overflow",
+  "PASS copy code, clipboard-denied fallback and keyboard-accessible conditions",
+  "PASS voucher applies to own cart without reserving usage",
+  "PASS cart reprices quantity without an update button"
+]
