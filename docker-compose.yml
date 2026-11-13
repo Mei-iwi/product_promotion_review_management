@@ -54,6 +54,9 @@ services:
       MONGO_URI: mongodb://${MONGO_APP_USERNAME}:${MONGO_APP_PASSWORD}@mongodb:27017/${MONGO_DB:-QL_KHUYENMAI_DANHGIA}?authSource=${MONGO_DB:-QL_KHUYENMAI_DANHGIA}&replicaSet=rs0&directConnection=true
       MONGO_DB: ${MONGO_DB:-QL_KHUYENMAI_DANHGIA}
       CHECKOUT_ENABLED: "true"
+      AVATAR_STORAGE_DIR: /app/instance/avatars
+    volumes:
+      - avatar_data:/app/instance/avatars
     ports:
       - "127.0.0.1:${FLASK_PORT:-5002}:5001"
     depends_on:
@@ -62,3 +65,4 @@ services:
 volumes:
   mongodb_data:
   replica_key:
+  avatar_data:

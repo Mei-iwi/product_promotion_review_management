@@ -16,6 +16,7 @@ COPY . .
 
 RUN addgroup --system appgroup && \
     adduser --system --ingroup appgroup appuser && \
+    mkdir -p /app/instance/avatars && \
     chown -R appuser:appgroup /app
 
 USER appuser

@@ -7,4 +7,6 @@ __pycache__/
 *.log
 backup/
 exports/
+instance/
+.test-tmp/
 

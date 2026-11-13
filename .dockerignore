@@ -13,3 +13,5 @@ exports
 tests
 docs
 requirements-dev.txt
+instance
+.test-tmp
