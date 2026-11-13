@@ -1,14 +1,14 @@
 {% extends 'base.html' %}{% block title %}Đánh giá{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Đánh giá sản phẩm</h1><p>Tiếp nhận, kiểm tra giao dịch và duyệt nội dung đánh giá</p></div></div>
 
-<form class="row g-2 my-3">
-    <div class="col-md-3"><input class="form-control" name="productCode" placeholder="Mã sản phẩm"></div>
-    <div class="col-md-2"><select class="form-select" name="status">
-            <option value="">Mọi trạng thái</option>
-            <option value="pending">Chờ duyệt</option>
-            <option value="approved">Đã duyệt</option>
-            <option value="rejected">Từ chối</option>
+<form class="row g-3 filter-panel" method="get" aria-label="Bộ lọc danh sách">
+    <div class="col-md-3"><label class="form-label" for="filter-productCode">Mã sản phẩm</label><input id="filter-productCode" class="form-control" name="productCode" placeholder="Mã sản phẩm" value="{{ request.args.get('productCode','') }}"></div>
+    <div class="col-md-2"><label class="form-label" for="filter-status">Trạng thái</label><select id="filter-status" class="form-select" name="status">
+            <option value="" {{ 'selected' if request.args.get('status','') == '' else '' }}>Mọi trạng thái</option>
+            <option value="pending" {{ 'selected' if request.args.get('status','') == 'pending' else '' }}>Chờ duyệt</option>
+            <option value="approved" {{ 'selected' if request.args.get('status','') == 'approved' else '' }}>Đã duyệt</option>
+            <option value="rejected" {{ 'selected' if request.args.get('status','') == 'rejected' else '' }}>Từ chối</option>
         </select></div>
-    <div class="col"><button class="btn btn-primary">Lọc</button></div>
+    <div class="col-12 d-flex flex-wrap gap-2"><button class="btn btn-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" href="{{ url_for(request.endpoint) }}">Đặt lại bộ lọc</a></div>
 </form>
 <div class="table-responsive">
     <table class="table table-striped align-middle">
@@ -22,7 +22,7 @@
                 <th>Xác nhận mua</th>
                 <th>Ngày</th>
                 <th>Trạng thái</th>
-                <th></th>
+                <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>{% for r in rows %}<tr>
@@ -36,8 +36,8 @@
                 <td><span class="status-badge status-{{ r.status|status_class }}">{{ r.status|status_vi }}</span></td>
                 <td>
                     <form method="post" action="{{ url_for('web.review_status', code=r.reviewCode) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button
-                            name="status" value="approved" class="btn btn-sm btn-success">Duyệt</button> <button
-                            name="status" value="rejected" class="btn btn-sm btn-outline-danger">Từ chối</button></form>
+                            type="submit" name="status" value="approved" class="btn btn-sm btn-success">Duyệt</button> <button
+                            type="submit" name="status" value="rejected" class="btn btn-sm btn-outline-danger">Từ chối</button></form>
                 </td>
             </tr>{% else %}<tr>
                 <td class="empty-state" colspan="9">Không có dữ liệu phù hợp</td>

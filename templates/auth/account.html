@@ -1,6 +1,49 @@
-{% extends 'base.html' %}{% block title %}Tài khoản của tôi{% endblock %}{% block content %}
-<h1 class="h3">Hồ sơ của tôi</h1><p>{{ item.customerCode }} · {{ item.email }} · {{ item.level|level_vi }}</p>
-<form method="post" action="{{ url_for('auth.profile') }}" class="row g-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-<div class="col-md-6"><label for="name" class="form-label">Họ tên</label><input id="name" name="fullName" class="form-control" maxlength="200" value="{{ item.fullName }}" required></div>
-<div class="col-md-6"><label for="address" class="form-label">Địa chỉ</label><input id="address" name="address" class="form-control" maxlength="500" value="{{ item.address or '' }}"></div><div><button class="btn btn-primary">Cập nhật hồ sơ</button></div></form>
+{% extends 'base.html' %}{% block title %}Hồ sơ của tôi · Mint & Lavender{% endblock %}{% block content %}
+<div class="page-heading"><div><span class="eyebrow">KHÔNG GIAN CỦA BẠN</span><h1 class="h3">Hồ sơ của tôi</h1><p>Một nơi để cập nhật thông tin và chăm sóc tài khoản của bạn.</p></div></div>
+<div class="profile-layout">
+<aside class="profile-header" aria-label="Hồ sơ cá nhân">
+  <div class="profile-identity">
+    <button id="avatar-pick" type="button" class="avatar-picker" aria-label="Thay ảnh đại diện"><img id="profile-avatar" class="profile-avatar" src="{{ url_for('auth.avatar') }}" alt="Ảnh đại diện của bạn" width="112" height="112"><span class="avatar-picker-badge" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h4l2-3h4l2 3h4v14H4Z" stroke-linejoin="round"/><circle cx="12" cy="13" r="4"/></svg></span></button>
+  <div class="avatar-controls">
+    <form id="avatar-upload" method="post" action="{{ url_for('auth.upload_avatar') }}" enctype="multipart/form-data" data-async-form data-form-kind="avatar-upload">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input id="avatar-file" name="avatar" type="file" accept="image/jpeg,image/png,image/webp" aria-label="Chọn ảnh đại diện" hidden required>
+      <div class="d-flex flex-wrap justify-content-center gap-2"><button type="submit" class="btn btn-primary btn-sm" id="avatar-save" hidden disabled>Lưu ảnh</button><button type="button" class="btn btn-outline-secondary btn-sm" id="avatar-cancel" hidden>Hủy</button></div>
+      <div class="form-status mt-3" data-form-status role="status" aria-live="polite" hidden></div>
+    </form>
+    <form id="avatar-delete" method="post" action="{{ url_for('auth.delete_avatar') }}" data-async-form data-form-kind="avatar-delete" data-confirm="Bạn muốn xóa ảnh đại diện?" {% if not item.get('avatar') %}hidden{% endif %}>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit" class="btn btn-link text-danger px-0">Xóa ảnh</button><div class="form-status mt-2" data-form-status role="status" aria-live="polite" hidden></div>
+    </form>
+    {% if account_error and error_section == 'avatar' %}<div class="alert alert-danger mt-3 mb-0" role="alert">{{ account_error }}</div>{% endif %}
+  </div>
+    <div class="profile-identity-text"><h2 id="profile-name">{{ item.fullName }}</h2><p>{{ current_user.email }}</p><span class="member-badge">{% if current_user.role == 'CUSTOMER' %}{{ icon('star',16) }} Thành viên {{ item.level|level_vi }}{% else %}{{ icon('user',16) }} {{ role_labels.get(current_user.role,current_user.role) }}{% endif %}</span></div>
+  </div>
+</aside>
+<div class="profile-sections">
+<section class="detail-section profile-information" aria-labelledby="profile-section-title">
+  <div class="profile-section-heading"><span class="module-symbol">{{ icon('user',24) }}</span><div><h2 id="profile-section-title" class="h5">Thông tin cá nhân</h2><p class="small text-secondary mb-0">Cập nhật thông tin liên hệ của bạn.</p></div></div>
+  {% if account_error and error_section == 'profile' %}<div class="alert alert-danger" role="alert">{{ account_error }}</div>{% endif %}
+  <form id="profile-form" class="row g-3" method="post" action="{{ url_for('auth.profile') }}" data-async-form data-form-kind="profile">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="col-md-6"><label class="form-label" for="name">Họ và tên <span class="required-marker" aria-hidden="true">*</span></label><input id="name" name="fullName" class="form-control" maxlength="200" autocomplete="name" value="{{ profile_values.get('fullName',item.fullName) }}" required></div>
+    <div class="col-md-6"><label class="form-label" for="profile-email">Email đăng nhập</label><input id="profile-email" class="form-control" type="email" value="{{ current_user.email }}" readonly aria-describedby="email-help"><small id="email-help" class="text-secondary">Email đăng nhập không thể thay đổi tại đây.</small></div>
+    <div class="col-md-6"><label class="form-label" for="profile-phone">Số điện thoại</label><input id="profile-phone" name="phone" class="form-control" type="tel" maxlength="25" autocomplete="tel" placeholder="090 123 4567" value="{{ profile_values.get('phone',item.get('phone','')) }}"></div>
+    <div class="col-md-6"><label class="form-label" for="profile-birth">Ngày sinh</label><input id="profile-birth" name="dateOfBirth" class="form-control" type="date" max="{{ today }}" autocomplete="bday" value="{{ profile_values.get('dateOfBirth',item.get('dateOfBirth','')) }}"></div>
+    <div class="col-md-6"><label class="form-label" for="profile-gender">Giới tính</label><select id="profile-gender" name="gender" class="form-select">{% for value,label in [('', 'Không chọn'),('female','Nữ'),('male','Nam'),('other','Khác'),('undisclosed','Không muốn tiết lộ')] %}<option value="{{ value }}" {{ 'selected' if profile_values.get('gender',item.get('gender','')) == value else '' }}>{{ label }}</option>{% endfor %}</select></div>
+    <div class="col-md-6"><label class="form-label" for="profile-level">{{ 'Hạng thành viên' if current_user.role == 'CUSTOMER' else 'Vai trò' }}</label><input id="profile-level" class="form-control" value="{{ item.level|level_vi if current_user.role == 'CUSTOMER' else role_labels.get(current_user.role,current_user.role) }}" readonly></div>
+    <div class="col-12"><label class="form-label" for="address">Địa chỉ</label><textarea id="address" name="address" class="form-control profile-address" maxlength="500" autocomplete="street-address" rows="2">{{ profile_values.get('address',item.get('address','') or '') }}</textarea></div>
+    <div class="col-12"><label class="form-label" for="profile-bio">Giới thiệu ngắn</label><textarea id="profile-bio" name="bio" class="form-control" maxlength="300" rows="3" placeholder="Một vài điều về bạn…" aria-describedby="bio-help">{{ profile_values.get('bio',item.get('bio','')) }}</textarea><small id="bio-help" class="text-secondary">Tùy chọn · Tối đa 300 ký tự.</small></div>
+    <div class="col-12"><div class="form-status" data-form-status role="status" aria-live="polite" hidden></div></div>
+    <div class="col-12 d-flex flex-wrap gap-2"><button class="btn btn-primary" type="submit">Lưu thay đổi</button><button class="btn btn-outline-secondary" type="reset">Hủy chỉnh sửa</button></div>
+  </form>
+</section>
+<section class="detail-section profile-security" aria-labelledby="security-section-title">
+  <div class="profile-section-heading"><span class="module-symbol">{{ icon('check',24) }}</span><div><h2 id="security-section-title" class="h5">Bảo mật tài khoản</h2><p class="small text-secondary mb-0">Giữ tài khoản luôn thuộc về bạn.</p></div></div>
+  <p class="small text-secondary">Mật khẩu mới dài 8–128 ký tự, khác mật khẩu hiện tại; tránh mật khẩu dễ đoán hoặc chứa email của bạn.</p>
+  {% include 'auth/_password_form.html' %}
+</section>
+</div>
+</div>
 {% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/account.js', v='1') }}"></script>{% endblock %}

@@ -121,7 +121,7 @@ def api_quote():
 def checkout_page(key, values=None, error=None, status=200):
     quote = checkout_service.get_quote(g.current_user, key)
     profile = own.profile(g.current_user)
-    values = values if values is not None else {'fullName': profile['fullName'], 'address': profile.get('address', ''), 'phone': ''}
+    values = values if values is not None else {'fullName': profile['fullName'], 'address': profile.get('address', ''), 'phone': profile.get('phone', '')}
     return render_template('auth/checkout.html', quote=quote, values=values, error=error,
                            offers=promotion_offer_service.for_cart(g.current_user)), status
 

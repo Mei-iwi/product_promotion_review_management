@@ -1,14 +1,13 @@
-{% extends 'base.html' %}{% block title %}Khách hàng{% endblock %}{% block content %}<h1 class="h3">Danh sách khách hàng
-</h1><a class="btn btn-primary btn-sm mb-2" href="{{ url_for('web.customer_create_form') }}">Thêm mới</a>
-<form class="row g-2 my-3">
-    <div class="col-md-4"><input class="form-control" name="q" placeholder="Tên hoặc email"></div>
-    <div class="col-md-3"><select class="form-select" name="level">
-            <option value="">Mọi hạng</option>
-            <option value="normal">Thường</option>
-            <option value="silver">Bạc</option>
-            <option value="gold">Vàng</option>
+{% extends 'base.html' %}{% block title %}Khách hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách khách hàng</h1><p>Tra cứu và quản lý thông tin khách hàng.</p></div>{% if can('customers.create') %}<a class="btn btn-primary" href="{{ url_for('web.customer_create_form') }}">Thêm mới</a>{% endif %}</div>
+<form class="row g-3 filter-panel" method="get" aria-label="Bộ lọc danh sách">
+    <div class="col-md-4"><label class="form-label" for="filter-q">Tìm kiếm</label><input id="filter-q" class="form-control" name="q" placeholder="Tên hoặc email" value="{{ request.args.get('q','') }}"></div>
+    <div class="col-md-3"><label class="form-label" for="filter-level">Hạng khách hàng</label><select id="filter-level" class="form-select" name="level">
+            <option value="" {{ 'selected' if request.args.get('level','') == '' else '' }}>Mọi hạng</option>
+            <option value="normal" {{ 'selected' if request.args.get('level','') == 'normal' else '' }}>Thường</option>
+            <option value="silver" {{ 'selected' if request.args.get('level','') == 'silver' else '' }}>Bạc</option>
+            <option value="gold" {{ 'selected' if request.args.get('level','') == 'gold' else '' }}>Vàng</option>
         </select></div>
-    <div class="col"><button class="btn btn-primary">Lọc</button></div>
+    <div class="col-12 d-flex flex-wrap gap-2"><button class="btn btn-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" href="{{ url_for(request.endpoint) }}">Đặt lại bộ lọc</a></div>
 </form>
 <div class="table-responsive">
     <table class="table table-striped">

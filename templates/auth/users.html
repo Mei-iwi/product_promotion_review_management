@@ -11,7 +11,7 @@
   <div><button class="btn btn-primary">Lọc tài khoản</button> <a class="btn btn-outline-secondary" href="{{ url_for('auth.users') }}">Xóa bộ lọc</a></div>
 </form>
 <div class="table-responsive"><table class="table"><thead><tr><th>Email</th><th>Vai trò</th><th>Trạng thái</th><th>Đăng nhập gần nhất</th><th>Thao tác</th></tr></thead><tbody>
-{% for u in rows %}<tr><td>{{ u.email }}</td><td>{{ role_labels.get(u.role,u.role) }}</td><td>{{ user_status_labels.get(u.status,u.status) }}</td><td>{{ u.lastLoginAt|datevn }}</td><td>
+{% for u in rows %}<tr><td>{{ u.email }}</td><td>{{ role_labels.get(u.role,u.role) }}</td><td><span class="status-badge status-{{ 'success' if u.status == 'active' else ('warning' if u.status == 'locked' else 'secondary') }}">{{ user_status_labels.get(u.status,u.status) }}</span></td><td>{{ u.lastLoginAt|datevn }}</td><td>
 {% if can('users.update') %}<a href="{{ url_for('auth.edit_user', user_id=u.id) }}">{% if u.status == 'locked' %}Mở khóa / Cập nhật{% elif u.status == 'disabled' %}Kích hoạt / Cập nhật{% else %}Quản lý / Đặt lại mật khẩu{% endif %}</a>{% endif %}</td></tr>
 {% else %}<tr><td colspan="5" class="empty-state">Không có tài khoản phù hợp</td></tr>{% endfor %}
 </tbody></table></div>

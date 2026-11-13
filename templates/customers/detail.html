@@ -1,5 +1,5 @@
 {% extends 'base.html' %}{% block title %}Chi tiết khách hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">{{ item.fullName }}</h1><p>{{ item.customerCode }}</p></div><div class="page-actions"><a class="btn btn-outline-secondary" href="{{ url_for('web.customers') }}">← Quay lại</a><a class="btn btn-primary" href="{{ url_for('web.customer_edit_form', code=item.customerCode) }}">Cập nhật</a></div></div>
-<table class="table">
+<div class="table-responsive"><table class="table">
     <tr>
         <th>Mã</th>
         <td>{{ item.customerCode }}</td>
@@ -24,7 +24,7 @@
         <th>Tổng doanh thu</th>
         <td>{{ orders|sum(attribute='totalAmount')|money }}</td>
     </tr>
-</table>
+</table></div>
 <h2 class="h5">Đơn hàng gần đây</h2>
 <div class="d-flex flex-wrap gap-2 mb-3">{% for o in orders %}<a class="btn btn-outline-primary btn-sm" href="{{ url_for('web.order_detail', code=o.orderCode) }}">Xem {{ o.orderCode }} · {{ o.totalAmount|money }}</a>{% else %}<span class="text-secondary">Chưa có</span>{% endfor %}</div>
 <h2 class="h5">Lịch sử đánh giá</h2>

@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-6">
         <img data-product-image src="{{ (item.image or item.imageUrl)|product_image }}" alt="{{ item.name }}" class="shop-product-image mb-3" loading="lazy">
-        <table class="table">
+        <div class="table-responsive"><table class="table">
             <tr>
                 <th>Danh mục</th>
                 <td>{{ item.category.categoryName }} ({{ item.category.categoryCode }})</td>
@@ -24,16 +24,16 @@
                 <th>Nhãn</th>
                 <td>{{ item.tags|join(', ') }}</td>
             </tr>
-        </table>
+        </table></div>
     </div>
     <div class="col-md-6">
         <h2 class="h5">Thuộc tính</h2>
-        <table class="table">{% for key,value in item.attributes.items() %}<tr>
+        <div class="table-responsive"><table class="table">{% for key,value in item.attributes.items() %}<tr>
                 <th>{{ key }}</th>
                 <td>{{ value }}</td>
             </tr>{% else %}<tr>
                 <td>Chưa có</td>
-            </tr>{% endfor %}</table>
+            </tr>{% endfor %}</table></div>
     </div>
 </div>
 {% if can('promotions.read') %}<h2 class="h5 mt-3">Khuyến mãi có thể áp dụng</h2>

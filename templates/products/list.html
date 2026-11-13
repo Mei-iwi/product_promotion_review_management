@@ -1,29 +1,29 @@
 {% extends 'base.html' %}{% block title %}Sản phẩm{% endblock %}{% block content %}
-<div class="d-flex justify-content-between">
+<div class="page-heading">
     <h1 class="h3">Danh sách sản phẩm</h1><div><span class="text-secondary me-2">{{ total }} sản phẩm</span>{% if can('products.create') %}<a class="btn btn-primary btn-sm" href="{{ url_for('web.product_create_form') }}">Thêm mới</a>{% endif %}</div>
 </div>
-<form class="row g-2 my-3">
-    <div class="col-md-3"><input class="form-control" name="q" value="{{ request.args.get('q','') }}"
+<form class="row g-3 filter-panel" method="get" aria-label="Bộ lọc danh sách">
+    <div class="col-md-3"><label class="form-label" for="filter-q">Tìm kiếm</label><input id="filter-q" class="form-control" name="q" value="{{ request.args.get('q','') }}"
             placeholder="Tên sản phẩm"></div>
-    <div class="col-md-2"><input class="form-control" name="category" value="{{ request.args.get('category','') }}"
+    <div class="col-md-2"><label class="form-label" for="filter-category">Mã danh mục</label><input id="filter-category" class="form-control" name="category" value="{{ request.args.get('category','') }}"
             placeholder="Mã danh mục"></div>
-    <div class="col-md-2"><input class="form-control" name="brand" value="{{ request.args.get('brand','') }}"
+    <div class="col-md-2"><label class="form-label" for="filter-brand">Thương hiệu</label><input id="filter-brand" class="form-control" name="brand" value="{{ request.args.get('brand','') }}"
             placeholder="Thương hiệu"></div>
-    <div class="col-md-2"><select class="form-select" name="status">
-            <option value="">Mọi trạng thái</option>
-            <option value="active">Đang hoạt động</option>
-            <option value="inactive">Ngừng hoạt động</option>
+    <div class="col-md-2"><label class="form-label" for="filter-status">Trạng thái</label><select id="filter-status" class="form-select" name="status">
+            <option value="" {{ 'selected' if request.args.get('status','') == '' else '' }}>Mọi trạng thái</option>
+            <option value="active" {{ 'selected' if request.args.get('status','') == 'active' else '' }}>Đang hoạt động</option>
+            <option value="inactive" {{ 'selected' if request.args.get('status','') == 'inactive' else '' }}>Ngừng hoạt động</option>
         </select></div>
-    <div class="col-md-2"><select class="form-select" name="sort">
-            <option value="">Giá tăng</option>
-            <option value="price_desc">Giá giảm</option>
+    <div class="col-md-2"><label class="form-label" for="filter-sort">Sắp xếp</label><select id="filter-sort" class="form-select" name="sort">
+            <option value="" {{ 'selected' if request.args.get('sort','') == '' else '' }}>Giá tăng</option>
+            <option value="price_desc" {{ 'selected' if request.args.get('sort','') == 'price_desc' else '' }}>Giá giảm</option>
         </select></div>
-    <div class="col"><button class="btn btn-primary">Lọc</button></div>
-    <div class="col-md-2"><input type="number" min="0" class="form-control" name="min_price" placeholder="Giá từ"></div>
-    <div class="col-md-2"><input type="number" min="0" class="form-control" name="max_price" placeholder="Giá đến">
+    <div class="col-12 d-flex flex-wrap gap-2"><button class="btn btn-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" href="{{ url_for(request.endpoint) }}">Đặt lại bộ lọc</a></div>
+<div class="col-12"><details {{ 'open' if request.args.get('min_price') or request.args.get('max_price') or request.args.get('tag') else '' }}><summary>Bộ lọc nâng cao</summary><div class="row g-3">    <div class="col-md-2"><label class="form-label" for="filter-min_price">Giá từ (₫)</label><input id="filter-min_price" type="number" min="0" class="form-control" name="min_price" placeholder="Giá từ" value="{{ request.args.get('min_price','') }}"></div>
+    <div class="col-md-2"><label class="form-label" for="filter-max_price">Giá đến (₫)</label><input id="filter-max_price" type="number" min="0" class="form-control" name="max_price" placeholder="Giá đến" value="{{ request.args.get('max_price','') }}">
     </div>
-    <div class="col-md-2"><input class="form-control" name="tag" placeholder="Nhãn"></div>
-</form>
+    <div class="col-md-2"><label class="form-label" for="filter-tag">Nhãn</label><input id="filter-tag" class="form-control" name="tag" placeholder="Nhãn" value="{{ request.args.get('tag','') }}"></div>
+</div></details></div></form>
 <div class="table-responsive">
     <table class="table table-striped align-middle">
         <thead>
@@ -51,7 +51,7 @@
             </tr>{% endfor %}</tbody>
     </table>
 </div>
-<nav><a class="btn btn-outline-secondary btn-sm {% if page <= 1 %}disabled{% endif %}" href="?page={{ page-1 }}">Trang
+<nav class="d-flex flex-wrap gap-2 mt-4" aria-label="Phân trang sản phẩm quản trị"><a class="btn btn-outline-secondary btn-sm {% if page <= 1 %}disabled{% endif %}" href="{{ url_for('web.products', **dict(request.args.to_dict(), page=page-1)) }}"{% if page <= 1 %} aria-disabled="true" tabindex="-1"{% endif %}>Trang
         trước</a> <a class="btn btn-outline-secondary btn-sm {% if page*10 >= total %}disabled{% endif %}"
-        href="?page={{ page+1 }}">Trang sau</a></nav>
+        href="{{ url_for('web.products', **dict(request.args.to_dict(), page=page+1)) }}"{% if page*10 >= total %} aria-disabled="true" tabindex="-1"{% endif %}>Trang sau</a></nav>
 {% endblock %}

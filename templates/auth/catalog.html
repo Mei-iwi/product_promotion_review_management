@@ -1,18 +1,21 @@
 {% extends 'base.html' %}{% block title %}Mua sắm · Danh mục{% endblock %}{% block content %}
-<div class="page-heading"><div><h1 class="h3">Khám phá sản phẩm</h1><p>Chọn sản phẩm yêu thích · Thanh toán COD · Miễn phí giao hàng</p></div><span>{{ total }} sản phẩm</span></div>
-<form class="row g-3 filter-panel" method="get">
+<section class="shop-hero" aria-labelledby="catalog-title">
+<div><span class="eyebrow">MỖI NGÀY, MỘT ĐIỀU YÊU THÍCH</span><h1 id="catalog-title">Khám phá sản phẩm.<br><span>Tìm điều bạn thích.</span></h1><p>Từ thiết bị công nghệ đến phụ kiện hằng ngày. Lựa chọn dễ dàng, mua sắm thật an tâm.</p><div class="hero-pills"><span>{{ icon('truck',18) }} Miễn phí giao hàng</span><span>{{ icon('bag',18) }} Thanh toán COD</span></div></div>
+<div class="hero-art" aria-hidden="true"><span class="hero-spark">{{ icon('star',24) }}</span><div class="hero-disc">{{ icon('bag',92) }}</div><span class="hero-label">Một chút mới, nhiều niềm vui.</span></div>
+</section>
+<form class="row g-3 filter-panel" method="get" aria-label="Tìm kiếm và lọc sản phẩm">
 <div class="col-md-4"><label for="search" class="form-label">Tên sản phẩm</label><input id="search" class="form-control" name="q" maxlength="100" value="{{ filters.q }}" placeholder="Tìm sản phẩm bạn cần"></div>
 <div class="col-md-3"><label for="category" class="form-label">Nhóm sản phẩm</label><select id="category" class="form-select" name="category"><option value="">Tất cả nhóm</option>{% for c in categories %}<option value="{{ c._id }}" {{ 'selected' if filters.category == c._id else '' }}>{{ c.name }}</option>{% endfor %}</select></div>
 <div class="col-md-3"><label for="brand" class="form-label">Thương hiệu</label><select id="brand" class="form-select" name="brand"><option value="">Tất cả thương hiệu</option>{% for b in brands %}<option {{ 'selected' if filters.brand == b else '' }}>{{ b }}</option>{% endfor %}</select></div>
 <div class="col-md-2"><label for="sort" class="form-label">Sắp xếp</label><select id="sort" class="form-select" name="sort">{% for value,label in [('name','Theo tên'),('price_asc','Giá tăng dần'),('price_desc','Giá giảm dần')] %}<option value="{{ value }}" {{ 'selected' if filters.sort == value else '' }}>{{ label }}</option>{% endfor %}</select></div>
 <div><button class="btn btn-primary">Tìm sản phẩm</button> <a class="btn btn-outline-secondary" href="{{ url_for('auth.catalog') }}">Đặt lại bộ lọc</a></div></form>
+<div class="catalog-section-heading"><h2>Sản phẩm dành cho bạn</h2><span class="result-count">{{ total }} sản phẩm</span></div>
 <div class="row g-4">{% for row in rows %}<div class="col-sm-6 col-lg-4 col-xl-3"><article class="card shop-product h-100">
-<a href="{{ url_for('auth.public_product', code=row.productCode) }}"><img data-product-image class="shop-product-image" src="{{ row.image }}" alt="{{ row.name }}" loading="lazy"></a>
+<a class="product-image-link" href="{{ url_for('auth.public_product', code=row.productCode) }}" tabindex="-1" aria-hidden="true"><img data-product-image class="shop-product-image" src="{{ row.image }}" alt="{{ row.name }}" loading="lazy"></a>
 <div class="card-body d-flex flex-column"><p class="small text-secondary mb-2">{{ row.brand }}</p><h2 class="h6 flex-grow-1"><a href="{{ url_for('auth.public_product', code=row.productCode) }}">{{ row.name }}</a></h2>
-<p class="shop-price">{{ row.price|money }}</p><p class="small">{% if row.reviewCount %}★ {{ row.avgRating }}/5 · {{ row.reviewCount }} đánh giá{% else %}Chưa có đánh giá{% endif %}</p>
-<p class="{{ 'text-success' if row.inStock else 'text-danger' }}">{{ 'Còn hàng' if row.inStock else 'Hết hàng' }}</p>
+<p class="shop-price">{{ row.price|money }}</p><div class="product-meta"><span>{% if row.reviewCount %}<span class="rating-star" aria-hidden="true">★</span> {{ row.avgRating }}/5 · {{ row.reviewCount }} đánh giá{% else %}Chưa có đánh giá{% endif %}</span><span class="{{ 'text-success' if row.inStock else 'text-danger' }}">{{ 'Còn hàng' if row.inStock else 'Hết hàng' }}</span></div>
 {% if can('cart.manage_own') and row.inStock %}<form method="post" action="{{ url_for('shop.add') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="productCode" value="{{ row.productCode }}"><input type="hidden" name="quantity" value="1"><button class="btn btn-primary w-100" type="submit">Thêm vào giỏ</button></form>
 {% elif not current_user %}<a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">Đăng nhập để mua</a>{% else %}<a class="btn btn-outline-secondary" href="{{ url_for('auth.public_product', code=row.productCode) }}">Xem chi tiết</a>{% endif %}
-</div></article></div>{% else %}<div class="empty-state"><h2 class="h5">Không có sản phẩm phù hợp</h2><a href="{{ url_for('auth.catalog') }}">Xóa bộ lọc và xem tất cả</a></div>{% endfor %}</div>
+</div></article></div>{% else %}<div class="empty-state">{{ icon('search',40) }}<h2 class="h5">Không có sản phẩm phù hợp</h2><a href="{{ url_for('auth.catalog') }}">Xóa bộ lọc và xem tất cả</a></div>{% endfor %}</div>
 <nav class="d-flex gap-3 align-items-center mt-4" aria-label="Phân trang sản phẩm">{% if page > 1 %}<a class="btn btn-outline-secondary" rel="prev" href="{{ page_url(page-1) }}">Trang trước</a>{% endif %}<span>Trang {{ page }} / {{ pages }}</span>{% if page < pages %}<a class="btn btn-outline-secondary" rel="next" href="{{ page_url(page+1) }}">Trang sau</a>{% endif %}</nav>
 {% endblock %}

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}{% block title %}Đơn hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách đơn hàng</h1><p>Tra cứu mặt hàng, khách hàng và khuyến mãi đã áp dụng</p></div></div>
-<form class="row g-2 my-3">
-    <div class="col-md-3"><input class="form-control" name="customerCode" placeholder="Mã khách hàng"></div>
-    <div class="col-md-2"><select class="form-select" name="status">
-            <option value="">Mọi trạng thái</option>
-            <option value="pending">Chờ xác nhận</option>
-            <option value="confirmed">Đã xác nhận</option>
-            <option value="completed">Hoàn tất</option>
-            <option value="cancelled">Đã hủy</option>
+<form class="row g-3 filter-panel" method="get" aria-label="Bộ lọc danh sách">
+    <div class="col-md-3"><label class="form-label" for="filter-customerCode">Mã khách hàng</label><input id="filter-customerCode" class="form-control" name="customerCode" placeholder="Mã khách hàng" value="{{ request.args.get('customerCode','') }}"></div>
+    <div class="col-md-2"><label class="form-label" for="filter-status">Trạng thái</label><select id="filter-status" class="form-select" name="status">
+            <option value="" {{ 'selected' if request.args.get('status','') == '' else '' }}>Mọi trạng thái</option>
+            <option value="pending" {{ 'selected' if request.args.get('status','') == 'pending' else '' }}>Chờ xác nhận</option>
+            <option value="confirmed" {{ 'selected' if request.args.get('status','') == 'confirmed' else '' }}>Đã xác nhận</option>
+            <option value="completed" {{ 'selected' if request.args.get('status','') == 'completed' else '' }}>Hoàn tất</option>
+            <option value="cancelled" {{ 'selected' if request.args.get('status','') == 'cancelled' else '' }}>Đã hủy</option>
         </select></div>
-    <div class="col-md-3"><input class="form-control" name="productCode" placeholder="Mã sản phẩm trong đơn"></div>
-    <div class="col"><button class="btn btn-primary">Lọc</button></div>
+    <div class="col-md-3"><label class="form-label" for="filter-productCode">Mã sản phẩm</label><input id="filter-productCode" class="form-control" name="productCode" placeholder="Mã sản phẩm trong đơn" value="{{ request.args.get('productCode','') }}"></div>
+    <div class="col-12 d-flex flex-wrap gap-2"><button class="btn btn-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" href="{{ url_for(request.endpoint) }}">Đặt lại bộ lọc</a></div>
 </form>
 <div class="table-responsive">
     <table class="table table-striped">

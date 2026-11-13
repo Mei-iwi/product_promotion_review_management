@@ -1,11 +1,30 @@
 {% extends 'base.html' %}{% block title %}Mã giảm giá{% endblock %}{% block content %}
-<div class="page-heading"><div><h1 class="h3">Mã giảm giá</h1><p>Khám phá ưu đãi và chọn mã phù hợp cho đơn hàng của bạn.</p></div><a class="btn btn-outline-primary" href="{{ url_for('auth.catalog') }}">Mua sắm ngay</a></div>
-<p>Mỗi đơn dùng một mã. Ưu đãi được kiểm tra lại khi đặt hàng; xem giỏ để biết số tiền giảm thực tế.</p>
-<div class="row g-3">{% for offer in rows %}<div class="col-md-6 col-xl-4"><article class="detail-section h-100 d-flex flex-column">
-<span class="badge text-bg-light align-self-start mb-2">{{ offer.state }}</span><h2 class="h5">{{ offer.name }}</h2><p class="shop-price">{% if offer.percentage is not none %}Giảm {{ offer.percentage }}%{% else %}Giảm {{ offer.amount|money }}{% endif %}</p><p><strong class="text-break">{{ offer.promoCode }}</strong></p>
-<p>Đơn từ {{ offer.minimum|money }}{% if offer.maximum %} · Giảm tối đa {{ offer.maximum|money }}{% endif %}</p><p>Áp dụng cho: {{ offer.scope }}</p><p class="small text-secondary">{{ offer.startDate|datevn }} – {{ offer.endDate|datevn }}</p>
-{% if offer.promoCode in eligible %}<p class="text-success">Phù hợp giỏ của bạn · Giảm {{ eligible[offer.promoCode]|money }}</p><form class="mt-auto" method="post" action="{{ url_for('shop.apply_promo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="promoCode" value="{{ offer.promoCode }}"><button class="btn btn-primary" type="submit">Dùng mã này</button></form>
-{% elif can('cart.read_own') %}<a class="btn btn-outline-primary mt-auto" href="{{ url_for('shop.cart') }}">{{ 'Xem giỏ và điều kiện' if offer.available else 'Xem giỏ hàng' }}</a>{% elif not current_user %}<a class="btn btn-outline-primary mt-auto" href="{{ url_for('auth.login') }}">Đăng nhập để mua hàng</a>{% endif %}
-</article></div>{% else %}<p>Hiện chưa có mã giảm giá. Vui lòng quay lại sau.</p>{% endfor %}</div>
-<nav aria-label="Phân trang mã giảm giá" class="d-flex flex-wrap align-items-center gap-3 mt-4">{% if page > 1 %}<a class="btn btn-outline-secondary" href="{{ url_for('shop.vouchers',page=page-1) }}">Trang trước</a>{% endif %}<span>Trang {{ page }} / {{ pages }}</span>{% if page < pages %}<a class="btn btn-outline-secondary" href="{{ url_for('shop.vouchers',page=page+1) }}">Trang sau</a>{% endif %}</nav>
+<div class="page-heading voucher-page-heading"><div><span class="eyebrow">ƯU ĐÃI CHO BẠN</span><h1 class="h3">Mã giảm giá</h1><p>Chọn ưu đãi phù hợp và áp dụng cho giỏ hàng của bạn.</p></div>{% if can('cart.read_own') %}<a class="btn btn-outline-primary" href="{{ url_for('shop.cart') }}">{{ icon('bag',18) }} Xem giỏ hàng</a>{% else %}<a class="btn btn-outline-primary" href="{{ url_for('auth.catalog') }}">Xem sản phẩm {{ icon('arrow',16) }}</a>{% endif %}</div>
+<div class="voucher-list-heading"><span>{{ total }} mã giảm giá</span><span>Mỗi đơn dùng 1 mã</span></div>
+<div class="row g-4 voucher-grid">
+{% for offer in rows %}{% set usable = offer.promoCode in eligible %}
+<div class="col-md-6 col-xl-4"><article class="voucher-ticket h-100 {{ 'is-eligible' if usable else '' }}">
+  <div class="voucher-ticket-head">
+    <div class="voucher-ticket-status"><span class="voucher-symbol">{{ icon('tag',20) }}</span><span class="status-badge status-{{ 'success' if usable else ('primary' if offer.available else 'secondary') }}">{{ 'Dùng được cho giỏ hàng' if usable else offer.state }}</span></div>
+    <p class="voucher-discount">{% if offer.percentage is not none %}<span>Giảm</span> {{ offer.percentage }}<small>%</small>{% else %}<span>Giảm</span> {{ offer.amount|money }}{% endif %}</p>
+    <h2 class="voucher-title">{{ offer.name }}</h2>
+  </div>
+  <div class="voucher-ticket-body">
+    <div class="voucher-code-row"><code id="voucher-code-{{ loop.index }}">{{ offer.promoCode }}</code><button type="button" class="voucher-copy" data-copy-voucher aria-label="Sao chép mã {{ offer.promoCode }}" aria-describedby="voucher-code-{{ loop.index }}">Sao chép</button></div>
+    <div class="voucher-conditions"><p>{% if offer.minimum %}Đơn từ <strong>{{ offer.minimum|money }}</strong>{% else %}Không yêu cầu giá trị đơn tối thiểu{% endif %}</p>{% if offer.maximum %}<p>Giảm tối đa <strong>{{ offer.maximum|money }}</strong></p>{% endif %}</div>
+    <p class="voucher-expiry">Hạn dùng: <strong>{{ offer.endDate|datevn }}</strong></p>
+    <details class="voucher-details"><summary>Điều kiện sử dụng</summary><dl><dt>Áp dụng cho</dt><dd>{{ offer.scope }}</dd><dt>Thời gian áp dụng</dt><dd>{{ offer.startDate|datevn }} – {{ offer.endDate|datevn }}</dd></dl></details>
+    <div class="voucher-ticket-footer">
+      {% if usable %}<p class="voucher-saving">{{ icon('check',16) }} Giỏ hàng của bạn được giảm <strong>{{ eligible[offer.promoCode]|money }}</strong></p><form method="post" action="{{ url_for('shop.apply_promo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="promoCode" value="{{ offer.promoCode }}"><button class="btn btn-primary w-100" type="submit">Dùng mã này {{ icon('arrow',16) }}</button></form>
+      {% elif not offer.available %}<p class="voucher-unavailable mb-0">Chưa thể sử dụng</p>
+      {% elif can('cart.read_own') %}<a class="btn btn-outline-primary w-100" href="{{ url_for('shop.cart') }}">Kiểm tra với giỏ hàng</a>
+      {% else %}<a class="btn btn-outline-primary w-100" href="{{ url_for('auth.catalog') }}">Xem sản phẩm</a>{% endif %}
+    </div>
+    <p class="voucher-copy-feedback small mb-0" data-copy-feedback role="status" aria-live="polite" hidden></p>
+  </div>
+</article></div>
+{% else %}<div class="col-12"><div class="empty-state">{{ icon('tag',40) }}<h2 class="h5">Chưa có ưu đãi mới</h2><p>Hãy quay lại sau để tìm mã giảm giá cho đơn hàng tiếp theo.</p><a class="btn btn-primary" href="{{ url_for('auth.catalog') }}">Khám phá sản phẩm</a></div></div>{% endfor %}
+</div>
+{% if pages > 1 %}<nav aria-label="Phân trang mã giảm giá" class="d-flex flex-wrap align-items-center justify-content-center gap-3 mt-4">{% if page > 1 %}<a class="btn btn-outline-secondary" rel="prev" href="{{ url_for('shop.vouchers',page=page-1) }}">← Trang trước</a>{% endif %}<span>Trang {{ page }} / {{ pages }}</span>{% if page < pages %}<a class="btn btn-outline-secondary" rel="next" href="{{ url_for('shop.vouchers',page=page+1) }}">Trang sau →</a>{% endif %}</nav>{% endif %}
 {% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/vouchers.js', v='1') }}"></script>{% endblock %}

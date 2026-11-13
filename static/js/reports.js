@@ -20,6 +20,7 @@
     controller = new AbortController();
     content.classList.add('is-loading');
     content.setAttribute('aria-busy', 'true');
+    content.querySelector('[data-report-error]')?.remove();
 
     try {
       const response = await fetch(url, {
@@ -33,6 +34,11 @@
       if (!nextContent) throw new Error('Dữ liệu báo cáo không hợp lệ');
 
       content.replaceChildren(...nextContent.childNodes);
+      content.querySelectorAll('.table-responsive').forEach(region => {
+        region.tabIndex = 0;
+        region.setAttribute('role', 'region');
+        region.setAttribute('aria-label', 'Bảng dữ liệu báo cáo');
+      });
       content.classList.remove('is-loading');
       content.removeAttribute('aria-busy');
       setActiveLink(url);
@@ -41,7 +47,7 @@
       if (error.name === 'AbortError') return;
       content.classList.remove('is-loading');
       content.removeAttribute('aria-busy');
-      content.insertAdjacentHTML('afterbegin', '<div class="alert alert-danger m-3" role="alert">Không thể tải báo cáo. Vui lòng thử lại.</div>');
+      content.insertAdjacentHTML('afterbegin', '<div class="alert alert-danger m-3" role="alert" data-report-error>Không thể tải báo cáo. Vui lòng thử lại.</div>');
     }
   };
 
