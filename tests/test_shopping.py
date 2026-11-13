@@ -94,7 +94,8 @@ def test_catalog_search_filters_pagination_and_privacy(app, client):
     assert rows[0]['image'] == '/static/img/product-placeholder.svg'
     assert not {'stock', 'internalCost', 'attributes'} & set(rows[0])
     html = guest.get('/catalog/SANPHAM2026090007').text
-    assert '128GB' in html and 'supplierPassword' not in html and 'hidden' not in html.replace('type="hidden"', '')
+    # Accessibility icons use aria-hidden; the private fixture value must still be absent.
+    assert '128GB' in html and 'supplierPassword' not in html and 'hidden' not in html.replace('type="hidden"', '').replace('aria-hidden="true"', '')
     assert 'Hết hàng' in html and 'name="quantity"' not in html
     assert guest.get('/api/public/products?q=.*').json['data'] == []
     for query in ['page=0', 'per_page=49', 'sort=stock', 'status=inactive', 'brand[$ne]=x', 'q=' + 'x' * 101]:

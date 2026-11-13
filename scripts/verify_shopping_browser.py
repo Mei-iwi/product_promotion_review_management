@@ -63,10 +63,20 @@ def main():
                 shot(customer, 'product')
                 customer.get_by_role('button', name='Thêm vào giỏ', exact=True).click()
                 customer.wait_for_url(base + '/cart')
-                customer.locator('#promo-choice').select_option('DEMO10')
-                customer.get_by_role('button', name='Áp dụng mã đã chọn', exact=True).click()
-                customer.wait_for_load_state('networkidle')
+                with customer.expect_navigation(wait_until='networkidle'):
+                    customer.locator('#promo-choice').select_option('DEMO10')
                 assert '40.000' in customer.locator('.shop-totals').inner_text()
+                # Quantity changes reprice automatically, retaining the applied code.
+                with customer.expect_navigation(wait_until='networkidle'):
+                    customer.locator('input[name="quantity"]').fill('2')
+                    customer.locator('input[name="quantity"]').press('Tab')
+                assert customer.locator('input[name="quantity"]').input_value() == '2'
+                assert '960.000' in customer.locator('.shop-totals').inner_text()
+                assert '40.000' in customer.locator('.shop-totals').inner_text()
+                with customer.expect_navigation(wait_until='networkidle'):
+                    customer.locator('input[name="quantity"]').fill('1')
+                    customer.locator('input[name="quantity"]').press('Tab')
+                assert '460.000' in customer.locator('.shop-totals').inner_text()
                 shot(customer, 'cart')
 
                 def place(page):
@@ -74,14 +84,14 @@ def main():
                     page.wait_for_url(re.compile(re.escape(base) + r'/checkout/[A-Za-z0-9_-]+$'))
                     page.locator('#phone').fill('0901234567')
                     if page.locator('#promo-choice option[value="DEMO10"]').count():
-                        page.locator('#promo-choice').select_option('')
-                        page.get_by_role('button', name='Áp dụng mã', exact=True).click()
-                        page.wait_for_load_state('networkidle')
+                        order_count = db.orders.count_documents({})
+                        with page.expect_navigation(wait_until='networkidle'):
+                            page.locator('#promo-choice').select_option('')
                         assert page.locator('#phone').input_value() == '0901234567'
                         assert page.locator('#promo-choice').input_value() == ''
-                        page.locator('#promo-choice').select_option('DEMO10')
-                        page.get_by_role('button', name='Áp dụng mã', exact=True).click()
-                        page.wait_for_load_state('networkidle')
+                        with page.expect_navigation(wait_until='networkidle'):
+                            page.locator('#promo-choice').select_option('DEMO10')
+                        assert db.orders.count_documents({}) == order_count
                         assert page.locator('#phone').input_value() == '0901234567'
                         assert '40.000' in page.locator('.shop-totals').inner_text()
                     shot(page, 'checkout')

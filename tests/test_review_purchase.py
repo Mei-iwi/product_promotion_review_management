@@ -43,8 +43,10 @@ def test_review_choices_only_purchased_products_and_account_dropdown(app, login_
     assert 'AirPods Pro thế hệ 2' in html
     assert 'name="productCode"' not in html and 'name="content"' not in html
     assert 'aria-label="Tài khoản khách hàng"' not in html
-    for path in ['/account', '/account/reviews', '/account/change-password']:
+    for path in ['/account', '/account/reviews']:
         assert f'class="dropdown-item" href="{path}"' in html
+    assert 'class="dropdown-item" href="/account/change-password"' not in html
+    assert 'id="password-form"' in client.get('/account').text
     assert 'class="dropdown-item" href="/account/orders"' not in html
     assert 'href="/account/orders"' in html
 
