@@ -1,7 +1,9 @@
-from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
+from datetime import datetime
+from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for, send_file, current_app
+from pymongo.errors import PyMongoError
 from db.mongo import get_db
 from repositories import public_repository
-from services import auth_service as auth, user_service, customer_account_service as own, review_service, catalog_service
+from services import auth_service as auth, user_service, customer_account_service as own, review_service, catalog_service, avatar_service, account_profile_service as profiles
 from services.access_policy import ROLE_PERMISSIONS, LANDINGS
 from services.helpers import ValidationError
 from routes.api_routes import response, body
@@ -42,8 +44,22 @@ def logout():
 @bp.route('/account/change-password', methods=['GET', 'POST'])
 def change_password():
     if request.method == 'POST':
-        auth.change_password(g.current_user, request.form.get('currentPassword'), request.form.get('newPassword'))
+        try:
+            check_form({'currentPassword', 'newPassword', 'confirmPassword'})
+            if not request.form.get('currentPassword'):
+                raise ValidationError('Vui lòng nhập mật khẩu hiện tại')
+            if not request.form.get('confirmPassword') or request.form.get('confirmPassword') != request.form.get('newPassword'):
+                raise ValidationError('Xác nhận mật khẩu mới chưa khớp')
+            auth.change_password(g.current_user, request.form.get('currentPassword'), request.form.get('newPassword'))
+        except (ValidationError, BlockingIOError) as error:
+            status = 409 if isinstance(error, BlockingIOError) else 400
+            if wants_json():
+                return response(None, str(error), status, False)
+            return render_template('auth/password.html', password_error=str(error)), status
         g.clear_auth_cookie = True
+        flash('Đã đổi mật khẩu thành công. Vui lòng đăng nhập lại; các phiên cũ đã được đăng xuất.', 'success')
+        if wants_json():
+            return response({'redirect': '/login'}, 'Đã đổi mật khẩu thành công')
         return redirect('/login')
     return render_template('auth/password.html')
 
@@ -119,13 +135,83 @@ def api_update_user(user_id):
 
 @bp.get('/account')
 def account():
-    return render_template('auth/account.html', item=own.profile(g.current_user))
+    return account_page()
+
+
+def wants_json():
+    return request.accept_mimetypes.best == 'application/json'
+
+
+def check_form(fields, file_fields=()):
+    if (set(request.form) - (set(fields) | {'csrf_token'}) or set(request.files) - set(file_fields)
+            or any(len(request.form.getlist(key)) != 1 for key in request.form)
+            or any(len(request.files.getlist(key)) != 1 for key in request.files)):
+        raise ValidationError('Trường biểu mẫu không được phép hoặc bị lặp')
+
+
+def account_page(error=None, status=200, values=None, section='profile'):
+    from services.shopping_common import VIETNAM
+    return render_template('auth/account.html', item=profiles.profile(g.current_user),
+                           profile_values=values or {}, account_error=error, error_section=section,
+                           today=datetime.now(VIETNAM).date().isoformat()), status
 
 
 @bp.post('/account/profile')
 def profile():
-    own.update_profile(g.current_user, request.form.to_dict())
+    try:
+        check_form({'fullName', 'phone', 'dateOfBirth', 'gender', 'address', 'bio'})
+        row = profiles.update_profile(g.current_user, request.form.to_dict())
+    except (ValidationError, BlockingIOError) as error:
+        status = 409 if isinstance(error, BlockingIOError) else 400
+        if wants_json():
+            return response(None, str(error), status, False)
+        safe = {key: request.form.get(key, '')[:500] for key in ['fullName', 'phone', 'dateOfBirth', 'gender', 'address', 'bio'] if key in request.form}
+        return account_page(str(error), status, safe)
+    if wants_json():
+        return response({key: row.get(key, '') for key in ['fullName', 'phone', 'dateOfBirth', 'gender', 'address', 'bio']}, 'Đã lưu thông tin cá nhân')
+    flash('Đã lưu thông tin cá nhân', 'success')
     return redirect('/account')
+
+
+@bp.get('/account/avatar')
+def avatar():
+    path = avatar_service.image_path(g.current_user)
+    if path:
+        return send_file(path, mimetype='image/webp', download_name='avatar.webp', conditional=False)
+    return send_file(current_app.static_folder + '/img/avatar-default.svg', mimetype='image/svg+xml', conditional=False)
+
+
+def avatar_result(action):
+    try:
+        check_form(set(), {'avatar'} if action == 'upload' else set())
+        if action == 'upload':
+            if 'avatar' not in request.files:
+                raise ValidationError('Vui lòng chọn ảnh đại diện')
+            avatar_service.replace(g.current_user, request.files['avatar'])
+            message = 'Đã cập nhật ảnh đại diện'
+        else:
+            avatar_service.delete(g.current_user)
+            message = 'Đã xóa ảnh đại diện'
+    except (ValidationError, BlockingIOError, PyMongoError, OSError) as error:
+        status = 409 if isinstance(error, BlockingIOError) else (503 if isinstance(error, (PyMongoError, OSError)) else 400)
+        message = str(error) if isinstance(error, (ValidationError, BlockingIOError)) else 'Chưa thể lưu ảnh; vui lòng thử lại sau'
+        if wants_json():
+            return response(None, message, status, False)
+        return account_page(message, status, section='avatar')
+    if wants_json():
+        return response({'avatarUrl': url_for('auth.avatar'), 'hasAvatar': action == 'upload'}, message)
+    flash(message, 'success')
+    return redirect('/account')
+
+
+@bp.post('/account/avatar')
+def upload_avatar():
+    return avatar_result('upload')
+
+
+@bp.post('/account/avatar/delete')
+def delete_avatar():
+    return avatar_result('delete')
 
 
 @bp.get('/account/orders')
@@ -167,7 +253,7 @@ def order_review(code):
 
 @bp.route('/api/account/profile', methods=['GET', 'PUT'])
 def api_profile():
-    return response(own.update_profile(g.current_user, body()) if request.method == 'PUT' else own.profile(g.current_user))
+    return response(profiles.update_profile(g.current_user, body()) if request.method == 'PUT' else profiles.profile(g.current_user))
 
 
 @bp.get('/api/account/orders')

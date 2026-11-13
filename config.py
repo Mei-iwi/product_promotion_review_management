@@ -17,6 +17,7 @@ class Config:
     MAX_CONTENT_LENGTH = 1024 * 1024
     MAX_FORM_MEMORY_SIZE = 1024 * 1024
     MAX_FORM_PARTS = 100
+    AVATAR_STORAGE_DIR = os.getenv('AVATAR_STORAGE_DIR', os.path.join(os.path.dirname(__file__), 'instance', 'avatars'))
     FLASK_HOST = os.getenv("FLASK_HOST", "127.0.0.1")
     FLASK_PORT = int(os.getenv("FLASK_PORT", "5001"))
     CHECKOUT_ENABLED = os.getenv('CHECKOUT_ENABLED', 'false').lower() == 'true'

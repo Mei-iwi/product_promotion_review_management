@@ -1,7 +1,9 @@
 from werkzeug.exceptions import NotFound
+from datetime import date, datetime
+import re
 from db.mongo import get_db
 from repositories import customer_repository, order_repository, review_repository
-from services.access_policy import authorize_object
+from services.access_policy import authorize_object, has_permission
 from services.helpers import ValidationError
 
 
@@ -12,16 +14,62 @@ def profile(principal):
     return row
 
 
+def validate_profile(data):
+    fields = {'fullName', 'phone', 'dateOfBirth', 'gender', 'address', 'bio'}
+    if not isinstance(data, dict) or set(data) - (fields | {'csrf_token'}):
+        raise ValidationError('Trường hồ sơ không được phép')
+    if any(not isinstance(value, str) for value in data.values()):
+        raise ValidationError('Thông tin hồ sơ phải là văn bản')
+    clean = {key: value.strip() for key, value in data.items() if key in fields}
+    for field, maximum, label in [('fullName', 200, 'Họ tên'), ('address', 500, 'Địa chỉ'), ('bio', 300, 'Giới thiệu')]:
+        if field in clean and (len(clean[field]) > maximum or (field == 'fullName' and not clean[field])):
+            raise ValidationError(f'{label} không hợp lệ (tối đa {maximum} ký tự)')
+    if clean.get('phone'):
+        phone = re.sub(r'[ .()\-]', '', clean['phone'])
+        if not re.fullmatch(r'(?:0|\+84)(?:[35789]\d{8}|2\d{9})', phone, flags=re.ASCII):
+            raise ValidationError('Số điện thoại Việt Nam không hợp lệ')
+        clean['phone'] = phone
+    if clean.get('dateOfBirth'):
+        from services.shopping_common import VIETNAM
+        try:
+            value = date.fromisoformat(clean['dateOfBirth'])
+            if value.isoformat() != clean['dateOfBirth'] or value > datetime.now(VIETNAM).date():
+                raise ValueError()
+        except ValueError as error:
+            raise ValidationError('Ngày sinh phải hợp lệ và không ở tương lai') from error
+    if clean.get('gender', '') not in {'', 'male', 'female', 'other', 'undisclosed'}:
+        raise ValidationError('Giới tính không hợp lệ')
+    return clean
+
+
 def update_profile(principal, data):
-    if set(data) - {'fullName', 'address', 'csrf_token'}:
-        raise ValidationError('Chỉ được cập nhật họ tên và địa chỉ')
-    row = profile(principal)
-    if not authorize_object(principal, 'customers.update_own_profile', row):
+    clean = validate_profile(data)
+    from repositories.security_repository import user_mutation_lock
+    with user_mutation_lock():
+        row = mutable_profile(principal)
+        # Omitted fields stay unchanged. Explicitly empty optional fields are removed.
+        changes = {}
+        if any(clean.values()):
+            changes['$set'] = {key: value for key, value in clean.items() if value}
+        if any(not value for value in clean.values()):
+            changes['$unset'] = {key: '' for key, value in clean.items() if not value}
+        if changes:
+            get_db().customers.update_one({'_id': row['_id'], 'customerCode': row['customerCode']}, changes)
+        return customer_repository.find_by_code(row['customerCode'])
+
+
+def mutable_profile(principal):
+    """Called under the shared account lock, preventing a concurrent relink/revoke."""
+    from services.auth_service import usable_user
+    from werkzeug.exceptions import Forbidden
+    fresh = get_db().users.find_one({'_id': (principal or {}).get('_id')})
+    if (not usable_user(fresh) or fresh.get('authVersion') != principal.get('authVersion')
+            or not has_permission(fresh, 'customers.update_own_profile')):
+        raise Forbidden()
+    row = profile(fresh)
+    if not authorize_object(fresh, 'customers.update_own_profile', row):
         raise NotFound()
-    clean = {key: value.strip() for key, value in data.items() if key in {'fullName', 'address'} and isinstance(value, str)}
-    if not clean.get('fullName') or len(clean['fullName']) > 200 or len(clean.get('address', '')) > 500:
-        raise ValidationError('Thông tin hồ sơ không hợp lệ')
-    return customer_repository.update(row['customerCode'], clean)
+    return row
 
 
 def orders(principal, status=''):

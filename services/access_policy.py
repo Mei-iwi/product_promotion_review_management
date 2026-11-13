@@ -1,6 +1,7 @@
 """Single source of role permissions; roles have no implicit hierarchy."""
 PUBLIC_PERMISSIONS = frozenset({'products.public_read', 'reviews.public_read_approved'})
-ACCOUNT = {'account.change_own_password', 'account.logout', 'promotions.view_offers'}
+ACCOUNT = {'account.change_own_password', 'account.logout', 'promotions.view_offers',
+           'account.read_own_profile', 'account.update_own_profile'}
 PRODUCT_READ = {'products.read_internal'}
 PRODUCT_WRITE = {'products.create', 'products.update', 'products.delete_test'}
 PROMOTIONS = {'promotions.read', 'promotions.create', 'promotions.update'}
@@ -44,6 +45,8 @@ def has_permission(principal, permission):
 def authorize_object(principal, action, obj):
     if not principal or not obj or not has_permission(principal, action):
         return False
+    if action in {'account.read_own_profile', 'account.update_own_profile'}:
+        return obj.get('_id') == principal.get('_id')
     if action in OWN | SHOPPING:
         owner = obj.get('customerCode') or obj.get('customer', {}).get('customerCode')
         if action.startswith('cart.') and obj.get('userId') != principal['_id']:

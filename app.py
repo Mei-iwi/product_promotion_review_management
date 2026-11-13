@@ -44,6 +44,8 @@ def create_app(config=None, mongo_client=None):
     register_cli(app)
     from services.shopping_cli import register_cli as shopping_cli
     shopping_cli(app)
+    from services.avatar_service import register_cli as avatar_cli
+    avatar_cli(app)
 
     @app.after_request
     def disable_development_cache(response):
