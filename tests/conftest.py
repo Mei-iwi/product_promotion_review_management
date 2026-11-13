@@ -11,7 +11,9 @@ from app import create_app
 @pytest.fixture()
 def app():
     mongo = mongomock.MongoClient()
-    app = create_app({"TESTING": True, "MONGO_DB": "QL_KHUYENMAI_DANHGIA_TEST", "SECRET_KEY": "test"}, mongo)
+    app = create_app({"TESTING": True, "APP_ENV": "development", "AUTH_COOKIE_SECURE": False,
+                      "AUTH_COOKIE_NAME": "dev-auth", "SESSION_COOKIE_SECURE": False,
+                      "MONGO_DB": "QL_KHUYENMAI_DANHGIA_TEST", "SECRET_KEY": "test"}, mongo)
     db = app.extensions["mongo_db"]
     db.products.create_index("productCode", unique=True)
     db.customers.create_index("customerCode", unique=True)
@@ -32,6 +34,48 @@ def app():
     yield app
 
 
+@pytest.fixture(scope='session')
+def account_password():
+    import secrets
+    return 'test phrase ' + secrets.token_urlsafe(24)
+
+
 @pytest.fixture()
-def client(app): return app.test_client()
+def login_as(app, account_password):
+    import re
+    from services import auth_service as auth
+    def login(role='ADMIN', customer='KHACHHANG20260001', client=None):
+        client = client or app.test_client()
+        with app.app_context():
+            db = app.extensions['mongo_db']
+            admin = db.users.find_one({'role': 'ADMIN'})
+            if not admin:
+                admin = auth.create_user({'email': 'admin@example.test', 'password': account_password, 'role': 'ADMIN'}, bootstrap=True)
+            email = role.lower() + ('-' + customer if role == 'CUSTOMER' else '') + '@example.test'
+            if role == 'ADMIN':
+                email = admin['email']
+            elif not db.users.find_one({'emailNormalized': auth.normalize_email(email)}):
+                data = {'email': email, 'password': account_password, 'role': role}
+                if role == 'ACCOUNT_MANAGER': data['actorPassword'] = account_password
+                if role == 'CUSTOMER': data['customerCode'] = customer
+                auth.create_user(data, admin)
+        html = client.get('/login').get_data(as_text=True)
+        token = re.search(r'name="csrf-token" content="([^"]+)"', html)[1]
+        result = client.post('/login', data={'email': email, 'password': account_password, 'csrf_token': token})
+        assert result.status_code == 302
+        return client
+    return login
+
+
+@pytest.fixture()
+def client(login_as):
+    return login_as('ADMIN')
+
+
+@pytest.fixture()
+def csrf():
+    import re
+    def token(client):
+        return re.search(r'name="csrf-token" content="([^"]+)"', client.get('/catalog').get_data(as_text=True))[1]
+    return token
 
