@@ -84,8 +84,8 @@ def test_http_session_expiration(app, client, field):
 def test_change_password_revokes_other_browser(app, login_as, csrf, account_password):
     c = login_as('ADMIN')
     other = login_as('ADMIN')
-    assert c.post('/account/change-password', data={'currentPassword': 'wrong', 'newPassword': 'new mountain river tulip evening', 'csrf_token': csrf(c)}).status_code == 400
-    assert c.post('/account/change-password', data={'currentPassword': account_password, 'newPassword': 'new mountain river tulip evening', 'csrf_token': csrf(c)}).status_code == 302
+    assert c.post('/account/change-password', data={'currentPassword': 'wrong', 'newPassword': 'new mountain river tulip evening', 'confirmPassword': 'new mountain river tulip evening', 'csrf_token': csrf(c)}).status_code == 400
+    assert c.post('/account/change-password', data={'currentPassword': account_password, 'newPassword': 'new mountain river tulip evening', 'confirmPassword': 'new mountain river tulip evening', 'csrf_token': csrf(c)}).status_code == 302
     assert other.get('/api/products').status_code == 401
 
 
