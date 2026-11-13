@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from pymongo.database import Database
+from flask import current_app, has_app_context
 
 _client: MongoClient | None = None
 _database: Database | None = None
@@ -17,6 +18,8 @@ def init_mongo(app, client=None) -> Database:
 
 
 def get_db() -> Database:
+    if has_app_context():
+        return current_app.extensions["mongo_db"]
     if _database is None:
         raise RuntimeError("MongoDB chưa được khởi tạo")
     return _database

@@ -1,11 +1,12 @@
 from db.mongo import get_db
+import re
 
 
 def find_customers(filters=None):
     filters = filters or {}
     query = {}
     if filters.get("q"):
-        query["$or"] = [{"fullName": {"$regex": filters["q"], "$options": "i"}}, {"email": {"$regex": filters["q"], "$options": "i"}}]
+        query["$or"] = [{"fullName": {"$regex": re.escape(filters["q"][:200]), "$options": "i"}}, {"email": {"$regex": re.escape(filters["q"][:200]), "$options": "i"}}]
     for key in ("level", "status"):
         if filters.get(key):
             query[key] = filters[key]

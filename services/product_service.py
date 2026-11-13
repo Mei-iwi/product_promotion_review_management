@@ -1,10 +1,13 @@
 from pymongo.errors import DuplicateKeyError
 from repositories import product_repository as repo
-from services.helpers import ValidationError, required
+from services.helpers import ValidationError, required, whitelist
 
 
 def list_products(filters=None, page=1, per_page=10, sort=""):
-    return repo.find_products(filters, max(1, int(page)), min(100, max(1, int(per_page))), sort)
+    try:
+        return repo.find_products(filters, max(1, int(page)), min(100, max(1, int(per_page))), sort)
+    except (ValueError, OverflowError) as exc:
+        raise ValidationError('Bộ lọc sản phẩm không hợp lệ') from exc
 
 
 def get_product(code):
@@ -12,8 +15,11 @@ def get_product(code):
 
 
 def validate(data, creating=False):
+    whitelist(data, ['productCode', 'name', 'brand', 'category', 'price', 'stock', 'status', 'attributes', 'tags'],
+              object_fields=['category', 'attributes'], list_fields=['tags'], number_fields=['price', 'stock'])
     required(data, ["productCode", "name", "brand", "category", "price", "stock", "status"] if creating else ["name", "brand", "category", "price", "stock", "status"])
     category = data.get("category", {})
+    whitelist(category, ['categoryCode', 'categoryName'])
     if not isinstance(category, dict) or not category.get("categoryCode") or not category.get("categoryName"):
         raise ValidationError("Danh mục phải có mã và tên")
     for field in ("price", "stock"):

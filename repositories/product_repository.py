@@ -1,11 +1,12 @@
 from db.mongo import get_db
+import re
 
 
 def find_products(filters=None, page=1, per_page=10, sort=""):
     filters = filters or {}
     query = {}
     if filters.get("q"):
-        query["name"] = {"$regex": filters["q"], "$options": "i"}
+        query["name"] = {"$regex": re.escape(filters["q"][:200]), "$options": "i"}
     mappings = {"category": "category.categoryCode", "brand": "brand", "status": "status", "tag": "tags"}
     for source, target in mappings.items():
         if filters.get(source):
