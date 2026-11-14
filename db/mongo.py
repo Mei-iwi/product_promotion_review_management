@@ -8,6 +8,8 @@ _database: Database | None = None
 
 def init_mongo(app, client=None) -> Database:
     global _client, _database
+    if client is None and not app.config.get("MONGO_URI"):
+        raise RuntimeError("Chưa cấu hình MONGO_URI trong môi trường hoặc file .env")
     _client = client or MongoClient(app.config["MONGO_URI"], serverSelectionTimeoutMS=3000)
     _database = _client[app.config["MONGO_DB"]]
     app.extensions["mongo_client"] = _client

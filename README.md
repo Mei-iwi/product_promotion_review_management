@@ -5,7 +5,7 @@
 Đã có **khu mua sắm CUSTOMER**: danh mục tìm/lọc/phân trang, giỏ lưu MongoDB, áp mã,
 đặt COD bằng transaction, hủy pending, theo dõi đơn và đánh giá. Checkout cần replica set và đối soát lượt mã;
 standalone vẫn xem danh mục/tra cứu được. [Cách chạy demo, chuyển dữ liệu an toàn và kết quả kiểm thử](docs/SHOPPING.md).
-Dùng một stack: `docker compose up --build -d`, web **http://127.0.0.1:5002**, MongoDB **localhost:27018**.
+Dùng `docker compose up --build -d`, web **http://127.0.0.1:5002** và MongoDB Atlas.
 Quản lý và mua sắm dùng chung database, tài khoản và dữ liệu.
 
 Đăng nhập bằng mọi vai trò đều chuyển đến `/catalog` trước; các tab quản lý vẫn theo quyền.
@@ -24,19 +24,13 @@ route/method: [SECURITY_ROUTES.md](docs/SECURITY_ROUTES.md); bằng chứng test
 
 Dùng duy nhất `docker-compose.yml` cho cả quản lý và mua sắm:
 
-```bash
+```powershell
 docker compose up --build -d
-docker compose exec app python -m flask --app app:create_app reconcile-promotion-usage
 ```
 
-Mở **http://127.0.0.1:5002**. `.env` cần SECRET_KEY và credential MongoDB
-như `.env.example`. `FLASK_PORT=5002` là cổng web; `MONGO_DOCKER_PORT=27018`
-là cổng MongoDB cho Compass. Chọn authSource đúng MONGO_DB và directConnection=true.
-Sau khi import khuyến mãi/đơn hàng, chạy lại lệnh đối soát ở trên.
-Tạo ADMIN khi database mới bằng `docker compose exec app python -m flask --app app:create_app bootstrap-admin`.
-Dừng bằng `docker compose down`, giữ volume; không dùng `down -v`.
+Mở **http://127.0.0.1:5002**. Cấu hình `MONGO_URI`, `MONGO_DB=promotion_review_management` và `SECRET_KEY` trong `.env` theo `.env.example`. Docker và Python local dùng cùng database Atlas. Tạo ADMIN chỉ khi database chưa có tài khoản quản trị. Lệnh `reconcile-promotion-usage` có thể thay đổi dữ liệu: sao lưu và xem hướng dẫn trước khi chạy. Dừng bằng `docker compose down`; volume avatar vẫn được giữ.
 
-`.venv` dùng cho phát triển/kiểm thử: `source .venv/Scripts/activate`, `python -m pytest -q`.
+`.venv` dùng cho phát triển/kiểm thử: `.\.venv\Scripts\Activate.ps1`, `python -m pytest -q`.
 Không chạy thêm `python app.py` khi Docker đã phục vụ web cổng 5002.
 Nếu chọn chạy Python thay Docker: `docker compose stop app`, sau đó `python app.py`.
 Trong `APP_ENV=development`, Python tự nạp lại khi sửa mã; debug console vẫn tắt.
@@ -74,12 +68,12 @@ Máy Windows cần có:
 
 1. **Git**: dùng để clone source code.
 2. **Python 3.11+**: nên chọn tùy chọn `Add Python to PATH` khi cài.
-3. **MongoDB Community Server**: MongoDB phải chạy tại `127.0.0.1:27017` hoặc một URI khác do người dùng cấu hình.
+3. **MongoDB Atlas**: cần URI, tài khoản có quyền trên database và quyền truy cập mạng tới cluster.
 4. **Navicat for MongoDB** hoặc **mongosh**: không bắt buộc để chạy ứng dụng, chỉ dùng để quản trị và kiểm tra MongoDB.
 
-Nếu chọn chạy bằng Docker, chỉ cần **Git** và **Docker Desktop**; Python và MongoDB trên máy host chỉ cần thiết khi chạy local hoặc khi muốn container ứng dụng dùng database hiện có trên máy.
+Nếu chọn chạy bằng Docker, cần **Git**, **Docker Desktop** và kết nối mạng tới Atlas. Python chỉ cần cho cách chạy local.
 
-Nếu máy đã có database `QL_KHUYENMAI_DANHGIA` như ảnh minh họa thì **không cần file `DB.js` và không chạy lại script này**. `DB.js` chỉ là script khởi tạo dữ liệu cho một MongoDB trống.
+Database Atlas hiện dùng là `promotion_review_management`; không chạy lại `DB.js` trên dữ liệu hiện có.
 
 Kiểm tra Git và Python:
 
@@ -132,8 +126,8 @@ Navicat không lưu database trong một file riêng. Navicat là công cụ qu�
 
 ```text
 Navicat ────────┐
-                ├── MongoDB Server: 127.0.0.1:27017
-Flask + PyMongo ┘                    └── QL_KHUYENMAI_DANHGIA
+                ├── MongoDB Atlas: cluster0.zyxqkmr.mongodb.net
+Flask + PyMongo ┘                    └── promotion_review_management
 ```
 
 Khi ứng dụng chạy, luồng dữ liệu là:
@@ -147,7 +141,7 @@ Trình duyệt → Flask → PyMongo → MongoDB Server
 ## 5–12. Cài đặt và chạy
 
 Theo mục **Khởi động nhanh** ở đầu tài liệu. Dùng một `docker-compose.yml`,
-web cổng 5002 và MongoDB cổng 27018, chung database cho quản lý và mua sắm.
+web cổng 5002 và MongoDB Atlas, chung database cho quản lý và mua sắm.
 Không cần chạy thêm MongoDB local hoặc `python app.py` để sử dụng website.
 Các bước nhập dữ liệu, bootstrap ADMIN, backup và đối soát xem [SHOPPING.md](docs/SHOPPING.md).
 Không nạp lại `DB.js` vào database đang dùng vì script khởi tạo có thể xóa dữ liệu.
@@ -262,22 +256,15 @@ Response JSON có cấu trúc:
 
 Xuất collection ra JSON:
 
-```powershell
-New-Item -ItemType Directory -Force .\exports
-mongoexport --uri="mongodb://127.0.0.1:27017" --db="QL_KHUYENMAI_DANHGIA" --collection="customers" --jsonArray --out=".\exports\customers.json"
-```
+Sử dụng MongoDB Database Tools với URI Atlas trong môi trường riêng, tránh lưu mật khẩu trong lịch sử lệnh.
 
 Sao lưu toàn bộ database:
 
-```powershell
-mongodump --uri="mongodb://127.0.0.1:27017" --db="QL_KHUYENMAI_DANHGIA" --out=".\backup"
-```
+Sử dụng `mongodump` với URI Atlas và database `promotion_review_management`.
 
 Khôi phục vào database kiểm tra riêng:
 
-```powershell
-mongorestore --uri="mongodb://127.0.0.1:27017" --nsFrom="QL_KHUYENMAI_DANHGIA.*" --nsTo="QL_KHUYENMAI_DANHGIA_RESTORE.*" ".\backup"
-```
+Khôi phục vào một database kiểm tra riêng sau khi xác nhận namespace và quyền truy cập.
 
 ## 17. Xử lý lỗi thường gặp
 
@@ -310,11 +297,10 @@ Không thể kết nối MongoDB
 Kiểm tra:
 
 ```powershell
-Get-Service MongoDB
 python scripts\check_connection.py
 ```
 
-Kiểm tra `MONGO_URI` trong `.env`. Nếu MongoDB chạy cổng khác, sửa lại URI.
+Kiểm tra `MONGO_URI`, `MONGO_DB`, quyền người dùng và Network Access của Atlas trong `.env` và MongoDB Atlas.
 
 ### Database không có dữ liệu
 
@@ -324,7 +310,7 @@ Chạy:
 python scripts\verify_database.py
 ```
 
-Nếu database trống, import JSON demo vào đúng MongoDB cổng 27018 theo data/demo/README.md.
+Nếu database trống, kiểm tra tên database và quyền trước khi cân nhắc nhập dữ liệu.
 
 ### Chữ tiếng Việt bị biến thành dấu hỏi
 
