@@ -5,8 +5,8 @@ load_dotenv()
 
 
 class Config:
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017")
-    MONGO_DB = os.getenv("MONGO_DB", "QL_KHUYENMAI_DANHGIA")
+    MONGO_URI = os.getenv("MONGO_URI", "")
+    MONGO_DB = os.getenv("MONGO_DB", "promotion_review_management")
     APP_ENV = os.getenv("APP_ENV", "development")
     SECRET_KEY = os.getenv("SECRET_KEY")
     AUTH_COOKIE_SECURE = APP_ENV == "production"

@@ -1,68 +1,17 @@
 services:
-  replica-key:
-    image: mongo:7.0
-    user: "0:0"
-    entrypoint: ["bash", "-ec"]
-    command:
-      - |
-        if [ ! -s /key/keyfile ]; then head -c 512 /dev/urandom | base64 > /key/keyfile; fi
-        chown mongodb:mongodb /key/keyfile
-        chmod 400 /key/keyfile
-    volumes:
-      - replica_key:/key
-  mongodb:
-    restart: unless-stopped
-    image: mongo:7.0
-    command: ["mongod", "--auth", "--keyFile", "/run/replica/keyfile", "--replSet", "rs0", "--bind_ip_all"]
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:?Set MONGO_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?Set MONGO_ROOT_PASSWORD}
-      MONGO_DB: ${MONGO_DB:-QL_KHUYENMAI_DANHGIA}
-      MONGO_APP_USERNAME: ${MONGO_APP_USERNAME:?Set MONGO_APP_USERNAME}
-      MONGO_APP_PASSWORD: ${MONGO_APP_PASSWORD:?Set MONGO_APP_PASSWORD}
-    ports:
-      - "127.0.0.1:${MONGO_DOCKER_PORT:-27018}:27017"
-    volumes:
-      - mongodb_data:/data/db
-      - replica_key:/run/replica:ro
-      - ./db/docker-init-user.js:/docker-entrypoint-initdb.d/10-app-user.js:ro
-    depends_on:
-      replica-key:
-        condition: service_completed_successfully
-    healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
-      interval: 3s
-      timeout: 5s
-      retries: 30
-  replica-init:
-    image: mongo:7.0
-    environment:
-      MONGO_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
-      MONGO_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-    volumes:
-      - ./db/init-replica.js:/scripts/init-replica.js:ro
-    command: ["mongosh", "--nodb", "--quiet", "/scripts/init-replica.js"]
-    depends_on:
-      mongodb:
-        condition: service_healthy
   app:
     restart: unless-stopped
     build: .
     environment:
       APP_ENV: ${APP_ENV:-development}
       SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY}
-      MONGO_URI: mongodb://${MONGO_APP_USERNAME}:${MONGO_APP_PASSWORD}@mongodb:27017/${MONGO_DB:-QL_KHUYENMAI_DANHGIA}?authSource=${MONGO_DB:-QL_KHUYENMAI_DANHGIA}&replicaSet=rs0&directConnection=true
-      MONGO_DB: ${MONGO_DB:-QL_KHUYENMAI_DANHGIA}
-      CHECKOUT_ENABLED: "true"
+      MONGO_URI: ${MONGO_URI:?Set MONGO_URI in .env}
+      MONGO_DB: ${MONGO_DB:-promotion_review_management}
+      CHECKOUT_ENABLED: ${CHECKOUT_ENABLED:-false}
       AVATAR_STORAGE_DIR: /app/instance/avatars
     volumes:
       - avatar_data:/app/instance/avatars
     ports:
       - "127.0.0.1:${FLASK_PORT:-5002}:5001"
-    depends_on:
-      replica-init:
-        condition: service_completed_successfully
 volumes:
-  mongodb_data:
-  replica_key:
   avatar_data:
