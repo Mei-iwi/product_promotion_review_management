@@ -1,9 +1,9 @@
 {% extends 'base.html' %}{% block title %}Hồ sơ của tôi · Mint & Lavender{% endblock %}{% block content %}
-<div class="page-heading"><div><span class="eyebrow">KHÔNG GIAN CỦA BẠN</span><h1 class="h3">Hồ sơ của tôi</h1><p>Một nơi để cập nhật thông tin và chăm sóc tài khoản của bạn.</p></div></div>
+<div class="page-heading"><div><h1 class="h3">Hồ sơ của tôi</h1></div></div>
 <div class="profile-layout">
 <aside class="profile-header" aria-label="Hồ sơ cá nhân">
   <div class="profile-identity">
-    <button id="avatar-pick" type="button" class="avatar-picker" aria-label="Thay ảnh đại diện"><img id="profile-avatar" class="profile-avatar" src="{{ url_for('auth.avatar') }}" alt="Ảnh đại diện của bạn" width="112" height="112"><span class="avatar-picker-badge" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h4l2-3h4l2 3h4v14H4Z" stroke-linejoin="round"/><circle cx="12" cy="13" r="4"/></svg></span></button>
+    <button id="avatar-pick" type="button" class="avatar-picker" aria-label="Thay ảnh đại diện"><img id="profile-avatar" class="profile-avatar" data-avatar-fallback src="{{ url_for('auth.avatar') if has_avatar else 'https://ui-avatars.com/api/?name=User&background=dff8ef&color=17675a&size=128' }}" alt="Ảnh đại diện của bạn" width="112" height="112"><span class="avatar-picker-badge" aria-hidden="true">+</span></button>
   <div class="avatar-controls">
     <form id="avatar-upload" method="post" action="{{ url_for('auth.upload_avatar') }}" enctype="multipart/form-data" data-async-form data-form-kind="avatar-upload">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -16,7 +16,7 @@
     </form>
     {% if account_error and error_section == 'avatar' %}<div class="alert alert-danger mt-3 mb-0" role="alert">{{ account_error }}</div>{% endif %}
   </div>
-    <div class="profile-identity-text"><h2 id="profile-name">{{ item.fullName }}</h2><p>{{ current_user.email }}</p><span class="member-badge">{% if current_user.role == 'CUSTOMER' %}{{ icon('star',16) }} Thành viên {{ item.level|level_vi }}{% else %}{{ icon('user',16) }} {{ role_labels.get(current_user.role,current_user.role) }}{% endif %}</span></div>
+    <div class="profile-identity-text"><h2 id="profile-name">{{ item.fullName }}</h2><p>{{ current_user.email }}</p>{% if current_user.role == 'CUSTOMER' %}<span class="member-badge">Thành viên {{ item.level|level_vi }}</span>{% endif %}</div>
   </div>
 </aside>
 <div class="profile-sections">
@@ -46,4 +46,4 @@
 </div>
 {% endblock %}
 
-{% block scripts %}<script src="{{ url_for('static', filename='js/account.js', v='1') }}"></script>{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/account.js', v='2') }}"></script>{% endblock %}

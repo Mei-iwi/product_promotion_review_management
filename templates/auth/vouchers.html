@@ -1,5 +1,5 @@
 {% extends 'base.html' %}{% block title %}Mã giảm giá{% endblock %}{% block content %}
-<div class="page-heading voucher-page-heading"><div><span class="eyebrow">ƯU ĐÃI CHO BẠN</span><h1 class="h3">Mã giảm giá</h1><p>Chọn ưu đãi phù hợp và áp dụng cho giỏ hàng của bạn.</p></div>{% if can('cart.read_own') %}<a class="btn btn-outline-primary" href="{{ url_for('shop.cart') }}">{{ icon('bag',18) }} Xem giỏ hàng</a>{% else %}<a class="btn btn-outline-primary" href="{{ url_for('auth.catalog') }}">Xem sản phẩm {{ icon('arrow',16) }}</a>{% endif %}</div>
+<div class="page-heading voucher-page-heading"><div><h1 class="h3">Mã giảm giá</h1></div>{% if can('cart.read_own') %}<a class="btn btn-outline-primary" href="{{ url_for('shop.cart') }}">Xem giỏ hàng</a>{% else %}<a class="btn btn-outline-primary" href="{{ url_for('auth.catalog') }}">Xem sản phẩm</a>{% endif %}</div>
 <div class="voucher-list-heading"><span>{{ total }} mã giảm giá</span><span>Mỗi đơn dùng 1 mã</span></div>
 <div class="row g-4 voucher-grid">
 {% for offer in rows %}{% set usable = offer.promoCode in eligible %}

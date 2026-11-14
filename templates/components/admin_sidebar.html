@@ -1,21 +1,21 @@
-<aside id="admin-sidebar" class="offcanvas-xl offcanvas-start admin-sidebar" tabindex="-1" aria-labelledby="sidebar-title">
-  <div class="offcanvas-header"><h2 class="h5 mb-0" id="sidebar-title">Menu quản trị</h2><button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#admin-sidebar" aria-label="Đóng menu quản trị"></button></div>
+{% from 'components/ui.html' import sidebar_item with context %}
+<aside id="admin-sidebar" class="admin-sidebar" aria-label="Menu quản trị">
+  <div class="sidebar-header"><strong class="sidebar-title">Menu quản trị</strong><button type="button" class="sidebar-collapse-toggle" data-sidebar-toggle aria-controls="admin-sidebar" aria-expanded="true" aria-label="Thu gọn menu" title="Thu gọn menu">{{ icon('menu') }}</button></div>
   <div class="offcanvas-body">
     <nav aria-label="Điều hướng quản trị">
       {% if can('reports.read_sensitive') or can('reports.read_aggregate') %}<section class="sidebar-group"><h2>Tổng quan</h2>
-      {% if can('reports.read_sensitive') %}{{ nav_item('web.home', 'Trang tổng quan', 'grid', request.endpoint == 'web.home') }}{% endif %}
-      {% if can('reports.read_aggregate') %}{{ nav_item('web.dashboard', 'Dashboard', 'chart', request.endpoint == 'web.dashboard') }}{% endif %}</section>{% endif %}
+      {% if can('reports.read_sensitive') %}{{ sidebar_item('web.home', 'Trang tổng quan', 'grid', request.endpoint == 'web.home') }}{% endif %}
+      {% if can('reports.read_aggregate') %}{{ sidebar_item('web.dashboard', 'Dashboard', 'chart', request.endpoint == 'web.dashboard') }}{% endif %}</section>{% endif %}
       {% if can('products.read_internal') or can('promotions.read') or can('orders.read_all') %}<section class="sidebar-group"><h2>Kinh doanh</h2>
-      {% if can('products.read_internal') %}{{ nav_item('web.products', 'Sản phẩm', 'bag', request.endpoint in ['web.products','web.product_detail','web.product_create_form','web.product_edit_form']) }}{% endif %}
-      {% if can('promotions.read') %}{{ nav_item('web.promotions', 'Khuyến mãi', 'tag', request.endpoint in ['web.promotions','web.promotion_detail','web.promotion_create_form','web.promotion_edit_form']) }}{% endif %}
-      {% if can('orders.read_all') %}{{ nav_item('web.orders', 'Đơn hàng', 'file', request.endpoint in ['web.orders','web.order_detail']) }}{% endif %}</section>{% endif %}
+      {% if can('products.read_internal') %}{{ sidebar_item('web.products', 'Sản phẩm', 'bag', request.endpoint in ['web.products','web.product_detail','web.product_create_form','web.product_edit_form']) }}{% endif %}
+      {% if can('promotions.read') %}{{ sidebar_item('web.promotions', 'Khuyến mãi', 'tag', request.endpoint in ['web.promotions','web.promotion_detail','web.promotion_create_form','web.promotion_edit_form']) }}{% endif %}
+      {% if can('orders.read_all') %}{{ sidebar_item('web.orders', 'Đơn hàng', 'file', request.endpoint in ['web.orders','web.order_detail']) }}{% endif %}</section>{% endif %}
       {% if can('customers.read') or can('reviews.read_moderation_queue') %}<section class="sidebar-group"><h2>Khách hàng</h2>
-      {% if can('customers.read') %}{{ nav_item('web.customers', 'Khách hàng', 'users', request.endpoint in ['web.customers','web.customer_detail','web.customer_create_form','web.customer_edit_form']) }}{% endif %}
-      {% if can('reviews.read_moderation_queue') %}{{ nav_item('web.reviews', 'Đánh giá', 'star', request.endpoint == 'web.reviews') }}{% endif %}</section>{% endif %}
+      {% if can('customers.read') %}{{ sidebar_item('web.customers', 'Khách hàng', 'users', request.endpoint in ['web.customers','web.customer_detail','web.customer_create_form','web.customer_edit_form']) }}{% endif %}
+      {% if can('reviews.read_moderation_queue') %}{{ sidebar_item('web.reviews', 'Đánh giá', 'star', request.endpoint == 'web.reviews') }}{% endif %}</section>{% endif %}
       {% if can('reports.read_aggregate') %}<section class="sidebar-group"><h2>Báo cáo</h2>
-      <a class="nav-link {{ 'active' if request.endpoint == 'web.query_demo' else '' }}" href="{{ url_for('web.query_demo') }}"{% if request.endpoint == 'web.query_demo' %} aria-current="page"{% endif %}>{{ icon('file') }}Báo cáo</a></section>{% endif %}
-      {% if can('users.read') %}<section class="sidebar-group"><h2>Hệ thống</h2>{{ nav_item('auth.users', 'Quản lý tài khoản', 'user', request.endpoint in ['auth.users','auth.create_user','auth.edit_user']) }}</section>{% endif %}
+      {{ sidebar_item('web.query_demo', 'Báo cáo', 'file', request.endpoint == 'web.query_demo') }}</section>{% endif %}
+      {% if can('users.read') %}<section class="sidebar-group"><h2>Hệ thống</h2>{{ sidebar_item('auth.users', 'Quản lý tài khoản', 'user', request.endpoint in ['auth.users','auth.create_user','auth.edit_user']) }}</section>{% endif %}
     </nav>
-    <div class="sidebar-note">{{ icon('bag', 26) }}<strong>Ghé không gian mua sắm</strong><p>Khám phá danh mục và những ưu đãi hiện có.</p><a href="{{ url_for('auth.catalog') }}">Xem danh mục {{ icon('arrow', 16) }}</a></div>
   </div>
 </aside>

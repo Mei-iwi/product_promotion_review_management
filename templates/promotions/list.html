@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% block title %}Khuyến mãi{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách khuyến mãi</h1><p>Tra cứu và quản lý thông tin khuyến mãi.</p></div>{% if can('promotions.create') %}<a class="btn btn-primary" href="{{ url_for('web.promotion_create_form') }}">Thêm mới</a>{% endif %}</div>
+{% extends 'base.html' %}{% block title %}Khuyến mãi{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách khuyến mãi</h1></div>{% if can('promotions.create') %}<a class="btn btn-primary" href="{{ url_for('web.promotion_create_form') }}">Thêm mới</a>{% endif %}</div>
 <form class="row g-3 filter-panel" method="get" aria-label="Bộ lọc danh sách">
     <div class="col-md-3"><label class="form-label" for="filter-status">Trạng thái</label><select id="filter-status" class="form-select" name="status">
             <option value="" {{ 'selected' if request.args.get('status','') == '' else '' }}>Mọi trạng thái</option>

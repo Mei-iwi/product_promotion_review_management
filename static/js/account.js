@@ -103,6 +103,12 @@
       if (form.dataset.submitting === 'true' || (kind.startsWith('avatar') && avatarBusy)) return;
       // Capture fields before disabling any upload input; preserve the submitter.
       const body = new FormData(form, event.submitter);
+      const submitter = event.submitter;
+      const originalMarkup = submitter?.innerHTML;
+      if (submitter) {
+        submitter.disabled = true;
+        submitter.insertAdjacentHTML('afterbegin', '<span class="loading-spinner" aria-hidden="true"></span>');
+      }
       form.dataset.submitting = 'true';
       form.setAttribute('aria-busy', 'true');
       if (kind.startsWith('avatar')) { avatarBusy = true; file.disabled = true; cancel.disabled = true; }
@@ -115,6 +121,8 @@
         if (kind === 'password') { clearPasswords(form); window.location.assign('/login'); return; }
         if (kind === 'profile') {
           document.getElementById('profile-name').textContent = result.data.fullName;
+          const headerName = document.querySelector('[data-header-name]');
+          if (headerName) headerName.textContent = result.data.fullName;
           Object.entries(result.data).forEach(([name, value]) => {
             const input = form.elements.namedItem(name);
             if (!input) return;
@@ -126,6 +134,8 @@
         if (kind.startsWith('avatar')) {
           savedAvatar = `${result.data.avatarUrl}?v=${Date.now()}`;
           resetSelection();
+          const headerAvatar = document.querySelector('[data-header-avatar]');
+          if (headerAvatar) headerAvatar.src = savedAvatar;
           remove.hidden = !result.data.hasAvatar;
         }
         status(form, result.message, true);
@@ -135,6 +145,7 @@
       } finally {
         delete form.dataset.submitting;
         form.removeAttribute('aria-busy');
+        if (submitter) { submitter.disabled = false; submitter.innerHTML = originalMarkup; }
         if (kind.startsWith('avatar')) { avatarBusy = false; file.disabled = false; cancel.disabled = false; }
       }
     }, true);
