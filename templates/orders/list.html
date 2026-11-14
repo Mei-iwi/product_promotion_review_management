@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% block title %}Đơn hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách đơn hàng</h1><p>Tra cứu mặt hàng, khách hàng và khuyến mãi đã áp dụng</p></div></div>
+{% extends 'base.html' %}{% block title %}Đơn hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách đơn hàng</h1></div></div>
 <form class="row g-3 filter-panel" method="get" aria-label="Bộ lọc danh sách">
     <div class="col-md-3"><label class="form-label" for="filter-customerCode">Mã khách hàng</label><input id="filter-customerCode" class="form-control" name="customerCode" placeholder="Mã khách hàng" value="{{ request.args.get('customerCode','') }}"></div>
     <div class="col-md-2"><label class="form-label" for="filter-status">Trạng thái</label><select id="filter-status" class="form-select" name="status">

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% block title %}Sản phẩm{% endblock %}{% block content %}
+{% extends 'base.html' %}{% from 'components/ui.html' import pagination %}{% block title %}Sản phẩm{% endblock %}{% block content %}
 <div class="page-heading">
     <h1 class="h3">Danh sách sản phẩm</h1><div><span class="text-secondary me-2">{{ total }} sản phẩm</span>{% if can('products.create') %}<a class="btn btn-primary btn-sm" href="{{ url_for('web.product_create_form') }}">Thêm mới</a>{% endif %}</div>
 </div>
@@ -51,7 +51,5 @@
             </tr>{% endfor %}</tbody>
     </table>
 </div>
-<nav class="d-flex flex-wrap gap-2 mt-4" aria-label="Phân trang sản phẩm quản trị"><a class="btn btn-outline-secondary btn-sm {% if page <= 1 %}disabled{% endif %}" href="{{ url_for('web.products', **dict(request.args.to_dict(), page=page-1)) }}"{% if page <= 1 %} aria-disabled="true" tabindex="-1"{% endif %}>Trang
-        trước</a> <a class="btn btn-outline-secondary btn-sm {% if page*10 >= total %}disabled{% endif %}"
-        href="{{ url_for('web.products', **dict(request.args.to_dict(), page=page+1)) }}"{% if page*10 >= total %} aria-disabled="true" tabindex="-1"{% endif %}>Trang sau</a></nav>
+{{ pagination(page, pages, page_url, 'Phân trang sản phẩm quản trị') }}
 {% endblock %}

@@ -4,6 +4,7 @@ import secrets
 from flask import abort, current_app, g, jsonify, redirect, render_template, request, url_for
 from werkzeug.exceptions import HTTPException
 from pymongo.errors import PyMongoError
+from db.mongo import get_db
 from services import auth_service as auth
 from services.access_policy import has_permission, LANDINGS, REPORT_PERMISSIONS, ROLE_LABELS, USER_STATUS_LABELS
 from services.helpers import ValidationError
@@ -200,9 +201,21 @@ def init_security(app):
 
     @app.context_processor
     def security_context():
+        user = g.get('current_user')
+        display_name = ''
+        has_avatar = False
+        if user:
+            profile = user.get('profile') or {}
+            display_name = profile.get('fullName', '')
+            has_avatar = bool(profile.get('avatar'))
+            if user.get('role') == 'CUSTOMER' and user.get('customerCode'):
+                customer = get_db().customers.find_one({'customerCode': user['customerCode']}, {'fullName': 1, 'avatar': 1})
+                display_name = (customer or {}).get('fullName') or display_name
+                has_avatar = bool((customer or {}).get('avatar'))
+            display_name = display_name or user.get('email', '').split('@')[0]
         return {'current_user': g.get('current_user'), 'can': lambda permission: has_permission(g.get('current_user'), permission),
                 'csrf_token': csrf_token, 'role_labels': ROLE_LABELS, 'user_status_labels': USER_STATUS_LABELS,
-                'landing': LANDINGS.get((g.get('current_user') or {}).get('role'), '/catalog')}
+                'display_name': display_name, 'has_avatar': has_avatar, 'landing': LANDINGS.get((g.get('current_user') or {}).get('role'), '/catalog')}
 
     @app.after_request
     def security_headers(response):

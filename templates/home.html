@@ -1,5 +1,5 @@
 {% extends 'base.html' %}{% from 'components/ui.html' import statistic, icon with context %}{% block title %}Tổng quan quản trị{% endblock %}{% block content %}
-<div class="page-heading"><div><span class="eyebrow">MINT & LAVENDER / TỔNG QUAN</span><h1 class="h3">Mọi hoạt động, trong tầm nhìn.</h1><p>Theo dõi kinh doanh và mở nhanh các công việc cần thiết.</p></div><a class="btn btn-outline-primary" href="{{ url_for('web.query_demo') }}">Xem báo cáo nghiệp vụ {{ icon('arrow',16) }}</a></div>
+<div class="page-heading"><div><h1 class="h3">Tổng quan hoạt động</h1></div><a class="btn btn-outline-primary" href="{{ url_for('web.query_demo') }}">Xem báo cáo nghiệp vụ</a></div>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-5 g-3 mb-4">
 {% for label,value,symbol in [('Sản phẩm đang kinh doanh',summary.activeProducts,'bag'),('Khuyến mãi hoạt động',summary.activePromotions,'tag'),('Khách hàng',summary.customers,'users'),('Đánh giá đã duyệt',summary.approvedReviews,'star'),('Đơn đã xác nhận/hoàn tất',summary.orders,'file')] %}
 <div class="col">{{ statistic(label,value,symbol) }}</div>{% endfor %}

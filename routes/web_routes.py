@@ -49,7 +49,9 @@ def home(): return render_template("home.html", summary=report_repository.summar
 @bp.get("/san-pham")
 def products():
     rows, total = product_service.list_products(request.args, request.args.get("page", 1), 10, request.args.get("sort", ""))
-    return render_template("products/list.html", rows=rows, total=total, page=int(request.args.get("page", 1)))
+    page = int(request.args.get("page", 1))
+    return render_template("products/list.html", rows=rows, total=total, page=page, pages=max(1, (total + 9) // 10),
+                           page_url=lambda p: url_for('web.products', **dict(request.args.to_dict(), page=p)))
 
 
 def product_form_data(form, code=None):

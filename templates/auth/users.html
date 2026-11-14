@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% block title %}Quản lý tài khoản{% endblock %}{% block content %}
+{% extends 'base.html' %}{% from 'components/ui.html' import pagination %}{% block title %}Quản lý tài khoản{% endblock %}{% block content %}
 <div class="page-heading"><div><h1 class="h3">Quản lý tài khoản</h1><p>{{ total }} tài khoản phù hợp{% if not can('users.manage_all') %} · Chỉ quản lý khách hàng{% endif %}</p></div>
 {% if can('users.create') %}<a class="btn btn-primary" href="{{ url_for('auth.create_user') }}">Tạo tài khoản</a>{% endif %}</div>
 <form method="get" class="row g-3">
@@ -15,8 +15,4 @@
 {% if can('users.update') %}<a href="{{ url_for('auth.edit_user', user_id=u.id) }}">{% if u.status == 'locked' %}Mở khóa / Cập nhật{% elif u.status == 'disabled' %}Kích hoạt / Cập nhật{% else %}Quản lý / Đặt lại mật khẩu{% endif %}</a>{% endif %}</td></tr>
 {% else %}<tr><td colspan="5" class="empty-state">Không có tài khoản phù hợp</td></tr>{% endfor %}
 </tbody></table></div>
-<nav aria-label="Phân trang tài khoản" class="d-flex flex-wrap align-items-center gap-3 mt-3">
-{% if page > 1 %}<a class="btn btn-outline-secondary" rel="prev" href="{{ page_url(page-1) }}">Trang trước</a>{% endif %}
-<span>Trang {{ page }} / {{ pages }}</span>
-{% if page < pages %}<a class="btn btn-outline-secondary" rel="next" href="{{ page_url(page+1) }}">Trang sau</a>{% endif %}
-</nav>{% endblock %}
+{{ pagination(page, pages, page_url) }}{% endblock %}

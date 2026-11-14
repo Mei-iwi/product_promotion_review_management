@@ -19,7 +19,20 @@
 {%- endmacro %}
 
 {% macro nav_item(endpoint, label, symbol, active=false) -%}
-<a class="nav-link {{ 'active' if active else '' }}" href="{{ url_for(endpoint) }}"{% if active %} aria-current="page"{% endif %}>{{ icon(symbol) }}<span>{{ label }}</span></a>
+<a class="nav-link {{ 'active' if active else '' }}" href="{{ url_for(endpoint) }}"{% if active %} aria-current="page"{% endif %}><span>{{ label }}</span></a>
+{%- endmacro %}
+
+{% macro sidebar_item(endpoint, label, symbol, active=false) -%}
+<a class="nav-link {{ 'active' if active else '' }}" href="{{ url_for(endpoint) }}" title="{{ label }}" aria-label="{{ label }}"{% if active %} aria-current="page"{% endif %}>{{ icon(symbol) }}<span class="sidebar-label">{{ label }}</span></a>
+{%- endmacro %}
+
+{% macro pagination(page, pages, page_url, label='Phân trang') -%}
+<nav class="pagination-nav mt-4" aria-label="{{ label }}">
+{% if page > 1 %}<a href="{{ page_url(1) }}" aria-label="Trang đầu">«</a><a rel="prev" href="{{ page_url(page-1) }}" aria-label="Trang trước">‹</a>{% else %}<span class="disabled" aria-disabled="true">«</span><span class="disabled" aria-disabled="true">‹</span>{% endif %}
+{% set start = [1, [page - 2, pages - 4]|min]|max %}{% set end = [pages, start + 4]|min %}
+{% for number in range(start, end + 1) %}{% if number == page %}<span class="active" aria-current="page">{{ number }}</span>{% else %}<a href="{{ page_url(number) }}">{{ number }}</a>{% endif %}{% endfor %}
+{% if page < pages %}<a rel="next" href="{{ page_url(page+1) }}" aria-label="Trang sau">›</a><a href="{{ page_url(pages) }}" aria-label="Trang cuối">»</a>{% else %}<span class="disabled" aria-disabled="true">›</span><span class="disabled" aria-disabled="true">»</span>{% endif %}
+</nav>
 {%- endmacro %}
 
 {% macro statistic(label, value, symbol='chart') -%}

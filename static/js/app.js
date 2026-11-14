@@ -1,3 +1,20 @@
+const sidebarToggle = document.querySelector('[data-sidebar-toggle]');
+if (sidebarToggle) {
+  const setSidebarCollapsed = collapsed => {
+    document.body.classList.toggle('sidebar-collapsed', collapsed);
+    const label = collapsed ? 'Mở rộng menu' : 'Thu gọn menu';
+    sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
+    sidebarToggle.setAttribute('aria-label', label);
+    sidebarToggle.title = label;
+  };
+  try { setSidebarCollapsed(sessionStorage.getItem('sidebar-collapsed') === 'true'); } catch (_) { /* Keep the default expanded menu. */ }
+  sidebarToggle.addEventListener('click', () => {
+    const collapsed = !document.body.classList.contains('sidebar-collapsed');
+    setSidebarCollapsed(collapsed);
+    try { sessionStorage.setItem('sidebar-collapsed', String(collapsed)); } catch (_) { /* Navigation still works without storage. */ }
+  });
+}
+
 // Keep the successful submitter enabled: its name/value, formaction and
 // formnovalidate must reach the browser unchanged (checkout uses all three).
 document.querySelectorAll('form').forEach(form => {
@@ -9,19 +26,47 @@ document.querySelectorAll('form').forEach(form => {
   }, true);
   form.addEventListener('submit', event => {
     if (event.defaultPrevented) return;
+    if (form.matches('[data-async-form]')) return;
     form.dataset.submitting = 'true';
     form.setAttribute('aria-busy', 'true');
+    const submitter = event.submitter;
+    // Wait until the browser serializes the clicked button's name and value.
+    setTimeout(() => {
+      form.querySelectorAll('button[type="submit"], button:not([type]), input[type="submit"]').forEach(button => {
+        if (button.disabled) return;
+        button.dataset.wasEnabled = 'true';
+        button.disabled = true;
+      });
+      if (submitter && submitter.tagName === 'BUTTON') {
+        submitter.dataset.originalMarkup = submitter.innerHTML;
+        submitter.insertAdjacentHTML('afterbegin', '<span class="loading-spinner" aria-hidden="true"></span>');
+      }
+    }, 0);
   });
 });
 window.addEventListener('pageshow', () => {
   document.querySelectorAll('form[data-submitting]').forEach(form => {
     delete form.dataset.submitting;
     form.removeAttribute('aria-busy');
+    form.querySelectorAll('[data-was-enabled]').forEach(button => { button.disabled = false; delete button.dataset.wasEnabled; });
+    form.querySelectorAll('[data-original-markup]').forEach(button => { button.innerHTML = button.dataset.originalMarkup; delete button.dataset.originalMarkup; });
     form.querySelectorAll('[data-original-label]').forEach(button => {
       button.textContent = button.dataset.originalLabel;
       delete button.dataset.originalLabel;
     });
   });
+});
+
+document.querySelectorAll('[data-slideshow]').forEach(slideshow => {
+  const slides = Array.from(slideshow.querySelectorAll('.catalog-slide'));
+  if (slides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let index = 0;
+  setInterval(() => {
+    if (document.hidden) return;
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+  }, 4500);
 });
 
 document.querySelectorAll('form[data-confirm]').forEach(form => {
@@ -47,6 +92,9 @@ document.querySelectorAll('img[data-product-image]').forEach(img => {
   };
   img.addEventListener('error', fallback);
   if (img.complete && img.naturalWidth === 0) fallback();
+});
+document.querySelectorAll('img[data-avatar-fallback]').forEach(img => {
+  img.addEventListener('error', () => { img.src = '/static/img/avatar-default.svg'; }, { once: true });
 });
 
 document.querySelectorAll('form[data-account-edit]').forEach(form => {

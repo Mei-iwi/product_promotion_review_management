@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% block title %}Khách hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách khách hàng</h1><p>Tra cứu và quản lý thông tin khách hàng.</p></div>{% if can('customers.create') %}<a class="btn btn-primary" href="{{ url_for('web.customer_create_form') }}">Thêm mới</a>{% endif %}</div>
+{% extends 'base.html' %}{% block title %}Khách hàng{% endblock %}{% block content %}<div class="page-heading"><div><h1 class="h3">Danh sách khách hàng</h1></div>{% if can('customers.create') %}<a class="btn btn-primary" href="{{ url_for('web.customer_create_form') }}">Thêm mới</a>{% endif %}</div>
 <form class="row g-3 filter-panel" method="get" aria-label="Bộ lọc danh sách">
     <div class="col-md-4"><label class="form-label" for="filter-q">Tìm kiếm</label><input id="filter-q" class="form-control" name="q" placeholder="Tên hoặc email" value="{{ request.args.get('q','') }}"></div>
     <div class="col-md-3"><label class="form-label" for="filter-level">Hạng khách hàng</label><select id="filter-level" class="form-select" name="level">
